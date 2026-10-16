@@ -2,3 +2,4 @@ dist/
 node_modules/
 .opencode/state/
 .playwright-mcp/
+*.bak

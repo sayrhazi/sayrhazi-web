@@ -1,17 +1,17 @@
 task_id: FEATURE-003
 agent: architect
 status: À IMPLÉMENTER
-completed_at: "2026-10-16T15:25:32+00:00"
-summary: Sync-noyau latest, migration org sayrhazi, base Pages et workflow déployé vers sayrhazi-web.
+completed_at: "2026-10-16T18:37:18+00:00"
+summary: Branche sayrhazi-web pour le travail, main déployé, push manuel utilisateur seul, aucun auto-commit.
 ---
-Date système réelle : 2026-10-16T15:25:32+00:00
+Date système réelle : 2026-10-16T18:37:18+00:00
 Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
 Type : website
 Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
 Tâche : FEATURE-003
 Auteur : Lawibrahim (agent : architect, rôle stable)
-Horodatage completed_at : 2026-10-16T15:25:32+00:00
-Résumé (summary) : Sync-noyau latest, migration org sayrhazi, base Pages et workflow déployé vers sayrhazi-web.
+Horodatage completed_at : 2026-10-16T18:37:18+00:00
+Résumé (summary) : Branche sayrhazi-web pour le travail, main déployé, push manuel utilisateur seul, aucun auto-commit.
 
 Contexte et sources :
 - FEATURE-001 bouclée et archivée (`.opencode/features/FEATURE-001.md`).
@@ -22,6 +22,8 @@ Contexte et sources :
 - Organisation `sayrhazi` créée le 2026-10-16 : `github.com/sayrhazi/sayrhazi` (noyau) et `github.com/sayrhazi/sayrhazi-web` (vitrine, dépôt créé, remote `origin` déjà configuré). Noyau local en 0.13.2 du 2026-10-16 (4 points dashboard et installeur), `main` en ligne encore en 0.13.1 : pousser le noyau d abord, sinon la sync en ligne reste une version derrière.
 - Vérifié le 2026-10-16 : `.gitignore` racine (`dist/`, `node_modules/`, `.opencode/state/`), `.playwright-mcp/` présent non ignoré, `yarn.lock` présent, 7 occurrences `Lawi-Salim` (`Demarrage.tsx` x2, `site.ts`, `agents.ts`, cahier, historique), `base: "/"` et `BrowserRouter` sans `basename` (page blanche assurée sous `/sayrhazi-web/`).
 - Confirmation explicite de l utilisateur le 2026-10-16 : consigner pour Bamse la migration org, la base Pages, le workflow et le push initial.
+- Noyau 0.13.2 poussé le 2026-10-16 (commit `0f0e808`, tag `v0.13.2`, `main` à jour, distant vérifié en 0.13.2). Cause du 0.13.1 persistant en local identifiée le 2026-10-16 : `yarn dev` ne lance pas `prebuild`, donc `scripts/sync-noyau.cjs` ne tourne qu au `build`, jamais en dev. Le script fonctionne, il n est juste jamais appelé en dev.
+- Dérive relevée : `docs/installation.md` a grandi (+32 lignes : textual en venv PEP 668, collisions `info` et `update` sous Ubuntu, `yarn add` sans PATH) et `tunda` vérifie désormais le dashboard ; la page Démarrage (prérequis, « Vérification attendue ») est à recontrôler.
 
 Décisions validées :
 
@@ -45,7 +47,11 @@ Décisions validées :
 
 10. Date : 2026-10-16 — Sujet : workflow Pages — Décision : `.github/workflows/pages.yml` (permissions `pages: write`, `id-token: write`, concurrence Pages) : install (`yarn install --frozen-lockfile`), sync-noyau (réseau disponible en CI), build (`yarn build` avec base Pages), `404.html` vérifié, déploiement vers GitHub Pages. Déclencheurs : `push` sur `main`, programmé quotidien (suivi des releases noyau sans intervention), `workflow_dispatch` manuel. Raisonnement : le sync au build exige un rebuild pour suivre le noyau ; le schedule rend le « automatique » réel. Statut : À IMPLÉMENTER.
 
-11. Date : 2026-10-16 — Sujet : ignore et push initial — Décision : ajouter `.playwright-mcp/` au `.gitignore` racine ; commiter `yarn.lock`, sources, `public/`, `scripts/`, configs, docs et `.opencode/resume/`, `history/`, `features/` (mémoire versionnée, seul `state/` reste local) ; pousser vers `origin` (`sayrhazi/sayrhazi-web`, `main`) sur demande explicite de l utilisateur actée ici. Raisonnement : préparation du push vérifiée le 2026-10-16 (remote déjà configuré). Statut : À IMPLÉMENTER.
+11. Date : 2026-10-16 — Sujet : ignore et commits (push réservé) — Décision : ajouter `.playwright-mcp/` au `.gitignore` racine ; Bamse committe en local sur la branche `sayrhazi-web` (`yarn.lock`, sources, `public/`, `scripts/`, configs, docs et `.opencode/resume/`, `history/`, `features/`, seul `state/` reste local) et **ne pousse jamais** ; le push vers `origin` et la fusion vers `main` sont réservés à l utilisateur (décision 17). Raisonnement : règle push explicite du 2026-10-16. Statut : À IMPLÉMENTER.
+
+12. Date : 2026-10-16 — Sujet : sync au démarrage dev — Décision : ajouter `"sync": "node scripts/sync-noyau.cjs"` et `"predev": "node scripts/sync-noyau.cjs"` dans `package.json` (le script existe et est branché en `prebuild`, mais `yarn dev` ne le lance jamais, d où le 0.13.1 persistant en local). Le script ne réécrit que si le contenu change (pas de bruit git) et le repli commité garde le dev démarrable hors-ligne. Action immédiate : `node scripts/sync-noyau.cjs` puis relance `yarn dev` → 0.13.2 en local. Raisonnement : le mécanisme est prouvé au build, il manquait son appel en dev. Statut : À IMPLÉMENTER.
+
+13. Date : 2026-10-16 — Sujet : hero Accueil empilé sur mobile — Décision : le conteneur `Accueil.tsx` lignes 24 à 32 passe en `flex flex-col sm:flex-row` (correction de la consigne antérieure « pas de `flex-col` », qui forçait le côte à côte partout et casse le mobile). Sur mobile : 2 lignes pleine largeur, `CopierCommande` (`w-full` déjà) puis lien `Démarrer` en `w-full` (retirer `shrink-0` sur mobile, `sm:w-auto sm:shrink-0` sur desktop), `items-stretch`, `gap-2`. Sur desktop (`sm:`) : côte à côte, même hauteur. Raisonnement : spécification explicite de l utilisateur du 2026-10-16 avec maquette (`|npm install -g sayrhazi 📄|` puis `|Démarrer en 3 commandes →|`), le `flex-row` actuel déborde sur 390. Statut : À IMPLÉMENTER (FEATURE-001, correctif mobile).
 
 Vérifications :
 - Noyau local (`package.json` 0.13.2, tête `CHANGELOG.md` 0.13.2 à 4 points) et `main` en ligne (0.13.1) relus ; API Releases en 404 constatée ; organisation `sayrhazi` et dépôt web confirmés par l utilisateur.
@@ -55,7 +61,10 @@ Vérifications :
 
 Problèmes :
 - HAUTE : `base: "/"` sans `basename` → page blanche sous `/sayrhazi-web/` (traité par la décision 9).
-- MOYENNE : distant encore en 0.13.1, sync en ligne une version derrière tant que le noyau 0.13.2 n est pas poussé (action utilisateur, autre dépôt).
+- MOYENNE levée : noyau 0.13.2 poussé (tag + `main` vérifiés le 2026-10-16) ; reste à tirer via sync.
+- MOYENNE : `yarn dev` ne lance jamais le sync (pas de `predev`), d où le 0.13.1 en local malgré le noyau à jour (traité par la décision 12).
+- MOYENNE : hero Accueil en `flex-row` sur mobile (côte à côte, `shrink-0`), débordement sur 390 au lieu des 2 lignes pleine largeur demandées (traité par la décision 13, qui corrige la consigne antérieure).
+- MOYENNE : dérive `installation.md` (+32 lignes : textual en venv, collisions Ubuntu, `yarn add`) et `tunda` vérifiant le dashboard → page Démarrage à recontrôler par Hadji (prérequis, « Vérification attendue »).
 - FAIBLE : `.playwright-mcp/` non ignoré (décision 11), liens org périmés (décision 8).
 - Note : deux builds à deux dates pourront différer (latest mouvante) ; les fichiers générés restent committés, le diff fait foi.
 
@@ -65,7 +74,17 @@ Limites :
 - Push du noyau 0.13.2 et validations FEATURE-002 hors périmètre Bamse web.
 
 Suite :
-- Bamse : décisions 1 à 6 (sync), 8 (org), 9 (base), 10 (workflow), 11 (ignore + push) → `yarn lint`, `build`, `test`, `dist/`, `build.txt` TERMINÉ pour FEATURE-003.
+- Immédiat (vous ou Bamse) : `node scripts/sync-noyau.cjs` puis relance `yarn dev` → local en 0.13.2.
+- Bamse (sur branche `sayrhazi-web`, commits locaux, **jamais de push**) : décisions 1 à 6 (sync), 8 (org), 9 (base), 10 (workflow), 11 (ignore), 12 (`sync` + `predev`), 13 (hero empilé mobile), 14 (renommage), 15 (README), 16 (0.13.2 complète), 17 (branches) → `yarn lint`, `build`, `test`, `dist/`, `build.txt` TERMINÉ pour FEATURE-003. Le push vers `origin` et la fusion vers `main` sont réservés à l utilisateur.
+
+14. Date : 2026-10-16 — Sujet : renommage Navbar et Footer — Décision : `src/components/Entete.tsx` devient `Navbar.tsx` (fonction `Entete` → `Navbar`), `src/components/PiedDePage.tsx` devient `Footer.tsx` (fonction `PiedDePage` → `Footer`) ; `App.tsx` met à jour les 2 imports et les usages `<Entete />`, `<PiedDePage />`. Le lien d évitement (`Aller au contenu`, ex-lignes 42 à 47) est **supprimé** de `Navbar.tsx` sur demande explicite de l utilisateur du 2026-10-16. Réserve actée : régression d accessibilité clavier assumée, contraire au cahier §6 (navigation clavier) ; Hadji et Zawadi la signaleront. Note : les autres composants gardent leurs noms français (`CopierCommande`, `CarteAgent`). Raisonnement : demande explicite, périmètre vérifié (3 fichiers). Statut : À IMPLÉMENTER.
+
+15. Date : 2026-10-16 — Sujet : README réécrit — Décision : `README.md` actuel (une ligne `# sayrhazi-web`, encodé UTF-16 LE illisible outillée) réécrit en **UTF-8 sans BOM** avec : présentation du site vitrine, stack (React, TypeScript, Vite, Tailwind, yarn), commandes (`install`, `dev` sur `localhost:5175`, `sync`, `build`, `lint`, `test`), sync-noyau (source `main` de `sayrhazi/sayrhazi`, repli commité), déploiement GitHub Pages (`sayrhazi.github.io/sayrhazi-web`, workflow), liens (dépôt noyau, npm `sayrhazi`, site en ligne), licence tous droits réservés, en français. Aucun lien `Lawi-Salim` résiduel. Raisonnement : demande explicite, l état actuel ne documente rien et casse la lecture outillée. Statut : À IMPLÉMENTER.
+
+16. Date : 2026-10-16 — Sujet : entrée 0.13.2 complète — Décision : l entrée `0.13.2` de `versions.ts` ne compte que 9 points sur 13 bullets du `CHANGELOG.md` ; les 4 derniers manquent (binaire npm `sayrhazi-tui`, profil premier argument et racine, dashboard en deux blocs, `--once` sans balisage Textual). Bamse relance le sync contre le changelog complet et ajoute les 4 points condensés fidèles, corrige le commentaire d en-tête resté en 0.13.1, et fait en sorte que le script mette l en-tête à jour et signale toute condensation (pas de troncature silencieuse). Vérification du script : aucune limite de bullets trouvée, cause de l incomplétude à établir (sync sur changelog mi-édition ou retouche manuelle, cette dernière interdite par la décision 5). Raisonnement : plainte fondée de l utilisateur vérifiée le 2026-10-16 (9 contre 13, fonctions visibles manquantes). Statut : À IMPLÉMENTER.
+
+17. Date : 2026-10-16 — Sujet : modèle de branches et règle push — Décision : branche de travail `sayrhazi-web` créée depuis `main` ; Bamse y travaille et y committe en local, **ne pousse jamais** (ni vers `sayrhazi-web` ni vers `main`) ; l utilisateur relit, fusionne vers `main` et pousse lui-même. `main` reste déployable en permanence (fusion après validations Hadji, Hifadhui et Zawadi). Workflow Pages : build sur `push` vers `main` et vers `sayrhazi-web` ainsi que sur `pull_request` (sans déploiement hors `main`, job deploy sous condition `github.ref == refs/heads/main`) ; schedule quotidien et `workflow_dispatch` sur `main` **sans auto-commit** (le schedule rebuild et déploie le snapshot committé, il ne committe ni ne pousse jamais). Corrige la clause « schedule auto-committe » inscrite hors session le 2026-10-16 à 18:35:57, contraire à la règle push de l utilisateur. Raisonnement : demande explicite du 2026-10-16 (« je ferai moi même le push, ce n est pas à Bamse »). Statut : À IMPLÉMENTER.
+- Hadji : recontrôle Démarrage contre la nouvelle `installation.md` (textual, Ubuntu, `tunda` + dashboard) en plus de la review standard.
 - Hadji : review (exactitude, repli, parsing, base Pages, workflow).
 - Hifadhui : audit (URL, timeout, pas d exec, pas de secret, permissions workflow).
 - Zawadi : QA locale (Versions, non-régression, console, responsive) puis en ligne après push.

@@ -21,11 +21,11 @@ export default function Accueil() {
           <p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/60">
             Un rôle. Un rapport. Une transition vérifiable.
           </p>
-          <div className="mx-auto mt-6 flex flex-row max-w-xl items-stretch gap-2">
+          <div className="mx-auto mt-6 flex max-w-xl flex-col items-stretch gap-2 sm:flex-row">
             <CopierCommande commande={COMMANDES[0].commande} etiquette="Commande d'installation à copier" />
             <Link
               to="/demarrage"
-              className="shrink-0 rounded-lg border border-white/40 px-5 py-3 text-sm font-bold text-white transition hover:border-chartreuse hover:text-chartreuse text-center"
+              className="w-full rounded-lg border border-white/40 px-5 py-3 text-center text-sm font-bold text-white transition hover:border-chartreuse hover:text-chartreuse sm:w-auto sm:shrink-0"
             >
               Démarrer en 3 commandes →
             </Link>

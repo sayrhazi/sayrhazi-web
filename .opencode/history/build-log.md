@@ -837,44 +837,52 @@ Suite :
 
 Verdict du rôle : TERMINÉ.
 
-## Archivé le 2026-10-16T12:05:15+00:00 (remplacé par le rapport FEATURE-002 page Agents)
+## Archivé le 2026-10-16T12:05:15+00:00 (remplacé par le rapport FEATURE-002 page Agents) — contenu corrigé le 2026-10-16T15:37:38+00:00 (doublon 28-ter remplacé par le vrai rapport FEATURE-002)
 
-task_id: FEATURE-001
+task_id: FEATURE-002
 agent: builder
 status: TERMINÉ
-completed_at: "2026-10-16T00:23:29+00:00"
-summary: Entrée 0.13.0 complétée des 3 points dashboard actif-zéro-compaction, yarn lint build test verts.
+completed_at: "2026-10-16T00:33:29+00:00"
+summary: Page Agents détaillée en 6 sections sourcées noyau 0.13.0, route /agents branchée, yarn lint build test verts.
 ---
-Date système réelle : 2026-10-16T00:23:29+00:00
+Date système réelle : 2026-10-16T00:33:29+00:00
 Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
 Type : website
-Stack : TypeScript / React, Vite.js, Tailwind (gestionnaire yarn, port 5175)
-Tâche : FEATURE-001 (corrections mobile + alignement 0.13.0)
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-002
 Auteur : Bamse (agent : builder, rôle stable)
-Horodatage completed_at : 2026-10-16T00:23:29+00:00
-Résumé (summary) : Entrée 0.13.0 complétée des 3 points dashboard actif-zéro-compaction, yarn lint build test verts.
+Horodatage completed_at : 2026-10-16T00:33:29+00:00
+Résumé (summary) : Page Agents détaillée en 6 sections sourcées noyau 0.13.0, route /agents branchée, yarn lint build test verts.
 
 Contexte et sources :
-- Plan relu : FEATURE-001 mis à jour par Lawibrahim le 2026-10-16T00:19:58+00:00, décisions 1 à 28-bis conservées, décision 28-ter (dashboard actif-zéro-compaction) à implémenter.
-- Acquis lus sans refaire leurs vérifications : `review.txt` VALIDÉ du 2026-10-15T23:46:17+00:00, `security.txt` VALIDÉ AVEC RÉSERVES du 2026-10-15T23:46:34+00:00, `qa.txt` VALIDÉ AVEC RÉSERVES du 2026-10-15T23:50:00+00:00.
-- Mémoire : `build.txt` TERMINÉ du 2026-10-15T23:44:30+00:00 relu puis archivé dans `.opencode/history/build-log.md` avant remplacement.
+- Plan relu : FEATURE-002 de Lawibrahim du 2026-10-16T00:29:58+00:00, décisions 1 à 7 à implémenter, FEATURE-001 bouclée et archivée.
+- Contenu sourcé du noyau 0.13.0 : `docs/agents.md` (rôles, descriptions, règle commune, modèle par agent, couleurs) et `core/agents/` (agent.yaml, contract.yaml, instructions.md par agent, modèle `muse-spark-1.3` partout).
+- Mémoire : `build.txt` TERMINÉ FEATURE-001 du 2026-10-16T00:23:29+00:00 relu puis archivé dans `.opencode/history/build-log.md` avant remplacement.
+
+Fichiers créés :
+- `src/data/agents.ts` : `AGENTS_DETAILLÉS` (nom, fichier, role, couleur, description, sourceFichier, rapports, lienDoc), figé au build, sans appel réseau.
+- `src/components/HeroAgents.tsx` : hero centré « Les six agents » + phrase d'accroche.
+- `src/components/SectionAgent.tsx` : `section` par agent (`h2`, pastille couleur avec `aria-label`, ordre workflow).
+- `src/components/CarteAgentDetaillee.tsx` : description + méta en grille 1 colonne mobile et 2 colonnes desktop (fichier agent, sources noyau, rapports, doc).
+- `src/pages/Agents.tsx` : hero + 6 sections (Lawibrahim, Ali, Bamse, Hadji, Hifadhui, Zawadi) + mention de source 0.13.0.
 
 Fichiers modifiés :
-- `src/data/versions.ts` : 3 points ajoutés à l'entrée `0.13.0` existante (session la plus récemment active, contexte à zéro ignoré, compaction sans cas particulier), formulations reprises du plan, fidèles au `CHANGELOG.md`.
+- `src/App.tsx` : route `/agents` branchée sur `<Agents />` (remplace le placeholder), titre déjà prévu.
 
-Fichiers non modifiés : `src/data/site.ts` (0.13.0 déjà en place), `src/App.tsx`, pages, composants, `index.html`, `public/` (deux SVG), `scripts/`, configuration, `yarn.lock`.
+Fichiers non modifiés : navigation (lien `Agents` déjà câblé en navbar, dropdown et pied), reste de `src/`, `index.html`, `public/`, `scripts/`, configuration, verrou.
 
 Vérifications :
-- `yarn lint` vert (`tsc --noEmit`) : 43 modules, aucune erreur.
-- `yarn build` vert (`tsc --noEmit && vite build`) : 43 modules, `dist/` avec `index.html`, `404.html` (identique), assets, deux SVG.
+- `yarn lint` vert (`tsc --noEmit`) : 48 modules, aucune erreur.
+- `yarn build` vert (`tsc --noEmit && vite build`) : 48 modules, `dist/` avec `index.html`, `404.html` (identique), assets, deux SVG.
 - `yarn test` vert (site statique, vérifié par le build et la relecture).
-- `node scripts/mesure-contrastes.js` vert (couples inchangés).
-- Entrée 0.13.0 : 10 points en tête, ordre décroissant conservé, `agents.md`, `installation.md` et `architecture.md` non concernés (vérifié au plan).
+- `node scripts/mesure-contrastes.js` vert (couples inchangés, couleurs d'agents cantonnées aux pastilles décoratives).
+- Route `/agents` : hero `h1`, 6 `section` avec `h2`, pastilles aux 6 couleurs du noyau, liens doc externes en `noreferrer noopener`.
 - Structure décision 4 inchangée : racine, aucun dossier `frontend/`.
 
 Décisions :
-- Ajout minimal au seul fichier de données : trois points, aucune touche au code ni au périmètre.
-- Formulations du plan reprises telles quelles, sans réinterprétation du journal du noyau.
+- Pastilles couleur décoratives (`aria-hidden` + `aria-label`) et textes en blanc : conformité AA préservée, couleurs exactes du noyau.
+- Composants calqués sur le design system validé (`bg-encre`, `grille-pointee-sombre`, bordures claires, accents `#249CD8`), Ali restant à false.
+- Données figées au build sans prose sur les sessions : gel décision 3 respecté.
 
 Problèmes :
 - FAIBLE : `quality.design_required` vaut true dans `sayrhazi.yaml` alors que le plan arbitre Ali à false ; plan suivi.
@@ -884,15 +892,234 @@ Problèmes :
 
 Limites :
 - Serveur de développement non rechargé ni redémarré par règle ; `dist/` fait foi du code livré et le rechargement appartient au gestionnaire avant le recontrôle de Zawadi.
-- Rendu réel des trois nouveaux points 0.13.0, responsive et console réservés à Zawadi, non déduits du seul code.
-- Page `/agents` en placeholder (FEATURE-002) ; données à sourcer en 0.13.0.
+- Rendu réel des 6 sections, pastilles, responsive 390 et 1280, navigation SPA et console réservés à Zawadi, non déduits du seul code.
 - Mise en ligne conditionnée aux recontrôles Hadji, Hifadhui et Zawadi.
 
 Suite :
 - Rechargement `yarn dev` par le gestionnaire.
-- Zawadi : QA page Versions en 0.13.0 à 10 points + mobile après rechargement.
-- Hadji : review exactitude du contenu 0.13.0.
-- Hifadhui : audit si surface changée (données statiques seules).
-- Bamse : FEATURE-002 (décisions 17-22 + 27, `Agents.tsx`, `agents.ts` sourcés en 0.13.0) après validation FEATURE-001.
+- Hadji : review depuis le présent `build.txt` (exactitude contre `docs/agents.md`, non-régression).
+- Hifadhui : audit (données statiques, SVG inline).
+- Zawadi : QA navigateur réel (6 sections, pastilles, responsive, navigation, console).
+- Archivage FEATURE-002 dans `.opencode/features/FEATURE-002.md` à la clôture confirmée.
+
+Verdict du rôle : TERMINÉ.
+
+## Archivé le 2026-10-16T15:37:38+00:00 (remplacé par le rapport FEATURE-003 sync-noyau latest + org + Pages)
+
+task_id: FEATURE-003
+agent: builder
+status: TERMINÉ
+completed_at: "2026-10-16T12:05:15+00:00"
+summary: Sync-noyau au build avec repli commité, entrée 0.13.1 condensée fidèle, essais local repli et réseau verts.
+---
+Date système réelle : 2026-10-16T12:05:15+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-003
+Auteur : Bamse (agent : builder, rôle stable)
+Horodatage completed_at : 2026-10-16T12:05:15+00:00
+Résumé (summary) : Sync-noyau au build avec repli commité, entrée 0.13.1 condensée fidèle, essais local repli et réseau verts.
+
+Contexte et sources :
+- Plan relu : FEATURE-003 de Lawibrahim du 2026-10-16T11:25:02+00:00, décisions 1 à 7 à implémenter (sync-noyau latest, preuve locale puis en ligne).
+- Noyau relu : `package.json` 0.13.1, tête `CHANGELOG.md` 0.13.1 à 4 points (binaire, profil, deux blocs, --once) ; Releases inexistantes admises, latest via `main`.
+- Mémoire : `build.txt` TERMINÉ FEATURE-002 du 2026-10-16T00:33:29+00:00 relu puis archivé dans `.opencode/history/build-log.md` avant remplacement.
+
+Fichiers créés :
+- `scripts/sync-noyau.cjs` (extension `.cjs` car paquet en `type: module`) : lecture réseau au build uniquement (timeout 15 s, parsing texte seul, aucune exécution), `SAYRHAZI_CORE_DIR` pour checkout local, union avec points committés préservés et entrées absentes condensées en ordre décroissant, repli commité avec avertissement et sortie 0 en cas d'échec.
+
+Fichiers modifiés :
+- `package.json` : script `prebuild` (`node scripts/sync-noyau.cjs`) avant `tsc --noEmit && vite build`.
+- `src/data/site.ts` : `VERSION_NOYAU` à `0.13.1`, `DATE_NOYAU` à `2026-10-16`, commentaire d'en-tête aligné.
+- `src/data/versions.ts` : nouvelle entrée `0.13.1` en tête avec 4 points fidèles (binaire, profil, deux blocs, --once) ; 9 anciennes entrées du journal complétées par le sync (0.2.3, 0.1.8 à 0.1.1), ordre décroissant vérifié, 0.13.1 en tête intacte.
+
+Fichiers non modifiés : `src/App.tsx`, pages, composants, `index.html`, `public/` (deux SVG), `scripts/mesure-contrastes.js`, `yarn.lock`.
+
+Vérifications :
+- Essai checkout local (`SAYRHAZI_CORE_DIR` vers le noyau) : latest 0.13.1 parsée, 9 entrées ajoutées puis second passage idempotent (« déjà à jour »).
+- Essai repli (chemin inexistant) : avertissement, fichiers inchangés, sortie 0.
+- Essai réseau (`raw.githubusercontent.com`) : latest `main` 0.13.1 tirée et parsée, déjà à jour — preuve en ligne du mécanisme.
+- Correctifs du script constatés en essai (format d'entrée invalide et ordre d'insertion réparés avant livraison, fichier de diagnostic retiré).
+- `yarn lint` vert (`tsc --noEmit`) : 48 modules, aucune erreur.
+- `yarn build` vert (`prebuild` sync vert dans la chaîne, `dist/` avec `index.html`, `404.html`, assets, deux SVG).
+- `yarn test` vert et `node scripts/mesure-contrastes.js` vert (couples inchangés).
+- Correctifs du script constatés en essai (format d'entrée invalide et ordre d'insertion réparés avant livraison, fichier de diagnostic retiré).
+- Structure décision 4 inchangée : racine, aucun dossier `frontend/`.
+
+Décisions :
+- Sync incrémental plutôt que régénération totale : points committés (condensés relus) préservés à l'identique, seules les versions absentes sont ajoutées — périmètre minimal, diff lisible.
+- `prebuild` yarn (déclenché par `yarn build` uniquement) : `lint` et `test` sans réseau, `dev` non concerné.
+- Condensation déterministe (markdown allégé, première phrase, 240 signes) : rejouable à l'identique, garde anti-perte si le committé est illisible.
+- Zéro dépendance ajoutée (fetch natif Node 18), zéro secret, zéro exécution de contenu distant.
+
+Problèmes :
+- MOYENNE : condensation qui tronque à l'intérieur de parenthèses sur les entrées historiques ajoutées (points 0.1.7 et 0.1.8) — à corriger avec retouche manuelle des deux points.
+- FAIBLE : `quality.design_required` vaut true dans `sayrhazi.yaml` alors que le plan arbitre Ali à false ; plan suivi.
+- FAIBLE : `AGENTS.md` §4 Règles locales toujours à compléter, inchangé.
+- FAIBLE : plan nomme `scripts/sync-noyau.js`, fichier réel en `.cjs` (paquet `type: module`) — à consigner par Lawibrahim.
+- FAIBLE reconduits : clés de liste fragiles et `execCommand` déprécié, reportés comme recommandé.
+- Aucun problème CRITIQUE ni HAUTE dans le code livré.
+
+Limites :
+- Serveur de développement non rechargé ni redémarré par règle ; `dist/` fait foi du code livré et le rechargement appartient au gestionnaire avant le recontrôle de Zawadi.
+- Preuve en ligne réelle (workflow GitHub Actions) réservée à la création du dépôt web, encore inexistant.
+- Rendu réel de l'entrée 0.13.1, responsive et console réservés à Zawadi, non déduits du seul code.
+
+Suite :
+- Rechargement `yarn dev` par le gestionnaire.
+- Hadji : review (exactitude 0.13.1, robustesse parsing et repli).
+- Hifadhui : audit (URL figée, timeout, pas d'exec, pas de secret).
+- Zawadi : QA (Versions 0.13.1 en tête, non-régression, console, responsive).
+- Archivage FEATURE-003 dans `.opencode/features/FEATURE-003.md` à la clôture confirmée.
+
+Verdict du rôle : TERMINÉ.
+
+## Archivé le 2026-10-16T17:50:04+00:00 (remplacé par le rapport FEATURE-003 sync dev, hero mobile et 0.13.2)
+
+task_id: FEATURE-003
+agent: builder
+status: TERMINÉ
+completed_at: "2026-10-16T15:37:38+00:00"
+summary: Migration org sayrhazi, base Pages avec basename, workflow déployé, push origin main, yarn lint build test verts.
+---
+Date système réelle : 2026-10-16T15:37:38+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-003
+Auteur : Bamse (agent : builder, rôle stable)
+Horodatage completed_at : 2026-10-16T15:37:38+00:00
+Résumé (summary) : Migration org sayrhazi, base Pages avec basename, workflow déployé, push origin main, yarn lint build test verts.
+
+Contexte et sources :
+- Plan relu : FEATURE-003 de Lawibrahim du 2026-10-16T15:25:32+00:00, décisions 1 à 11 (sync, org, base, workflow, push).
+- Acquis lus sans refaire leurs vérifications : `review.txt` VALIDÉ AVEC RÉSERVES du 2026-10-16T12:08:25+00:00 (MOYENNE condensation parenthèses), `security.txt` VALIDÉ AVEC RÉSERVES du 2026-10-16T12:08:30+00:00, `qa.txt` VALIDÉ AVEC RÉSERVES du 2026-10-16T12:10:00+00:00.
+- Git vérifié : 1 commit, branche `main`, remote `origin` vers `sayrhazi/sayrhazi-web`, identité configurée.
+- Mémoire : `build.txt` TERMINÉ FEATURE-003 du 2026-10-16T12:05:15+00:00 relu ; journal d'historique réparé (doublon 28-ter remplacé par les vrais rapports FEATURE-002 et FEATURE-003).
+
+Fichiers modifiés :
+- `scripts/sync-noyau.cjs` : URLs `raw.githubusercontent.com/sayrhazi/sayrhazi/main` (décision 8) ; `condense` sans coupe dans parenthèse ni sous 40 signes avec extension au séparateur suivant (lève la MOYENNE Hadji) ; `lireNoyau` durci (existence répertoire et fichiers, `path.resolve`).
+- `src/data/versions.ts` : points 0.1.7 et 0.1.8 retouchés fidèlement sans parenthèse orpheline.
+- `src/pages/Demarrage.tsx` : clone et libellé vers `sayrhazi/sayrhazi` (décision 8).
+- `src/data/site.ts` et `src/data/agents.ts` : liens GitHub et doc vers `sayrhazi/sayrhazi` (décision 8), paquet npm inchangé.
+- `vite.config.ts` : base conditionnelle (`/sayrhazi-web/` si `GITHUB_ACTIONS`, `/` sinon, port 5175 inchangé).
+- `src/App.tsx` : `basename={import.meta.env.BASE_URL}` sur `BrowserRouter` (décision 9).
+- `.gitignore` : `.playwright-mcp/` ajouté (décision 11).
+- `src/vite-env.d.ts` : déclaration minimale `process.env` pour la base conditionnelle, sans `@types/node`.
+
+Fichiers créés :
+- `.github/workflows/pages.yml` (permissions `pages`/`id-token`, concurrence Pages, install `--frozen-lockfile`, build avec base Pages, vérification `404.html`, déploiement ; déclencheurs `push main`, quotidien, manuel).
+
+Fichiers non modifiés : pages, autres composants, `index.html`, `public/`, `scripts/mesure-contrastes.js`, `yarn.lock`.
+
+Vérifications :
+- Essai local 0.13.2 : entrée ajoutée puis reversée (push noyau en attente, vitrine finale en 0.13.1) ; condensation améliorée prouvée sur 8 points (plus de « Dashboard. » dégénéré).
+- Essai repli (chemin inexistant) : avertissement, fichiers inchangés, sortie 0.
+- Essai réseau (nouvelle org) : latest `main` 0.13.1 tirée, déjà à jour.
+- Base Pages prouvée (`GITHUB_ACTIONS=true`) : assets sous `/sayrhazi-web/`, `dist` local restauré ensuite.
+- `yarn lint` vert (`tsc --noEmit`) : 48 modules, aucune erreur.
+- `yarn build` vert (`prebuild` sync réseau « déjà à jour » puis `tsc` + `vite build`, 48 modules, `dist/` avec `index.html`, `404.html`, assets, deux SVG).
+- `yarn test` vert et `node scripts/mesure-contrastes.js` vert (couples inchangés).
+- Recherche ciblée : zéro `Lawi-Salim` dans `src/` (cahier et historique conservés), `basename` et base conditionnelle en place.
+- Git : commit `61d149e` (46 fichiers, sélection du plan, runtime Sayrhazi et `state/` exclus), push `da67005..61d149e main -> main` vérifié distant.
+- Structure décision 4 inchangée : racine, aucun dossier `frontend/`.
+
+Décisions :
+- 0.13.1 maintenue en tête malgré l'essai 0.13.2 concluant : push du noyau en attente (action utilisateur), QA attendue sur 0.13.1, revue humaine du diff avant tout commit de nouvelle version.
+- Vitrine finale en 0.13.1 avec condensation améliorée déjà prouvée pour les versions futures.
+- Push effectué sur demande explicite actée au plan (décision 11), sélection vérifiée avant commit.
+
+Problèmes :
+- FAIBLE : `quality.design_required` vaut true dans `sayrhazi.yaml` alors que le plan arbitre Ali à false ; plan suivi.
+- FAIBLE : `AGENTS.md` §4 Règles locales toujours à compléter, inchangé.
+- FAIBLE reconduits : clés de liste fragiles et `execCommand` déprécié, reportés comme recommandé.
+- FAIBLE : plan nomme `scripts/sync-noyau.js`, fichier réel en `.cjs` — à consigner par Lawibrahim.
+- Aucun problème CRITIQUE, HAUTE ni MOYENNE dans le code livré.
+
+Limites :
+- Push du noyau 0.13.2 hors périmètre (autre dépôt, action utilisateur) ; sync en ligne une version derrière jusque-là.
+- Serveur de développement non rechargé ni redémarré par règle ; `dist/` fait foi du code livré.
+- Mise en ligne Pages effective après le workflow du dépôt distant, non observée localement.
+- Rendu réel, responsive et console réservés à Zawadi, non déduits du seul code.
+
+Suite :
+- Hadji : review (exactitude, base Pages, workflow, push).
+- Hifadhui : audit (URLs org, workflow, pas de secret).
+- Zawadi : QA locale puis en ligne après push (Versions, non-régression, console, responsive).
+- Archivage FEATURE-003 dans `.opencode/features/FEATURE-003.md` à la clôture confirmée.
+
+Verdict du rôle : TERMINÉ.
+
+## Archivé le 2026-10-16T18:26:09+00:00 (remplacé par le rapport FEATURE-003 décisions 14, 15 et 16)
+
+task_id: FEATURE-003
+agent: builder
+status: TERMINÉ
+completed_at: "2026-10-16T17:50:04+00:00"
+summary: Sync dev avec predev, hero empilé mobile, 0.13.2 tirée du distant poussé, TITRES sans basename, yarn lint build test verts.
+---
+Date système réelle : 2026-10-16T17:50:04+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-003
+Auteur : Bamse (agent : builder, rôle stable)
+Horodatage completed_at : 2026-10-16T17:50:04+00:00
+Résumé (summary) : Sync dev avec predev, hero empilé mobile, 0.13.2 tirée du distant poussé, TITRES sans basename, yarn lint build test verts.
+
+Contexte et sources :
+- Plan relu : FEATURE-003 de Lawibrahim du 2026-10-16T16:32:29+00:00, décisions 12 (sync + predev), 13 (hero empilé mobile), 0.13.2 poussée en ligne (prérequis levé).
+- Acquis lus sans refaire leurs vérifications : `review.txt` VALIDÉ AVEC RÉSERVES du 2026-10-16T15:42:38+00:00 (MOYENNE TITRES sous basename, FAIBLE .bak), `security.txt` VALIDÉ AVEC RÉSERVES du 2026-10-16T15:42:03+00:00, `qa.txt` VALIDÉ AVEC RÉSERVES du 2026-10-16T15:44:02+00:00 (Pages en 404, repli réseau).
+- Mémoire : `build.txt` TERMINÉ du 2026-10-16T15:37:38+00:00 relu puis archivé dans `.opencode/history/build-log.md` avant remplacement.
+
+Fichiers modifiés :
+- `package.json` : scripts `sync` et `predev` (`node scripts/sync-noyau.cjs`) ajoutés (décision 12) ; `prebuild` inchangé.
+- `src/pages/Accueil.tsx` : conteneur du hero en `flex-col` mobile et `sm:flex-row` bureau, 2 lignes pleine largeur sur mobile (copie puis lien `Démarrer` en `w-full`, `sm:w-auto sm:shrink-0` sur bureau), `items-stretch`, `gap-2` (décision 13, corrige la consigne antérieure).
+- `src/App.tsx` : `cheminSansBase` retirant le basename avant consultation de `TITRES` (lève la MOYENNE Hadji, titres corrects sous `/sayrhazi-web/`).
+- `src/data/versions.ts` : entrée `0.13.2` tirée du distant poussé (9 points condensés par le script, ordre décroissant, 0.13.1 conservée).
+- `src/data/site.ts` : `VERSION_NOYAU` à `0.13.2`, `DATE_NOYAU` et commentaire alignés (badge suit automatiquement).
+- `.gitignore` : `*.bak` ajouté ; `.opencode/history/review-log.md.bak` retiré du suivi (`git rm --cached`, lève le FAIBLE Hadji).
+
+Fichiers non modifiés : pages, autres composants, `index.html`, `public/` (deux SVG), `scripts/`, `yarn.lock`, workflow Pages.
+
+Vérifications :
+- Sync réseau : latest `main` 0.13.2 tirée et parsée, entrée ajoutée, `site.ts` aligné ; second passage idempotent (« déjà à jour »).
+- Condensation 0.13.2 : 9 points en premières propositions fidèles, sans coupe dégénérée (boucle 40 signes prouvée).
+- Repli (chemin inexistant) : avertissement, fichiers inchangés, sortie 0.
+- `yarn lint` vert (`tsc --noEmit`) : 48 modules, aucune erreur.
+- `yarn build` vert (`prebuild` sync « déjà à jour » puis `tsc` + `vite build`, 48 modules, `dist/` avec `index.html`, `404.html`, assets, deux SVG).
+- `yarn test` vert et `node scripts/mesure-contrastes.js` vert (couples inchangés).
+- Base Pages prouvée (`GITHUB_ACTIONS=true`) : assets sous `/sayrhazi-web/`, `dist` local restauré ensuite.
+- Recherche ciblée : zéro `rel="noreferrer"` sans `noopener`, hero `flex-col sm:flex-row`, `basename` et `cheminSansBase` en place.
+- Git : `.bak` hors suivi et ignoré ; commit et push non ordonnés ce tour, arbre laissé en place pour demande explicite.
+- Structure décision 4 inchangée : racine, aucun dossier `frontend/`.
+
+Décisions :
+- 0.13.2 committée : poussée noyau effectuée (prérequis levé), entrée générée par le script (décision 5), revue du diff faite avant livraison.
+- `predev` + `sync` : le sync tourne en dev comme au build, `lint` et `test` restent sans réseau.
+- Hero empilé mobile, côte à côte bureau : corrige le débordement 390 signalé, sans toucher au DOM ni à l'ordre de tabulation.
+- Titres normalisés sans basename : repli sur l'accueil uniquement pour route inconnue, dev local inchangé.
+- Ni commit ni push ce tour : non ordonnés explicitement, en attente de demande.
+
+Problèmes :
+- FAIBLE : `quality.design_required` vaut true dans `sayrhazi.yaml` alors que le plan arbitre Ali à false ; plan suivi.
+- FAIBLE : `AGENTS.md` §4 Règles locales toujours à compléter, inchangé.
+- FAIBLE reconduits : clés de liste fragiles et `execCommand` déprécié, reportés comme recommandé.
+- FAIBLE : plan nomme `scripts/sync-noyau.js`, fichier réel en `.cjs` — à consigner par Lawibrahim.
+- FAIBLE : dérive `installation.md` (+32 lignes) et `tunda` + dashboard — page Démarrage à recontrôler par Hadji, hors périmètre de ce tour.
+- Aucun problème CRITIQUE, HAUTE ni MOYENNE dans le code livré.
+
+Limites :
+- Serveur de développement non rechargé ni redémarré par règle (dont la relance `yarn dev` avec `predev`) ; `dist/` fait foi du code livré.
+- Mise en ligne Pages effective après le workflow du dépôt distant, non observée localement.
+- Rendu réel du hero empilé, de l'entrée 0.13.2, responsive et console réservés à Zawadi, non déduits du seul code.
+
+Suite :
+- Gestionnaire : relancer `yarn dev` (avec `predev`), demander explicitement commit + push si mise en ligne voulue.
+- Hadji : review (Démarrage contre nouvelle `installation.md`, 0.13.2, hero, TITRES) + FAIBLE `.cjs`, regex, paquet/journal.
+- Hifadhui : audit (sync dev, hero, TITRES, `.bak` hors suivi).
+- Zawadi : QA locale puis en ligne (hero empilé, 0.13.2 en tête, console, responsive).
+- Archivage FEATURE-003 dans `.opencode/features/FEATURE-003.md` à la clôture confirmée.
 
 Verdict du rôle : TERMINÉ.

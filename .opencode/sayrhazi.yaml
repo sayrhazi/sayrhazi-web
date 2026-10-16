@@ -1,0 +1,58 @@
+# Configuration locale de Sayrhazi.
+# Ce fichier décrit le projet courant ; il ne lance aucun service.
+workflow:
+  name: Sayrhazi # Ne pas modifier
+  version: "0.13.2" # Ne pas modifier
+
+project:
+  name: Sayrhazi-web # Renseigner le nom du projet
+  description: Le site vitrine du système agentic Sayrhazi # La description
+  type: website # application | website | api | library | other
+
+agents:
+  # Noms d'affichage des agents, modifiables librement par projet.
+  # Les fichiers agent/*.md et les roles restent stables : seul le nom presente change.
+  architect: Lawibrahim
+  designer: Ali
+  builder: Bamse
+  reviewer: Hadji
+  security: Hifadhui
+  qa: Zawadi
+
+technical:
+  language: TypeScript
+  framework: React, Vite.js, Tailwind
+  database_type: none # postgresql | mongodb | sqlite | mysql | none (moteur, pas le nom)
+  database_driver: none # sequelize | prisma | typeorm | pg | mongoose | knex | drizzle | none (librairie d'acces)
+  database_name: null # Nom de la base (null si database_type: none)
+  package_manager: yarn # npm
+
+commands:
+  install: yarn install # npm install
+  dev: yarn dev # npm run dev
+  build: yarn build
+  test: yarn test
+  lint: yarn lint
+
+runtime:
+  # URL locale du projet (utilisee par Zawadi pour la QA). Ajuster selon la stack : Vite 5173, Next.js 3000, Nest.js 3001... Mettre null si aucun serveur local.
+  local_url: http://localhost:5175
+
+quality:
+  security_audit_required_by_default: true
+  visual_qa_required: true
+  design_required: true
+  required_checks: []
+
+session:
+  # Une seule session OpenCode par tâche, réutilisée à chaque appel.
+  # Bascule vers une session neuve quand l'usage atteint max_usage
+  # (0.95 = 95 %, marge pour écrire le rapport final).
+  max_usage: 0.95
+  # Fenêtre de contexte (tokens) si le modèle est inconnu.
+  default_limit: 1048576
+
+integration:
+  docker_required: false
+  docker_reason: null
+  playwright_available: false

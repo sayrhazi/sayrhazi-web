@@ -96,13 +96,17 @@ function parseChangelog(md) {
 
 // Condensation déterministe d'une puce : markdown allégé, première
 // phrase utile, coupée au mot près. Idempotent d'un appel à l'autre.
-function condense(bullet) {
-  let texte = bullet
+function brut(bullet) {
+  return bullet
     .replace(/\*\*([^*]+)\*\*/g, "$1")
     .replace(/`([^`]+)`/g, "$1")
     .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
     .replace(/\s+/g, " ")
     .trim();
+}
+
+function condense(bullet) {
+  let texte = brut(bullet);
   const SEPARATEURS = /[.](\s|$)| — | : | ; /;
   const nettoyer = (s) => s.replace(/[.:;—\s(]+$/, "");
   const couper = (debut) => {
@@ -167,7 +171,15 @@ function versionSiteCommitee() {
 }
 
 function formaterPoints(bullets) {
-  return bullets.map((b) => `      ${JSON.stringify(condense(b))},`).join("\n");
+  return bullets
+    .map((b) => {
+      const condenseT = condense(b);
+      if (condenseT !== brut(b)) {
+        log(`condensation (${brut(b).length}→${condenseT.length} signes) : « ${brut(b).slice(0, 60)}… »`);
+      }
+      return `      ${JSON.stringify(condenseT)},`;
+    })
+    .join("\n");
 }
 
 async function main() {
@@ -233,11 +245,13 @@ async function main() {
     }
   }
   const ordre = [...parVersion.keys()].sort((a, b) => cmpVersions(b, a));
-  const aJour = manquantes.length === 0 && derniere.version === versionSite;
+  const teteAttendue = `à la release ${derniere.version} (${derniere.date})`;
+  const teteOK = contenuVersions.includes(teteAttendue);
+  const aJour = manquantes.length === 0 && derniere.version === versionSite && teteOK;
 
   try {
     if (!aJour) {
-      if (manquantes.length > 0) {
+      {
         const ancre = "export const VERSIONS: EntreeVersion[] = [\n";
         const pos = contenuVersions.indexOf(ancre);
         if (pos === -1) throw new Error("ancre VERSIONS introuvable");
@@ -248,9 +262,14 @@ async function main() {
             return `  {\n    version: ${JSON.stringify(v)},\n    date: ${JSON.stringify(e.date)},\n    points: [${e.inner}],\n  }${virgule}`;
           })
           .join("\n");
-        const nouveau = `${contenuVersions.slice(0, pos + ancre.length)}${corps}\n];\n`;
+        let nouveau = `${contenuVersions.slice(0, pos + ancre.length)}${corps}\n];\n`;
+        const avantTete = nouveau;
+        nouveau = nouveau.replace(/à la release \d+\.\d+\.\d+ \(\d{4}-\d{2}-\d{2}\)/, teteAttendue);
+        if (nouveau !== avantTete) log(`en-tête aligné sur ${derniere.version} du ${derniere.date}`);
         fs.writeFileSync(VERSIONS_TS, nouveau, "utf8");
-        log(`entrées ajoutées : ${manquantes.sort((a, b) => cmpVersions(b, a)).join(", ")}`);
+        if (manquantes.length > 0) {
+          log(`entrées ajoutées : ${manquantes.sort((a, b) => cmpVersions(b, a)).join(", ")}`);
+        }
       }
       if (derniere.version !== versionSite) {
         let site = fs.readFileSync(SITE_TS, "utf8");
