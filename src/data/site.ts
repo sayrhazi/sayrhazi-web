@@ -6,11 +6,11 @@ export interface Agent {
   fichier: string;
 }
 
-/* Contenu gelé sur le noyau à la release en cours (0.13.1 du 2026-10-16).
+/* Contenu gelé sur le noyau à la release en cours (0.13.2 du 2026-10-16).
    Sources : README.md, docs/installation.md, docs/agents.md, package.json (sayrhazi).
    Aucune affirmation du thème v0.5.0 n'est reprise. */
 
-export const VERSION_NOYAU = "0.13.1";
+export const VERSION_NOYAU = "0.13.2";
 export const DATE_NOYAU = "2026-10-16";
 
 export const PRESENTATION =

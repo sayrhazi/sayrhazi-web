@@ -9,7 +9,7 @@ const LIENS_NAV = [
   { to: "/agents", cle: "agents", libelle: "Agents" },
 ];
 
-export default function Entete() {
+export default function Navbar() {
   const base = import.meta.env.BASE_URL;
   const location = useLocation();
   const [menuOuvert, setMenuOuvert] = useState(false);
@@ -39,12 +39,6 @@ export default function Entete() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/15 bg-encre/80 text-white backdrop-blur-md">
-      <a
-        href="#contenu"
-        className="sr-only focus:not-sr-only focus:block focus:bg-chartreuse focus:px-4 focus:py-2 focus:text-encre"
-      >
-        Aller au contenu
-      </a>
       <div className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-4 sm:px-6 relative">
         <Link to="/" className="flex items-center gap-3" aria-label="Sayrhazi, retour à l'accueil">
           <img

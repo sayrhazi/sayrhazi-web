@@ -1,6 +1,6 @@
 import { LIENS } from "../data/site";
 
-export default function PiedDePage() {
+export default function Footer() {
   const base = import.meta.env.BASE_URL;
   return (
     <footer className="border-t border-white/15 bg-encre">

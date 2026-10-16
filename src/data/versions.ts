@@ -4,11 +4,26 @@ export interface EntreeVersion {
   points: string[];
 }
 
-/* Liste figée au build depuis CHANGELOG.md du noyau à la release 0.13.1 (2026-10-16).
+/* Liste figée au build depuis CHANGELOG.md du noyau à la release 0.13.2 (2026-10-16).
    Synchronisée par scripts/sync-noyau.cjs (prebuild) ou figée manuellement.
    Aucun appel réseau au runtime : ces données sont statiques. */
 
 export const VERSIONS: EntreeVersion[] = [
+  {
+    version: "0.13.2",
+    date: "2026-10-16",
+    points: [
+      "Documentation : section Linux/macOS complétée par les trois pièges rencontrés à l'usage.",
+      "Dashboard : le panneau de détail était invisible alors qu'il était écrit.",
+      "Dashboard : les horaires du détail affichaient créée 0s · active 0s pour tout le monde.",
+      "Dashboard : le détail affichait — comme état pour tout agent, y compris ceux dont la colonne État indique attente.",
+      "Dashboard : une session ouverte depuis plus de 24 h affichait 2903m11s.",
+      "Dashboard : la ligne sélectionnée ne revient plus à la première ligne au rafraîchissement.",
+      "Dashboard : panneau de détail sous le tableau, suivant la ligne sélectionnée (flèches ou clic, aucune touche supplémentaire).",
+      "tunda sayrhazi vérifie enfin le dashboard, qu'il ignorait complètement.",
+      "engine/installer.py installe désormais .opencode/models.yaml.",
+    ],
+  },
   {
     version: "0.13.1",
     date: "2026-10-16",

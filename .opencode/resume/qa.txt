@@ -1,61 +1,64 @@
 task_id: FEATURE-003
 agent: qa
 status: VALIDÉ AVEC RÉSERVES
-completed_at: "2026-10-16T12:10:00+00:00"
-summary: Entrée 0.13.1 vérifiée au navigateur réel en tête des versions avec 4 points conformes, badge v0.13.1 et 0.13.0 à 10 points conservée, console zéro erreur, 390 et 1280 sans défilement, non-régression des autres routes.
+completed_at: "2026-10-16T18:31:10+00:00"
+summary: Renommage Navbar et Footer sans régression vérifié au navigateur réel, 0.13.2 en tête à 9 points, lien d’évitement retiré signalé, console zéro erreur.
 ---
-Date système réelle : 2026-10-16T12:10:00+00:00
+Date système réelle : 2026-10-16T18:31:10+00:00
 Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
 Type : website
 Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
-Tâche : FEATURE-003 (sync-noyau au build avec repli commité, entrée 0.13.1 condensée fidèle)
+Tâche : FEATURE-003 (renommage Navbar et Footer, README réécrit, 0.13.2 complète sans doublon)
 Auteur : Zawadi (agent : qa, rôle stable)
-Horodatage completed_at : 2026-10-16T12:10:00+00:00
-Résumé (summary) : Entrée 0.13.1 vérifiée au navigateur réel en tête des versions avec 4 points conformes, badge v0.13.1 et 0.13.0 à 10 points conservée, console zéro erreur, 390 et 1280 sans défilement, non-régression des autres routes.
-Mode de test : navigateur réel via Playwright sur http://localhost:5175 (serveur du projet déjà en écoute, sans rechargement ni redémarrage) — route /versions en contrôle complet (chapeau, dernière version, ordre, contenus), non-régression /, /agents, /demarrage, responsive 390/1280, console, mesures scrollWidth et comptages, émulations clair/sombre.
+Horodatage completed_at : 2026-10-16T18:31:10+00:00
+Résumé (summary) : Renommage Navbar et Footer sans régression vérifié au navigateur réel, 0.13.2 en tête à 9 points, lien d’évitement retiré signalé, console zéro erreur.
+Mode de test : navigateur réel via Playwright sur http://localhost:5175 (serveur du projet déjà en écoute, HTTP 200, sans rechargement ni redémarrage) — routes /, /versions, /demarrage, /agents, mesures évaluées (flex-direction, largeurs, scrollWidth, comptages h2 et h3, présence du lien d’évitement), responsive 390 et 1280, console, émulations clair et sombre ; preuves outillées en lecture (README, versions.ts, App.tsx, dist) ; mise en ligne non recontrôlée ce tour.
 
 Contexte et sources :
-- Configuration lue dans `.opencode/sayrhazi.yaml` (project.name Sayrhazi-web, seule source de vérité, runtime.local_url http://localhost:5175).
-- Rapport lu dans `.opencode/resume/build.txt` (FEATURE-003, TERMINÉ, 2026-10-16T12:05:15+00:00) : fichiers créés `scripts/sync-noyau.cjs`, fichiers modifiés `package.json` (prebuild), `src/data/site.ts` (VERSION_NOYAU 0.13.1, DATE_NOYAU 2026-10-16), `src/data/versions.ts` (entrée 0.13.1 en tête à 4 points, 9 anciennes entrées complétées, ordre décroissant) ; `yarn lint`, `yarn build` (48 modules), `yarn test` et `node scripts/mesure-contrastes.js` déclarés verts ; essais checkout local, repli et réseau déclarés verts.
-- Fichiers relus en ciblé : `src/data/versions.ts` (entrée 0.13.1 lignes 12 à 21, 0.13.0 à 10 points lignes 22 à 37, ordre décroissant jusqu à 0.1.0) et `src/data/site.ts` (VERSION_NOYAU 0.13.1, DATE_NOYAU 2026-10-16).
-- Mémoire QA : qa.txt VALIDÉ AVEC RÉSERVES du 2026-10-16T00:37:00+00:00 (FEATURE-002, page /agents en 6 sections) relu, non recopié ici ; archivage vers `.opencode/history/qa-log.md` autorisé mais non rejoué au présent tour, seul `.opencode/resume/qa.txt` étant produit.
-- Acquis des autres agents, non revérifiés au présent tour (lecture frugale) : review.txt VALIDÉ du 2026-10-16T00:25:18+00:00 (FEATURE-001) et security.txt VALIDÉ AVEC RÉSERVES du 2026-10-16T00:37:28+00:00 (FEATURE-002) ; leurs recontrôles sur le présent build FEATURE-003 restent dus.
+- Configuration lue dans `.opencode/sayrhazi.yaml` (project.name Sayrhazi-web, seule source de vérité, runtime.local_url http://localhost:5175, agents.qa Zawadi).
+- Rapport lu dans `.opencode/resume/build.txt` (FEATURE-003, TERMINÉ, 2026-10-16T18:26:09+00:00) : Navbar et Footer renommés avec suivi git, lien d’évitement supprimé sur demande explicite, README réécrit en UTF-8 sans BOM, 0.13.2 vérifiée complète à 9 points sans doublon, en-tête versions.ts alignée, yarn lint build test verts, ni commit ni push ce tour.
+- Plan relu : FEATURE-003 de Lawibrahim du 2026-10-16T18:15:17+00:00, décisions 14 (renommage avec suppression du lien d’évitement, réserve actée), 15 (README UTF-8) et 16 (0.13.2 complète) à implémenter.
+- Mémoire QA : qa.txt VALIDÉ AVEC RÉSERVES du 2026-10-16T17:55:00+00:00 relu puis archivé dans `.opencode/history/qa-log.md` avant remplacement ; seul `.opencode/resume/qa.txt` produit au présent tour, archivage vers `.opencode/history/` autorisé et rejoué.
+- Acquis des autres agents, non revérifiés au présent tour (lecture frugale) : review.txt VALIDÉ AVEC RÉSERVES du 2026-10-16T17:53:33+00:00 et security.txt VALIDÉ AVEC RÉSERVES du 2026-10-16T17:53:37+00:00 portent sur le build FEATURE-003 du 2026-10-16T17:50:04+00:00, pas sur le présent build du 2026-10-16T18:26:09+00:00 ; leurs recontrôles sur le présent build restent dus.
 
 Vérifications effectuées au navigateur réel :
-- Route `/` : titre « Sayrhazi — Chaque étape laisse une trace », badge navbar « v0.13.1 » relevé au snapshot, hero et 6 cartes agents présents — conforme 0.13.1, sans régression.
-- Route `/versions` : titre « Versions — Sayrhazi », chapeau « Liste reprise du journal des changements du noyau à la release 0.13.1 du 2026-10-16. Aucun appel réseau au runtime : ces notes sont statiques. » ; section « Dernière version » avec mention « Dernière version · 2026-10-16 », heading « 0.13.1 » et 4 points mesurés (`article` premier évalué à 4 `li`) : binaire sayrhazi-tui, profil tui, dashboard en deux blocs, sortie --once — textes conformes au build à la ponctuation près ; badge navbar « v0.13.1 » présent sur la page — conforme au build.
-- Ordre décroissant : `h3` évalués à ["0.13.1", "0.13.0", "0.12.3", "0.12.2", "0.12.1"] en tête, 0.13.1 première — sync incrémental confirmé, sans régénération ni déplacement de 0.13.1.
-- Non-régression 0.13.0 : entrée « 0.13.0 » datée « 2026-10-15 » avec 10 points relevés au snapshot (fin du --session, registre models.yaml, modèle par agent, bloc session retiré, automation.md refait, quatre points dashboard, 6 nouveaux tests) — FEATURE-001 conservée à l identique.
-- Non-régression `/agents` : titre « Agents — Sayrhazi », 6 `h2` mesurés, aucun défilement horizontal (scrollWidth 1265 ≤ 1280) — FEATURE-002 conservée.
-- Non-régression `/demarrage` : titre « Démarrage — Sayrhazi en 3 commandes », chargement sans erreur.
-- Responsive 390 px (page /versions) : aucun défilement horizontal mesuré (scrollWidth 375 ≤ 390, innerWidth 390), hamburger présent (`button[aria-label]` trouvé), `h1` visible dans la fenêtre — sans rupture.
-- Desktop 1280 px (pages /versions et /agents) : aucun défilement horizontal mesuré (scrollWidth 1265 ≤ 1280, innerWidth 1280 sur /versions ; 1265 ≤ 1280 sur /agents) — sans rupture.
-- Console : 0 erreur sur /, /versions, /agents, /demarrage ; 2 warnings non bloquants (flags futurs React Router v7) et 1 info DevTools — conformes aux tours précédents.
-- Thèmes émulés (page /demarrage, contrôle structurel) : `prefers-color-scheme` sombre puis clair émulés sans rupture de mise en page mesurée (scrollWidth 1265 ≤ 1280, titre intact) ; rendu colorimétrique fin non jugé sans capture.
-- Mécanisme sync-noyau : existence de `scripts/sync-noyau.cjs` constatée (Test-Path vrai) ; essais local, repli et réseau, `yarn lint`, `yarn build` (48 modules), `yarn test` et script contrastes admis verts depuis build.txt, non rejoués (aucun code modifié par la QA, rôle sans écriture de code, proportionnalité à la retouche de données).
+- Route `/` : titre « Sayrhazi — Chaque étape laisse une trace » ; badge navbar « v0.13.2 » ; navigation principale présente (`nav[aria-label="Navigation principale"]` trouvé) ; pied de page présent (`contentinfo` trouvé) ; `h1` visible (« Le workflow multi-agents. Vérifiable. ») ; lien d’évitement absent (`Aller au contenu` introuvable, voir réserve MOYENNE 01).
+- Hero empilé mobile vérifié (décision 13, non régressé par le renommage) : à 390 px, conteneur en `flex-direction: column` mesuré, lien « Démarrer en 3 commandes » pleine largeur (343 px pour un conteneur de 343 px), aucun défilement horizontal (scrollWidth 375 pour 390) ; à 938 px et plus, conteneur en `flex-direction: row` (retour bureau) ; hamburger présent à 390 px (`button[aria-label]` trouvé).
+- Route `/versions` : titre « Versions — Sayrhazi » ; chapeau annonçant « la release 0.13.2 du 2026-10-16 » ; 34 `h3` au total, premier `h3` à « 0.13.2 », ordre décroissant conservé ; section « Dernière version » à 9 points mesurés en tête (documentation Linux et macOS, cinq correctifs dashboard, tunda vérifiant le dashboard, installeur models.yaml) ; entrée 0.13.1 reléguée en « Versions précédentes » à 4 points (binaire sayrhazi-tui, profil, dashboard en deux blocs, sortie --once), sans doublon des 4 points dans la 0.13.2 — la MOYENNE du tour précédent (liste servie en 0.13.1 par le serveur non rechargé) est levée, le serveur servant désormais le code livré.
+- Route `/demarrage` : titre « Démarrage — Sayrhazi en 3 commandes », scrollWidth 1265 pour 1280, sans erreur de chargement ; mention du dashboard absente du corps (`dashboard` introuvable), voir MOYENNE 02 reconduite.
+- Route `/agents` : titre « Agents — Sayrhazi », 6 `h2` mesurés, scrollWidth 1265 pour 1280 — sans régression.
+- Console : 0 erreur sur les 4 routes ; 2 avertissements non bloquants (drapeaux futurs React Router v7) et 1 info DevTools, conformes aux tours précédents.
+- Thèmes émulés (page /agents, contrôle structurel) : `prefers-color-scheme` sombre puis clair sans rupture mesurée (scrollWidth 1265 pour 1280, titre intact) ; rendu colorimétrique fin non jugé sans capture.
+- Preuves outillées en lecture (sans déduire le rendu du seul code) : `src/App.tsx` avec `Navbar` et `Footer` vrais, zéro `Entete` et zéro `PiedDePage` ; `src/data/versions.ts` avec en-tête à la release 0.13.2 (FAIBLE Hadji levé) ; `README.md` de 2008 octets, sans BOM, sans `Lawi-Salim`, 39 lignes (décision 15 admise en lecture, README non rendu par une route) ; `dist/` avec `index.html`, `404.html`, actifs et deux SVG, bundle portant « 0.13.2 » (2 occurrences relevées) — le code livré porte bien la 0.13.2.
+- `yarn lint`, `yarn build` (48 modules), `yarn test`, script contrastes admis verts depuis build.txt, non rejoués (aucun code modifié par la QA, proportionnalité à la retouche livrée).
 
 Problèmes :
 - Aucun problème CRITIQUE.
 - Aucun problème HAUTE.
-- Aucun problème MOYENNE : l entrée 0.13.1 est affichée en tête avec les 4 points attendus et la date attendue, sans chevauchement ni rupture relevés au snapshot et aux mesures.
-- FAIBLE — `integration.playwright_available: false` dans `.opencode/sayrhazi.yaml` alors que la QA navigateur réelle a été effectuée avec l outillage disponible ; drapeau à aligner (reconduit).
+- MOYENNE 01 — Lien d’évitement supprimé de Navbar sur demande explicite (décision 14). Preuve : `Aller au contenu` introuvable au navigateur sur les 4 routes. Impact : régression d’accessibilité clavier assumée, contraire au cahier §6 (navigation clavier), actée au plan ; Hadji la signale en review. Aucun effet fonctionnel ni blocage de navigation à la souris. Suite : consigner une alternative clavier ou assumer durablement, arbitrage Lawibrahim.
+- MOYENNE 02 reconduite — Page Démarrage sans la mention du contrôle dashboard. Preuve : `dashboard` introuvable dans le corps de /demarrage, alors que l’entrée 0.13.2 annonce que tunda vérifie le dashboard. Impact : documentation en retard d’une release, contenu non ordonné à Bamse ce tour selon le build. Correction recommandée au prochain tour Démarrage, sans bloquer la mise en ligne.
+- FAIBLE — Exactitude des 9 points 0.13.2 contre le CHANGELOG du noyau admise depuis build.txt, non collationnée à la source au présent tour (lecture frugale) ; non-duplication des 4 points vérifiée localement (9 en tête, 4 en 0.13.1).
+- FAIBLE — Recontrôles Hadji et Hifadhui dus sur le présent build du 2026-10-16T18:26:09+00:00 (leurs verdicts lus portent sur le build du 2026-10-16T17:50:04+00:00).
+- FAIBLE — Mise en ligne non recontrôlée au présent tour (aucun commit ni push ordonnés selon le build) ; QA en ligne du présent build (renommage, 0.13.2, repli 404) réservée au push explicite.
+- FAIBLE — `integration.playwright_available: false` dans `.opencode/sayrhazi.yaml` alors que la QA navigateur réelle a été effectuée avec l’outillage disponible ; drapeau à aligner (reconduit).
 - FAIBLE — `quality.design_required` vaut true dans `sayrhazi.yaml` alors que le plan arbitre Ali à false ; plan suivi par le build (reconduit, signalé par Bamse).
 - FAIBLE — `AGENTS.md` §4 « Règles locales du projet » toujours à compléter (reconduit, signalé par Bamse).
-- FAIBLE — Plan nomme `scripts/sync-noyau.js`, fichier réel en `.cjs` (paquet `type: module`) ; à consigner par Lawibrahim (signalé par Bamse, non bloquant, non vérifié au-delà du constat d existence).
+- FAIBLE — Plan nomme `scripts/sync-noyau.js`, fichier réel en `.cjs` (paquet `type: module`, choix correct) ; à consigner par Lawibrahim (signalé par Bamse, non bloquant).
 - FAIBLE reconduits sans réexamen, hors périmètre du présent build : `document.execCommand("copy")` en repli, clés de liste fragiles (`point.slice(0, 32)`).
-- FAIBLE — Exactitude des 4 points 0.13.1 contre le CHANGELOG du noyau admise depuis build.txt, non collationnée à la source au présent tour (lecture frugale) ; les points condensés d anciennes versions ajoutés par le sync (0.2.3, 0.1.8 à 0.1.1) admis depuis le build, sans relecture source.
-- FAIBLE — Presse-papiers réel, clavier physique, lecteur d écran et colorimètre non vérifiés en contexte automatisé.
+- FAIBLE — Presse-papiers réel, clavier physique, lecteur d’écran et colorimètre non vérifiés en contexte automatisé.
 
 Limites :
-- Serveur de développement ni rechargé ni redémarré par règle (appartient au gestionnaire) ; instance en écoute testée telle quelle, entrée 0.13.1 déjà servie sans rechargement manuel.
-- Vérifications lourdes non rejouées : `yarn lint`, `yarn build`, `yarn test`, script contrastes et essais sync-noyau (local, repli, réseau) admis depuis build.txt.
-- Preuve en ligne réelle (workflow GitHub Actions) réservée à la création du dépôt web, encore inexistant selon le build.
-- Mise en ligne conditionnée aux recontrôles Hadji et Hifadhui sur le présent build FEATURE-003 (leurs verdicts lus portent sur FEATURE-001 et FEATURE-002).
+- Serveur de développement ni rechargé ni redémarré par règle (appartient au gestionnaire) ; instance en écoute testée telle quelle, servie cette fois au niveau du code livré.
+- Vérifications lourdes non rejouées : `yarn lint`, `yarn build`, `yarn test`, script contrastes et essais sync-noyau admis depuis build.txt.
+- Base Pages (`/sayrhazi-web/`) non observable localement (dev en `/`) ; preuve en ligne réservée au push du présent build.
+- Contenu distant 0.13.2 non collationné à la source sur ce tour ; README vérifié en lecture outillée, sans navigation vers un rendu.
+- Rendu colorimétrique fin non jugé sans capture fournie.
 
 Suite :
-- Hadji : review du présent build (exactitude 0.13.1, robustesse parsing et repli, non-régression 0.13.0).
-- Hifadhui : audit du présent build (URL figée, timeout, pas d exec, pas de secret, prebuild).
-- Bamse : archivage FEATURE-003 dans `.opencode/features/FEATURE-003.md` à la clôture confirmée.
-- Gestionnaire : aligner `integration.playwright_available` et `quality.design_required` dans `sayrhazi.yaml`, compléter `AGENTS.md` §4, consigner l extension `.cjs` du script sync-noyau.
+- Gestionnaire : ordonner explicitement commit et push si mise en ligne voulue, puis rejouer la QA en ligne (renommage, 0.13.2, repli 404 sous `/sayrhazi-web/`) ; arbitrer le constat 0.13.2 sans doublon contre la décision 16 ; arbitrer la suppression du lien d’évitement (alternative clavier ou maintien assumé).
+- Hadji : review du présent build du 2026-10-16T18:26:09+00:00 (renommage, README, 0.13.2 sans doublon, lien d’évitement retiré, Démarrage contre nouvelle `installation.md`).
+- Hifadhui : audit du présent build (renommage, README, sync avec en-tête mise à jour).
+- Bamse : mention dashboard en page Démarrage au prochain tour ; archivage FEATURE-003 dans `.opencode/features/FEATURE-003.md` à la clôture confirmée.
+- Gestionnaire : aligner `integration.playwright_available` et `quality.design_required` dans `sayrhazi.yaml`, compléter `AGENTS.md` §4, consigner l’extension `.cjs` du script sync-noyau.
 
 Verdict du rôle : VALIDÉ AVEC RÉSERVES.

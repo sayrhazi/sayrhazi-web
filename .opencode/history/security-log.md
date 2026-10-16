@@ -727,3 +727,238 @@ Suite :
 - Bamse : archivage FEATURE-002 dans `.opencode/features/FEATURE-002.md` à la clôture confirmée.
 
 Verdict du rôle : VALIDÉ AVEC RÉSERVES.
+
+---
+
+## Archive le 2026-10-16T15:42:03+00:00 (remplace par audit du build migration org du 2026-10-16T15:37:38+00:00)
+
+task_id: FEATURE-003
+agent: security
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-16T12:08:30+00:00"
+summary: Audit sécurité du sync-noyau FEATURE-003 : script de build confiné sans exécution ni secret, runtime toujours sans appel réseau, hygiène résiduelle non bloquante.
+---
+Date système réelle : 2026-10-16T12:08:30+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-003 (sync-noyau au build, entrée 0.13.1)
+Version auditée : build.txt du 2026-10-16T12:05:15+00:00 (TERMINÉ, `prebuild` sync, 0.13.1 en tête, yarn lint build test verts)
+Auteur : Hifadhui (agent : security, rôle stable)
+Horodatage completed_at : 2026-10-16T12:08:30+00:00
+Résumé (summary) : Audit sécurité du sync-noyau FEATURE-003 : script de build confiné sans exécution ni secret, runtime toujours sans appel réseau, hygiène résiduelle non bloquante.
+
+Contexte et sources :
+- Configuration lue dans `.opencode/sayrhazi.yaml` (project.name `Sayrhazi-web`, seule source de vérité) ; règles lues dans `AGENTS.md`.
+- Tâche et périmètre lus dans `.opencode/resume/build.txt` (FEATURE-003, TERMINÉ, 2026-10-16T12:05:15+00:00) et `.opencode/resume/plan.txt` (FEATURE-003, À IMPLÉMENTER, décisions 1 à 7).
+- Mémoire : `security.txt` VALIDÉ AVEC RÉSERVES du 2026-10-16T00:37:28+00:00 (FEATURE-002) relu puis archivé dans `.opencode/history/security-log.md` avant remplacement.
+- Acquis des autres agents, non revérifiés : `review.txt` porte sur FEATURE-001 (build antérieur) ; aucune review FEATURE-003 présente au moment de l'audit, aucun verdict repris ni requalifié.
+
+Périmètre audité (fichiers du build, relus en intégralité) :
+- `scripts/sync-noyau.cjs` (243 lignes, nouveau) : lecture du noyau au build uniquement (`SAYRHAZI_CORE_DIR` local ou `raw.githubusercontent.com` vers `main`), timeout 15 s via `AbortController`, parsing texte seul, écriture de `src/data/versions.ts` et `src/data/site.ts`, repli commité avec sortie 0 en cas d'échec.
+- `package.json` (relus ciblés) : ajout du script `prebuild` (`node scripts/sync-noyau.cjs`) avant `tsc --noEmit && vite build` ; `postbuild` inchangé (copie `dist/index.html` vers `dist/404.html`) ; zéro dépendance ajoutée, moteurs `node >= 18`.
+- `src/data/site.ts` (relu ciblé) : `VERSION_NOYAU` à `0.13.1`, `DATE_NOYAU` à `2026-10-16`, commentaire d'en-tête aligné.
+- `src/data/versions.ts` (relu ciblé, 266 lignes) : entrée `0.13.1` en tête à 4 points, 9 entrées complétées, ordre décroissant.
+- Fichiers déclarés non modifiés (`src/App.tsx`, pages, composants, `index.html`, `public/`, `scripts/mesure-contrastes.js`, `yarn.lock`) : couverture des audits précédents maintenue sans relecture intégrale, conformément à la lecture frugale.
+
+Vérifications effectuées :
+1. Injections / XSS via le runtime : aucun appel réseau ajouté au runtime ; recherche ciblée dans `src/` sur `fetch(` : aucun résultat (seules des URL `https` figées affichées en texte : `github.com`, `npmjs.com`, `docs/agents.md`) ; interpolation React échappée par défaut conservée ; `dangerouslySetInnerHTML`, `innerHTML`, `eval(`, `Function(`, stockages et cookies : aucun résultat dans le périmètre.
+2. Confinement du script de build : aucune exécution de contenu distant — recherche ciblée dans `scripts/` sur `eval`, `execSync`, `child_process`, `spawn`, `Function(`, `dangerouslySetInnerHTML`, `innerHTML` : aucun résultat ; seul `fetch` + `res.text()` + `JSON.parse` du `package.json` distant + découpe texte du `CHANGELOG.md` ; aucune écriture hors `src/data/site.ts` et `src/data/versions.ts`.
+3. Neutralisation de l'injection dans les fichiers générés : versions et dates validées par regex strictes (`\d+\.\d+\.\d+`, `\d{4}-\d{2}-\d{2}`) côté parsing et côté blocs committés ; toute sérialisation vers le TypeScript généré passe par `JSON.stringify` (`formaterPoints`, bloc `VERSIONS`, patch `VERSION_NOYAU`/`DATE_NOYAU`) ; la condensation (`condense`) allège le markdown distant (gras, code, liens) en texte brut avant insertion — un contenu distant hostile reste une chaîne affichée, jamais du code.
+4. URL et transport réseau : base figée en `https` (`https://raw.githubusercontent.com/Lawi-Salim/sayrhazi/main`, constante `RAW_BASE`), deux chemins fixes (`package.json`, `CHANGELOG.md`), aucune URL construite depuis une entrée externe ; timeout 15 s avec `AbortController` et libération du minuteur ; échec HTTP non-OK levé puis replié ; aucune authentification, aucun token (le mot `token` n'apparaît que dans le commentaire « ni token »).
+5. Variable `SAYRHAZI_CORE_DIR` : lue depuis l'environnement de build (opérateur), assemblée par `path.join` vers `package.json` et `CHANGELOG.md` puis lue en synchrone ; non pilotable par un visiteur du site ; lecture en `utf8` sans exécution (voir FAIBLE 01 pour le durcissement possible).
+6. Disponibilité du build (fail-open sûr) : toute erreur (lecture, parsing, écriture, inattendue) appelle `warn` et termine en sortie 0 sans casser `yarn build` ; le garde anti-perte refuse d'écrire si `versions.ts` committé est illisible (`blocs.size === 0` ou différent du comptage) et refuse toute régression de version (noyau plus ancien que la vitrine) ; comportement conforme à la décision 1 du plan.
+7. Secrets : recherche ciblée dans `scripts/` sur `token|secret|password|apiKey|Authorization|VITE_` : une seule occurrence de commentaire (« ni token »), aucun jeton, aucune clé, aucun identifiant, aucun secret ; décision 2 du plan (pas d'API GitHub, pas de token) respectée.
+8. Authentification, sessions, cookies, stockage local, formulaires, téléversement : absents du périmètre relu, conformes au positionnement affiché (aucune donnée utilisateur) ; `dev`, `lint` et `test` restent sans réseau selon le build (`prebuild` déclenché par `yarn build` uniquement).
+9. Dépendances et supply-chain : zéro dépendance ajoutée (`fetch` natif Node 18) ; transitives inchangées selon le build (48 modules, `yarn.lock` non modifié) ; `lint`, `build` et `test` admis verts depuis le build, sans rejouement ici.
+10. En-têtes, CORS, fichiers servis : aucun en-tête ajouté dans le dépôt (rappel FAIBLE reconduit, délégué à l'hébergeur) ; CORS sans objet (aucun appel runtime) ; aucune image ajoutée, `public/` inchangé.
+
+Problèmes :
+- Aucun problème CRITIQUE.
+- Aucun problème HAUTE.
+- Aucun problème MOYENNE.
+- FAIBLE 01 — `SAYRHAZI_CORE_DIR` non normalisé : `path.join(dirLocal, ...)` sans vérification de containment ; un chemin malveillant ou erroné reste cantonné à une lecture de build opérateur (échec replié, sortie 0), jamais exposé aux visiteurs. Recommandation à Bamse : valider que le répertoire existe et contient `package.json` + `CHANGELOG.md` avant lecture, ou `path.resolve` + contrôle de préfixe, à la prochaine retouche du script.
+- FAIBLE 02 — Intégrité du contenu distant confiée au TLS + revue du diff : le `CHANGELOG.md` tiré de `main` est condensé puis commité ; une compromission amont s'écrirait dans `versions.ts` en texte (jamais exécutée) mais serait publiée au build suivant. Recommandation à Bamse : conserver la revue humaine du diff généré avant commit (pratique déjà induite par « les fichiers générés restent committés, le diff fait foi ») ; ne jamais élargir le parsing au-delà du texte.
+- FAIBLE 03 reconduit — En-têtes de sécurité non définis dans le dépôt : ni CSP, ni `X-Content-Type-Options`, ni `Referrer-Policy`, ni HSTS versionnés ; protection réelle déléguée à l'hébergeur, non vérifiable ici (hors périmètre modifié).
+- FAIBLE 04 reconduit — Repli de copie déprécié (`document.execCommand("copy")`) et clés de liste fragiles (`point.slice(0, 32)` dans `Versions.tsx`) : inchangés selon le build, dette qualité hors faille (contenu copié constant, clés non pilotables par l'utilisateur).
+- FAIBLE 05 reconduit — Tiers vie privée (Google Fonts) et provenance des images : inchangés, hors périmètre modifié.
+- Notes non requalifiées (qualité, autorité Hadji/Lawibrahim) : `quality.design_required` à true contre arbitrage Ali à false, `AGENTS.md` §4 à compléter, nom de script `.cjs` contre `.js` du plan — sans impact sécurité.
+
+Corrections recommandées (à Bamse, agent builder, non bloquantes) :
+- FAIBLE 01 : durcir `lireNoyau` (existence du répertoire, présence des deux fichiers, `path.resolve` + contrôle de préfixe) à la prochaine retouche, sans changer le repli actuel.
+- FAIBLE 02 : garder le sync strictement textuel ; toute future extension (agents, Accueil — lot ultérieur du plan, décision 4) devra repasser l'audit avant publication.
+- FAIBLE 03 : documenter au déploiement les en-têtes servis par l'hébergeur et, si possible, ajouter une CSP restrictive, sans bloquer cette tâche.
+- Conserver le timeout explicite, l'absence d'exécution et la sortie 0 avec repli sur tout futur appel réseau de build.
+
+Limites :
+- Audit statique ciblé sur les quatre fichiers du build, sans rejouement de `yarn lint`, `yarn build`, `yarn test`, mesure des contrastes ni scan de vulnérabilités ; essais local, repli et réseau ainsi que `lint`, `build` et `test` admis verts depuis le build.
+- `node_modules/` et `dist/` non audités exhaustivement ; veille CVE des transitives non rejouée en ligne.
+- Exactitude de l'entrée 0.13.1 contre le `CHANGELOG.md` du noyau et robustesse du parsing réservées à Hadji ; rendu réel, responsive et console réservés à Zawadi après rechargement, non déduits du seul code.
+- Preuve en ligne réelle (workflow GitHub Actions) réservée à la création du dépôt web, encore inexistant.
+
+Suite :
+- Hadji : review depuis le présent `build.txt` (exactitude 0.13.1, robustesse parsing et repli).
+- Zawadi : QA navigateur réel après rechargement `yarn dev` par le gestionnaire (Versions 0.13.1 en tête, non-régression, console, responsive).
+- Bamse : archivage FEATURE-003 dans `.opencode/features/FEATURE-003.md` à la clôture confirmée.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.
+
+---
+
+
+---
+
+## Archive le 2026-10-16T17:52:31+00:00 (remplace par audit du build sync dev du 2026-10-16T17:50:04+00:00)
+
+task_id: FEATURE-003
+agent: security
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-16T15:42:03+00:00"
+summary: Audit migration org sayrhazi, base Pages et workflow : runtime toujours sans appel ni secret, script confiné durci, réserves d'hygiène non bloquantes.
+---
+Date système réelle : 2026-10-16T15:42:03+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-003 (migration org sayrhazi, base Pages avec basename, workflow déployé, push origin main)
+Version auditée : build.txt du 2026-10-16T15:37:38+00:00 (TERMINÉ, Bamse, commit 61d149e poussé da67005..61d149e, yarn lint build test verts)
+Auteur : Hifadhui (agent : security, rôle stable)
+Horodatage completed_at : 2026-10-16T15:42:03+00:00
+Résumé (summary) : Audit migration org sayrhazi, base Pages et workflow : runtime toujours sans appel ni secret, script confiné durci, réserves d'hygiène non bloquantes.
+
+Contexte et sources :
+- Configuration lue dans `.opencode/sayrhazi.yaml` (project.name `Sayrhazi-web`, seule source de vérité, agents.security `Hifadhui`) ; règles lues dans `AGENTS.md`.
+- Tâche et périmètre lus dans `.opencode/resume/build.txt` (FEATURE-003, TERMINÉ, 2026-10-16T15:37:38+00:00).
+- Mémoire : `security.txt` VALIDÉ AVEC RÉSERVES du 2026-10-16T12:08:30+00:00 relu puis archivé dans `.opencode/history/security-log.md` avant remplacement.
+- Acquis des autres agents, non revérifiés : `review.txt` et `qa.txt` portent sur le build FEATURE-003 de 12:05 (MOYENNE condensation parenthèses depuis levée selon le présent build) ; aucune review ni QA du présent build 15:37 présente au moment de l'audit, aucun verdict repris ni requalifié.
+
+Périmètre audité (fichiers du présent build, relus en ciblé) :
+- `scripts/sync-noyau.cjs` (274 lignes, relu en intégralité) : `RAW_BASE` vers `https://raw.githubusercontent.com/sayrhazi/sayrhazi/main`, `condense` anti-parenthèse orpheline, `lireNoyau` durci (`path.resolve`, existence racine et deux fichiers).
+- `.github/workflows/pages.yml` (nouveau, 61 lignes, relu en intégralité) : déclencheurs push main, quotidien, manuel ; permissions `contents: read`, `pages: write`, `id-token: write` ; concurrence Pages ; install `--frozen-lockfile`, build, vérification `404.html`, déploiement.
+- `vite.config.ts` (relu) : base conditionnelle (`/sayrhazi-web/` si `GITHUB_ACTIONS=true`, `/` sinon, port 5175 inchangé).
+- `src/App.tsx` (relu) : `basename={import.meta.env.BASE_URL}` sur `BrowserRouter`.
+- `src/vite-env.d.ts` (relu) : déclaration minimale `process.env`, sans `@types/node`.
+- `.gitignore` (relu) : `.playwright-mcp/` ajouté ; `dist/`, `node_modules/`, `.opencode/state/` conservés.
+- `src/data/site.ts`, `src/data/agents.ts`, `src/pages/Demarrage.tsx`, `src/data/versions.ts` : périmètre admis depuis le build (liens vers `sayrhazi/sayrhazi`, points 0.1.7 et 0.1.8 retouchés, paquet npm inchangé), sans relecture intégrale par frugalité.
+- Fichiers déclarés non modifiés (pages, autres composants, `index.html`, `public/`, `scripts/mesure-contrastes.js`, `yarn.lock`) : couverture des audits précédents maintenue sans relecture intégrale.
+
+Vérifications effectuées :
+1. Injections / XSS au runtime : recherche ciblée dans `src/` sur `dangerouslySetInnerHTML|innerHTML|eval\(|Function\(|localStorage|sessionStorage|document.cookie` : aucun résultat ; recherche sur `fetch\(|axios|XMLHttpRequest|WebSocket|EventSource` dans `src/` : aucun résultat ; interpolation React échappée par défaut conservée ; `basename` issu de `import.meta.env.BASE_URL` (valeur de build, non pilotable par un visiteur), jamais injecté dans du HTML ; `location.pathname` uniquement comparé pour le titre, jamais en `href` ni sélecteur.
+2. Confinement du script de build : recherche dans `scripts/` sur `execSync|child_process|spawn|exec\(|eval|Function\(` : seuls deux `re.exec` de regex locale (parsing de `versions.ts`), aucune exécution de contenu distant, aucun `child_process` ; seul `fetch` + `res.text()` + `JSON.parse` du `package.json` distant + découpe texte du `CHANGELOG.md` ; écritures limitées à `src/data/site.ts` et `src/data/versions.ts` ; toute sérialisation via `JSON.stringify` ; versions et dates validées par regex strictes.
+3. Durcissement `lireNoyau` : `path.resolve(dirLocal)` puis contrôle d'existence de la racine, de `package.json` et de `CHANGELOG.md` avant lecture en `utf8` sans exécution ; variable lue depuis l'environnement opérateur de build, non pilotable par un visiteur ; la FAIBLE 01 de l'audit précédent est levée.
+4. URL et transport réseau : base figée en `https` vers la nouvelle org (`sayrhazi/sayrhazi`), deux chemins fixes (`package.json`, `CHANGELOG.md`), aucune URL construite depuis une entrée externe ; timeout 15 s avec `AbortController` et libération du minuteur ; échec HTTP non-OK levé puis replié en sortie 0 avec fichiers committés conservés.
+5. Secrets : recherche ciblée sur `token|secret|password|apiKey|Authorization|VITE_` : une seule occurrence de commentaire (`ni token` dans le script), mentions `tokens` de vocabulaire (polices, jauge) et `id-token: write` (permission OIDC du workflow, pas une valeur de secret) ; aucun jeton, aucune clé, aucun identifiant, aucune variable `VITE_` ; décision pas d'API GitHub ni token respectée, y compris en CI (rebuild quotidien sans secret).
+6. Base Pages et routage : chaînes figées `/` et `/sayrhazi-web/`, sélection par `process.env.GITHUB_ACTIONS` (contrôle CI, pas d'entrée utilisateur) ; `basename` synchronisé avec `base`, sans schéma `javascript:`, `data:` ni `blob:` ; `dist/` avec `index.html` et `404.html` selon le build, repli SPA conservé.
+7. Workflow Pages : permissions minimales (`contents: read`, `pages: write`, `id-token: write`), sans `pull_request_target`, sans entrée non fiable, sans secret injecté ; commandes `run` figées (`corepack enable`, `yarn install --frozen-lockfile`, `yarn build`, `test -f dist/404.html && test -f dist/index.html`) ; actions épinglées aux majeures (`checkout@v4`, `setup-node@v4`, `upload-pages-artifact@v3`, `deploy-pages@v4`) avec `node-version: 20` et cache yarn (voir FAIBLE 02).
+8. Authentification, sessions, cookies, stockage local, formulaires, téléversement : absents du périmètre relu, conformes au positionnement affiché (aucune donnée utilisateur) ; `.gitignore` élargi à `.playwright-mcp/` réduit le risque de commit d'artefacts de test.
+9. Dépendances et supply-chain : zéro dépendance ajoutée selon le build (`yarn.lock` non modifié, 48 modules, `lint`/`build`/`test` admis verts sans rejouement ici) ; déclaration `process.env` sans `@types/node` n'élargit pas la surface servie (fichier de types, exclu du paquet runtime).
+10. En-têtes, CORS, fichiers servis : aucun en-tête ajouté dans le dépôt (rappel FAIBLE reconduit, délégué à l'hébergeur Pages) ; CORS sans objet (aucun appel runtime) ; aucune image ajoutée, `public/` inchangé selon le build.
+
+Problèmes :
+- Aucun problème CRITIQUE.
+- Aucun problème HAUTE.
+- Aucun problème MOYENNE (la MOYENNE Hadji sur la condensation dans les parenthèses est déclarée levée par le présent build : `condense` avec équilibre et retouche 0.1.7/0.1.8 ; exactitude du retouche réservée à Hadji, non requalifiée ici).
+- FAIBLE 01 reconduit — Intégrité du contenu distant confiée au TLS + revue du diff : le `CHANGELOG.md` tiré du `main` de la nouvelle org est condensé puis commité, y compris via le rebuild quotidien Pages ; une compromission amont s'écrirait en texte (jamais exécutée) mais serait publiée au build suivant. Recommandation à Bamse : conserver la revue humaine du diff généré avant commit ; ne jamais élargir le parsing au-delà du texte.
+- FAIBLE 02 nouveau — Actions du workflow épinglées aux tags majeurs sans SHA : `checkout@v4`, `setup-node@v4`, `upload-pages-artifact@v3`, `deploy-pages@v4` mutables par l'éditeur ; compromission d'un tag = exécution en CI avec `id-token: write`. Recommandation à Bamse : épingler aux SHA avec commentaire de version à la prochaine retouche du workflow, ou documenter l'acceptation du suivi aux majeures ; sans bloquer ce tour.
+- FAIBLE 03 reconduit — En-têtes de sécurité non définis dans le dépôt : ni CSP, ni `X-Content-Type-Options`, ni `Referrer-Policy`, ni HSTS versionnés ; protection réelle déléguée à GitHub Pages, non vérifiable ici (hors périmètre modifié).
+- FAIBLE 04 reconduit — Repli de copie déprécié (`document.execCommand("copy")`) et clés de liste fragiles (`point.slice(0, 32)`) : inchangés selon le build, dette qualité hors faille (contenu copié constant, clés non pilotables par l'utilisateur).
+- FAIBLE 05 reconduit — Tiers vie privée (Google Fonts) et provenance des images : inchangés, hors périmètre modifié.
+- Notes non requalifiées (qualité, autorité Hadji/Lawibrahim) : `quality.design_required` à true contre arbitrage Ali à false, `AGENTS.md` §4 à compléter, nom de script `.cjs` contre `.js` du plan — sans impact sécurité.
+
+Corrections recommandées (à Bamse, agent builder, non bloquantes) :
+- FAIBLE 01 : garder le sync strictement textuel ; toute future extension du parsing devra repasser l'audit avant publication.
+- FAIBLE 02 : épingler les quatre actions Pages aux SHA (ou consigner le suivi aux majeures) à la prochaine retouche de `pages.yml`.
+- FAIBLE 03 : documenter au déploiement les en-têtes servis par GitHub Pages et, si possible, ajouter une CSP restrictive, sans bloquer cette tâche.
+- Conserver le timeout explicite, l'absence d'exécution, la sortie 0 avec repli et les permissions minimales sur tout futur appel réseau de build ou de CI.
+
+Limites :
+- Audit statique ciblé sur les fichiers du présent build, sans rejouement de `yarn lint`, `yarn build`, `yarn test`, mesure des contrastes ni scan de vulnérabilités ; essais local, repli, réseau, base Pages et `lint`/`build`/`test` admis verts depuis le build.
+- `node_modules/` et `dist/` non audités exhaustivement ; veille CVE des transitives non rejouée en ligne ; contenu distant `sayrhazi/saynhazi` non collationné à la source sur ce tour.
+- Exactitude des points 0.1.7/0.1.8 retouchés et robustesse du `condense` réservées à Hadji ; mise en ligne Pages effective après le workflow distant, non observée localement.
+- Rendu réel, responsive et console réservés à Zawadi, non déduits du seul code.
+
+Suite :
+- Hadji : review du présent build (exactitude, base Pages avec basename, workflow, push).
+- Zawadi : QA locale puis en ligne après push (Versions, non-régression, console, responsive, routes sous `/sayrhazi-web/`).
+- Bamse : archivage FEATURE-003 dans `.opencode/features/FEATURE-003.md` à la clôture confirmée.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.
+
+---
+
+## Archivé le 2026-10-16T18:29:21+00:00 (remplacé par l'audit du build renommage Navbar Footer du 2026-10-16T18:26:09+00:00)
+
+task_id: FEATURE-003
+agent: security
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-16T17:53:37+00:00"
+summary: Sync dev, hero empilé, 0.13.2 et TITRES sans basename sans surface d'attaque exploitable, réserves d'hygiène reconduites non bloquantes.
+---
+Date système réelle : 2026-10-16T17:53:37+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-003 (sync dev avec predev, hero empilé mobile, 0.13.2 tirée du distant poussé, TITRES sans basename)
+Version auditée : build.txt du 2026-10-16T17:50:04+00:00 (TERMINÉ, Bamse, yarn lint build test verts)
+Auteur : Hifadhui (agent : security, rôle stable)
+Horodatage completed_at : 2026-10-16T17:53:37+00:00
+Résumé (summary) : Sync dev, hero empilé, 0.13.2 et TITRES sans basename sans surface d'attaque exploitable, réserves d'hygiène reconduites non bloquantes.
+
+Contexte et sources :
+- Configuration lue dans `.opencode/sayrhazi.yaml` (project.name `Sayrhazi-web`, seule source de vérité, renseigné ; agents.security `Hifadhui`) ; règles lues dans `AGENTS.md`.
+- Tâche et périmètre lus dans `.opencode/resume/build.txt` (FEATURE-003, TERMINÉ, 2026-10-16T17:50:04+00:00).
+- Mémoire : `security.txt` VALIDÉ AVEC RÉSERVES du 2026-10-16T15:42:03+00:00 relu puis archivé dans `.opencode/history/security-log.md` avant remplacement.
+- Acquis des autres agents, non revérifiés : `review.txt` VALIDÉ AVEC RÉSERVES du 2026-10-16T15:42:38+00:00 et `qa.txt` cité par le build portent sur le build FEATURE-003 de 15:37, pas sur le présent build 17:50 ; aucune review ni QA du présent build présente au moment de l'audit, aucun verdict repris ni requalifié.
+
+Périmètre audité (fichiers modifiés par le présent build, relus en ciblé avec leurs dépendances directes) :
+- `package.json` : scripts `sync` et `predev` ajoutés (`node scripts/sync-noyau.cjs`), `prebuild` inchangé, zéro dépendance ajoutée.
+- `scripts/sync-noyau.cjs` : déclaré non modifié ; en-tête relu (constantes `RAW_BASE` vers `sayrhazi/sayrhazi`, timeout 15 s, lecture `SAYRHAZI_CORE_DIR` durcie) inchangé par ce tour.
+- `src/App.tsx` : fonction `cheminSansBase` retirant le basename avant consultation de `TITRES`, `basename` synchronisé, repli sur l'accueil.
+- `src/pages/Accueil.tsx` : conteneur du hero en `flex-col` mobile et `sm:flex-row` bureau, lien interne `/demarrage` en `Link`, `CopierCommande` sur constante figée.
+- `src/data/site.ts` : `VERSION_NOYAU` à `0.13.2`, `DATE_NOYAU` alignée, commentaire d'en-tête aligné.
+- `src/data/versions.ts` : entrée `0.13.2` en tête (neuf points), `0.13.1` conservée, ordre décroissant.
+- `.gitignore` : `*.bak` ajouté ; `.opencode/history/review-log.md.bak` retiré du suivi.
+- Fichiers déclarés non modifiés (autres pages et composants, `index.html`, `public/`, `scripts/mesure-contrastes.js`, `yarn.lock`, workflow Pages) : couverture des audits précédents maintenue sans relecture intégrale, conformément à la lecture frugale.
+
+Vérifications effectuées :
+1. Injections / XSS au runtime : recherche ciblée dans `src/` et `scripts/` sur `dangerouslySetInnerHTML`, `innerHTML`, `eval(`, stockages et cookies : aucun résultat ; recherche sur `fetch(`, `axios`, `XMLHttpRequest`, `WebSocket`, `EventSource` dans `src/` : aucun résultat ; interpolation React échappée par défaut conservée, y compris pour les neuf points 0.13.2 affichés en nœuds texte.
+2. Normalisation `cheminSansBase` : `import.meta.env.BASE_URL` (valeur de build, non pilotable par un visiteur) privé de son slash final par regex stricte, comparaison par `startsWith`, découpe par `slice`, repli sur `/` ; résultat utilisé uniquement en clé de `TITRES` avec repli sur l'accueil, assigné à `document.title` (texte, jamais du HTML) ; `location.pathname` comparé dans `Entete.tsx` pour `aria-current` et classes, jamais injecté dans un `href` ni un sélecteur.
+3. Hero empilé : changement purement déclaratif de classes (`flex-col`, `items-stretch`, `gap-2`, largeurs `w-full` / `sm:w-auto`) ; aucun gestionnaire, aucune donnée, ordre du DOM et de tabulation inchangés ; aucun schéma `javascript:`, `data:` ni `blob:` dans `src/`.
+4. Liens externes : cinq occurrences en `target="_blank"` toutes en `rel="noreferrer noopener"` explicite (`CarteAgentDetaillee`, `Entete`, `PiedDePage`, deux dans `Demarrage`) ; liens internes en `Link`, aucun `href` construit depuis une entrée.
+5. Extension du sync au dev : `predev` et `sync` invoquent le même script confiné déjà audité (fetch natif, deux chemins fixes en `https`, timeout 15 s avec `AbortController`, parsing texte seul, écritures limitées à `src/data/site.ts` et `src/data/versions.ts`, sortie 0 avec repli) ; recherche dans `scripts/` sur `child_process`, `execSync`, `spawn` : aucun résultat ; `lint` et `test` restent sans réseau selon le build ; la fréquence d'exposition augmente (chaque `yarn dev`), la nature du risque reste couverte par FAIBLE 01.
+6. Secrets : recherche ciblée sur `VITE_`, `apiKey`, `Authorization`, `password` dans `src/`, `scripts/`, `package.json` et `vite.config.ts` : aucun résultat ; aucune variable `VITE_`, aucun jeton, aucune clé ; décision pas d'API GitHub ni token respectée, y compris en dev.
+7. Authentification, sessions, cookies, stockage local, formulaires, téléversement : absents du périmètre relu, conformes au positionnement affiché (aucune donnée utilisateur).
+8. Dépendances et supply-chain : zéro dépendance ajoutée selon le build (`yarn.lock` non modifié, 48 modules, `lint`/`build`/`test` admis verts sans rejouement ici) ; le point verrou des audits du 2026-10-14 reste clos.
+9. Hygiène du dépôt : `.bak` retiré du suivi et ignoré par `*.bak`, vérifié dans `git status` ; en-tête du script en revanche périmé (mention « build uniquement » antérieure à `predev`, voir recommandation).
+10. En-têtes, CORS, fichiers servis : aucun en-tête ajouté dans le dépôt (rappel FAIBLE reconduit, délégué à l'hébergeur Pages) ; CORS sans objet (aucun appel runtime) ; aucune image ajoutée, `public/` inchangé selon le build.
+
+Problèmes :
+- Aucun problème CRITIQUE.
+- Aucun problème HAUTE.
+- Aucun problème MOYENNE (la MOYENNE Hadji sur les TITRES sous basename est déclarée levée par le présent build via `cheminSansBase` ; exactitude des titres réservée à Hadji, non requalifiée ici).
+- FAIBLE 01 reconduit et étendu — Intégrité du contenu distant confiée au TLS + revue du diff : le `CHANGELOG.md` tiré du `main` est condensé puis commité, désormais aussi à chaque `yarn dev` via `predev` ; une compromission amont s'écrirait en texte (jamais exécutée) mais serait publiée au build ou au dev suivant. Recommandation à Bamse : conserver la revue humaine du diff généré avant commit ; ne jamais élargir le parsing au-delà du texte ; mettre à jour l'en-tête du script (« build uniquement » périmé depuis `predev`).
+- FAIBLE 02 reconduit — Actions du workflow épinglées aux tags majeurs sans SHA (`checkout@v4`, `setup-node@v4`, `upload-pages-artifact@v3`, `deploy-pages@v4`), hors périmètre modifié. Recommandation à Bamse : épingler aux SHA avec commentaire de version à la prochaine retouche du workflow, ou consigner l'acceptation du suivi aux majeures.
+- FAIBLE 03 reconduit — En-têtes de sécurité non définis dans le dépôt : ni CSP, ni `X-Content-Type-Options`, ni `Referrer-Policy`, ni HSTS versionnés ; protection réelle déléguée à GitHub Pages, non vérifiable ici (hors périmètre modifié).
+- FAIBLE 04 reconduit — Repli de copie déprécié (`document.execCommand("copy")` dans `CopierCommande.tsx`) et clés de liste fragiles (`point.slice(0, 32)` dans `Versions.tsx`) : inchangés selon le build, dette qualité hors faille (contenu copié constant, clés non pilotables par l'utilisateur).
+- FAIBLE 05 reconduit — Tiers vie privée (Google Fonts) et provenance des images : inchangés, hors périmètre modifié.
+- Notes non requalifiées (qualité, autorité Hadji/Lawibrahim) : `quality.design_required` à true contre arbitrage Ali à false, `AGENTS.md` §4 à compléter, nom de script `.cjs` contre `.js` du plan, dérive `installation.md` (+32 lignes) et `tunda` + dashboard signalée par le build (page Démarrage à recontrôler par Hadji) — sans impact sécurité.
+
+Corrections recommandées (à Bamse, agent builder, non bloquantes) :
+- FAIBLE 01 : garder le sync strictement textuel en dev comme au build ; corriger l'en-tête de `scripts/sync-noyau.cjs` (`prebuild` + `predev`/`sync`, plus seulement le build) ; toute future extension du parsing devra repasser l'audit avant publication.
+- FAIBLE 02 : épingler les quatre actions Pages aux SHA (ou consigner le suivi aux majeures) à la prochaine retouche de `pages.yml`.
+- FAIBLE 03 : documenter au déploiement les en-têtes servis par GitHub Pages et, si possible, ajouter une CSP restrictive, sans bloquer cette tâche.
+- Conserver le timeout explicite, l'absence d'exécution, la sortie 0 avec repli et les permissions minimales sur tout futur appel réseau de build, de dev ou de CI.
+- Maintenir `rel="noreferrer noopener"` explicite sur tout futur lien externe en `target="_blank"`.
+
+Limites :
+- Audit statique ciblé sur les fichiers du présent build, sans rejouement de `yarn lint`, `yarn build`, `yarn test`, mesure des contrastes ni scan de vulnérabilités ; `lint`, `build` et `test` admis verts depuis le build (48 modules).
+- `node_modules/` et `dist/` non audités exhaustivement ; veille CVE des transitives non rejouée en ligne ; contenu distant 0.13.2 non collationné à la source sur ce tour.
+- Exactitude des neuf points 0.13.2 et des titres sous basename réservées à Hadji ; serveur de développement non rechargé par règle (dont la relance `yarn dev` avec `predev`) ; mise en ligne Pages effective après le workflow distant, non observée localement.
+- Rendu réel du hero empilé, de l'entrée 0.13.2, responsive et console réservés à Zawadi, non déduits du seul code.
+
+Suite :
+- Hadji : review du présent build (sync dev, hero empilé, 0.13.2, TITRES sans basename, Démarrage contre nouvelle `installation.md`).
+- Zawadi : QA locale puis en ligne (hero empilé mobile et bureau, 0.13.2 en tête, console, responsive).
+- Bamse : archivage FEATURE-003 dans `.opencode/features/FEATURE-003.md` à la clôture confirmée ; ni commit ni push sans demande explicite selon le build.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.

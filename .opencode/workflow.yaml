@@ -1,0 +1,65 @@
+# Workflow Sayrhazi du projet (contrat déclaratif, Lot 2).
+# Copié dans `.opencode/workflow.yaml` à l'installation, jamais écrasé ensuite.
+# Les étapes désignent des rôles stables, jamais des noms d'affichage.
+# `auto: true` = transition prise en charge par le watcher ; `auto: false` =
+# orchestration humaine. Automatiques : review, security et visual_qa (si
+# requis dans sayrhazi.yaml), rework (retour vers builder sur CORRECTIONS),
+# rework_qa (retour vers builder sur qa.txt À COMPLÉTER).
+# Vérifié par `tunda sayrhazi` (présence + validité, jamais bloquant).
+workflow:
+  mode: supervised
+  auto_start: false
+  max_parallel_agents: 3
+
+stages:
+  - id: implementation
+    agent: builder
+    trigger:
+      report: plan.txt
+      status: VALIDÉ
+    auto: false
+
+  - id: design
+    agent: designer
+    condition: design_required
+    trigger:
+      report: plan.txt
+      status: VALIDÉ
+    auto: false
+
+  - id: review
+    agent: reviewer
+    trigger:
+      report: build.txt
+      status: TERMINÉ
+    auto: true
+
+  - id: security
+    agent: security
+    condition: security_required
+    trigger:
+      report: build.txt
+      status: TERMINÉ
+    auto: true
+
+  - id: visual_qa
+    agent: qa
+    condition: visual_qa_required
+    trigger:
+      report: build.txt
+      status: TERMINÉ
+    auto: true
+
+  - id: rework
+    agent: builder
+    trigger:
+      report: review.txt
+      status: CORRECTIONS NÉCESSAIRES
+    auto: true
+
+  - id: rework_qa
+    agent: builder
+    trigger:
+      report: qa.txt
+      status: À COMPLÉTER
+    auto: true

@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --port 5175",
+    "sync": "node scripts/sync-noyau.cjs",
+    "predev": "node scripts/sync-noyau.cjs",
     "prebuild": "node scripts/sync-noyau.cjs",
     "build": "tsc --noEmit && vite build",
     "postbuild": "node -e \"const fs=require('fs'); fs.copyFileSync('dist/index.html','dist/404.html');\"",
