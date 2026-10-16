@@ -1,0 +1,498 @@
+# Journal des reviews — FEATURE-001
+
+## Archive du 2026-10-14T21:07:16+00:00 — review du 2026-10-14T19:47:24+00:00 (VALIDÉ AVEC RÉSERVES), remplacée suite au build du 2026-10-14T21:06:10+00:00
+
+task_id: FEATURE-001
+agent: reviewer
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-14T19:47:24+00:00"
+summary: Bloc héros unique et icônes accessibles vérifiés conformes aux décisions 15 et 16, sans réserve nouvelle.
+---
+Date système réelle : 2026-10-14T19:47:24+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (gestionnaire yarn, port 5175)
+Tâche : FEATURE-001
+Version examinée : build.txt de Bamse, statut TERMINÉ, horodatage 2026-10-14T19:46:17+00:00 ; noyau documenté 0.12.3 du 2026-10-14 ; paquet vitrine 0.1.0
+Auteur : Hadji (agent : reviewer, rôle stable)
+Horodatage completed_at : 2026-10-14T19:47:24+00:00
+Résumé (summary) : Bloc héros unique et icônes accessibles vérifiés conformes aux décisions 15 et 16, sans réserve nouvelle.
+Nom du projet : lu dans `.opencode/sayrhazi.yaml` (`project.name` = Sayrhazi-web) ; aucune valeur A_COMPLETER, aucun nom supposé.
+
+Contexte et sources :
+- Mémoire de session : ma review précédente du 2026-10-14T19:39:00+00:00 (VALIDÉ AVEC RÉSERVES, sans réserve nouvelle) portait sur le build du 2026-10-14T19:36:50+00:00 ; elle est archivée dans `.opencode/history/review-log.md` avant le présent remplacement.
+- Nouveau build lu en intégralité : décisions 15 (bloc héros unique) et 16 (icônes copie et validation) appliquées, `yarn lint`, `yarn build` et `yarn test` déclarés verts.
+- Plan relu pour ses décisions 15 (copie et Démarrer regroupés, copie visible, rechargement du dev exigé) et 16 (icônes seules avec `aria-label`, `sr-only` et `aria-live`, bouton et focus inchangés) ; décisions 1 à 14 conservées.
+- Acquits des autres agents, lus pour leurs verdicts sans refaire leurs vérifications : `security.txt` de Hifadhui du 2026-10-14T19:39:30+00:00 et `qa.txt` de Zawadi du 2026-10-14T19:41:56+00:00 (tous deux VALIDÉ AVEC RÉSERVES, dev rechargé côté bleu, presse-papiers et focus clavier à confirmer). Tous deux antérieurs au présent build et donc non réappliqués à ce périmètre.
+- `sayrhazi.yaml` et `AGENTS.md` non relus (déjà lus, aucune modification signalée par les horodatages).
+
+Contrôles réalisés (ciblés sur les fichiers modifiés depuis ma review, horodatages du 2026-10-14T19:45 au 19:46) :
+- Relecture intégrale de `src/components/CopierCommande.tsx` : SVG inline sans contenu actif (aucun `script`, gestionnaire d'événement, `foreignObject`, `iframe` ni schéma à risque), `aria-hidden` et `focusable="false"` sur les icônes, `aria-label` dynamique et texte `sr-only` conservant l'intitulé, `aria-live="polite"` conservé, bouton `bg-chartreuse text-encre` en `currentColor` (contraste 6,44 inchangé) avec paddings et focus inchangés, logique presse-papiers et repli intacts.
+- Relecture du héros d'Accueil : conteneur unique `max-w-xl` centré (copie pleine largeur puis lien centré), conforme à la décision 15.
+- Recherche ciblée sur `Copier|Copié` : zéro texte visible, occurrences restantes cantonnées aux imports, props `etiquette`, `aria-label` et `sr-only` (affirmation du build vérifiée).
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité ; preuve de contrastes non rejouée (couples inchangés, icônes en `currentColor`, admis depuis le build vert) ; aucune QA au navigateur (réservée à Zawadi) ; aucun verdict de sécurité (réservé à Hifadhui).
+
+Problèmes :
+- FAIBLE (reconducts inchangés) — clés `point.slice(0, 32)` dans `Versions.tsx` ; `execCommand` déprécié (repli inchangé du composant retouché) ; `quality.design_required` à true contre Ali à false ; `AGENTS.md` §4 à compléter ; `lint` et `test` réduits.
+- Aucun problème CRITIQUE, HAUTE ni MOYENNE dans le code livré ; aucune réserve nouvelle sur ce périmètre (accessibilité des icônes préservée, zone de clic et focus inchangés, contraste hérité intact, SVG sans contenu actif).
+
+Recommandations (hors corrections ci-dessus) :
+- Conditionner la mise en ligne aux recontrôles Hifadhui (bloc unique, icônes inline) et Zawadi (bloc unique, icônes copie et check, retour `Copié` au presse-papiers autorisé, barre fixe floue en bureau et 390) après rechargement du dev par le gestionnaire, comme le build le prévoit.
+
+Limites :
+- Hadji ne modifie, ne crée et ne supprime jamais de code source ; aucune correction appliquée, constats seuls.
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité ; `dist/` admis depuis le build sans contrôle direct du contenu généré.
+- Rendu réel des icônes, retour `Copié`, focus clavier, responsive 390 et console réservés à Zawadi, non déduits du seul code.
+- Sécurité admise depuis Hifadhui sur le périmètre précédent, ré-audit requis sur ce périmètre ; aucun verdict de sécurité rendu, signaux transmis à Hifadhui, autorité en la matière.
+
+Suite :
+- Bamse : finitions FAIBLE lors d'une prochaine retouche, sans évolution de périmètre sans confirmation explicite.
+- Hifadhui : audit du bloc unique et des icônes inline si requis par défaut.
+- Zawadi : recontrôle au navigateur réel après rechargement du dev (bloc unique, icônes copie et check, retour `Copié`, barre fixe floue en bureau et 390).
+- Fichier vérifié après écriture avant déclaration de fin de review.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.
+
+## Archive du 2026-10-14T19:47:24+00:00 — review du 2026-10-14T19:39:00+00:00 (VALIDÉ AVEC RÉSERVES), remplacée suite au build du 2026-10-14T19:46:17+00:00
+
+task_id: FEATURE-001
+agent: reviewer
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-14T19:39:00+00:00"
+summary: Héros simplifié, barre fixe et teinte mesurée vérifiés conformes aux décisions 13 et 14, sans réserve nouvelle.
+---
+Date système réelle : 2026-10-14T19:39:00+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (gestionnaire yarn, port 5175)
+Tâche : FEATURE-001
+Version examinée : build.txt de Bamse, statut TERMINÉ, horodatage 2026-10-14T19:36:50+00:00 ; noyau documenté 0.12.3 du 2026-10-14 ; paquet vitrine 0.1.0
+Auteur : Hadji (agent : reviewer, rôle stable)
+Horodatage completed_at : 2026-10-14T19:39:00+00:00
+Résumé (summary) : Héros simplifié, barre fixe et teinte mesurée vérifiés conformes aux décisions 13 et 14, sans réserve nouvelle.
+Nom du projet : lu dans `.opencode/sayrhazi.yaml` (`project.name` = Sayrhazi-web) ; aucune valeur A_COMPLETER, aucun nom supposé.
+
+Contexte et sources :
+- Mémoire de session : ma review précédente du 2026-10-14T18:53:40+00:00 (VALIDÉ AVEC RÉSERVES, 1 FAIBLE nouveau) portait sur le build du 2026-10-14T18:52:30+00:00 ; elle est archivée dans `.opencode/history/review-log.md` avant le présent remplacement.
+- Nouveau build lu en intégralité : décisions 13 (héros simplifié) et 14 (barre fixe floue) appliquées, teinte du corps mesurée telle qu'employée, `yarn lint`, `yarn build` et `yarn test` déclarés verts.
+- Plan relu pour ses décisions 13 et 14 (bouton Démarrer conservé avec retrait possible, barre `sticky` avec flou, rechargement du dev exigé) ; décisions 1 à 12 conservées.
+- Acquits des autres agents, lus pour leurs verdicts sans refaire leurs vérifications : `security.txt` de Hifadhui du 2026-10-14T18:54:00+00:00 et `qa.txt` de Zawadi du 2026-10-14T18:56:26+00:00 (tous deux VALIDÉ AVEC RÉSERVES, dev à relancer). Tous deux antérieurs au présent build et donc non réappliqués à ce périmètre.
+- `sayrhazi.yaml` et `AGENTS.md` non relus (déjà lus, aucune modification signalée par les horodatages).
+
+Contrôles réalisés (ciblés sur les fichiers modifiés depuis ma review, horodatages du 2026-10-14T19:35 au 19:37) :
+- Relecture réelle du héros d'Accueil : bouton GitHub supprimé, import `LIENS` retiré sans import mort (aucune occurrence résiduelle dans le fichier), lien Démarrer conservé dans un conteneur centré, espacements resserrés conformes à la décision 13.
+- Relecture réelle d'`Entete.tsx` (barre `sticky top-0 z-50` avec `bg-encre/80` et `backdrop-blur-md`, bordure et grille conservées, liens et logotype inchangés) et d'`App.tsx` (racine en `bg-encre`, `scroll-mt-20` compensant la barre fixe pour l'ancre d'évitement).
+- Recherche ciblée : zéro `rel="noreferrer"` seul dans `src/` (les cinq liens externes restants sont en `noreferrer noopener`, le sixième ayant disparu avec le bouton).
+- Preuve rejouée : `node scripts/mesure-contrastes.js` exécuté, sortie 8 CONFORME dont corps `--clair` à 18,45 (mon FAIBLE précédent levé par la mesure exacte plutôt que par alignement, sans changement visuel comme annoncé).
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité (`tsc --noEmit` excluant l'import mort par typage strict, admis depuis le build vert) ; aucune QA au navigateur (réservée à Zawadi) ; aucun verdict de sécurité (réservé à Hifadhui).
+
+Points levés depuis ma précédente review :
+- Teinte du corps mesurée telle qu'employée (18,45), sans changement visuel ; plus aucun écart entre preuve et code.
+
+Problèmes :
+- FAIBLE (reconducts inchangés) — clés `point.slice(0, 32)` dans `Versions.tsx` ; `execCommand` déprécié ; `quality.design_required` à true contre Ali à false ; `AGENTS.md` §4 à compléter ; `lint` et `test` réduits.
+- Aucun problème CRITIQUE, HAUTE ni MOYENNE dans le code livré ; aucune réserve nouvelle sur ce périmètre (bouton Démarrer conservé sur arbitrage plan, barre `sticky` sans masquage de contenu par construction, grille réappliquée selon la décision 12 en vigueur).
+
+Recommandations (hors corrections ci-dessus) :
+- Conditionner la mise en ligne aux recontrôles Hifadhui (héros simplifié, barre fixe) et Zawadi (héros sans GitHub, copie, barre fixe floue en bureau et 390, focus, console) après rechargement du dev par le gestionnaire, comme le build le prévoit.
+
+Limites :
+- Hadji ne modifie, ne crée et ne supprime jamais de code source ; aucune correction appliquée, constats seuls.
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité ; `dist/` admis depuis le build sans contrôle direct du contenu généré.
+- Serveur de développement non rechargé (écart dev contre dist persistant côté processus) ; rendu réel de la barre fixe floue et du héros resserré, responsive 390 et console réservés à Zawadi, non déduits du seul code.
+- Sécurité admise depuis Hifadhui sur le périmètre précédent, ré-audit requis sur ce périmètre ; aucun verdict de sécurité rendu, signaux transmis à Hifadhui, autorité en la matière.
+
+Suite :
+- Bamse : finitions FAIBLE lors d'une prochaine retouche, sans évolution de périmètre sans confirmation explicite.
+- Hifadhui : audit du héros simplifié et de la barre fixe si requis par défaut.
+- Zawadi : recontrôle au navigateur réel après rechargement du dev (héros sans GitHub, copie, barre fixe floue en bureau et 390, focus, console).
+- Fichier vérifié après écriture avant déclaration de fin de review.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.
+
+## Archive du 2026-10-14T19:39:00+00:00 — review du 2026-10-14T18:53:40+00:00 (VALIDÉ AVEC RÉSERVES), remplacée suite au build du 2026-10-14T19:36:50+00:00
+
+task_id: FEATURE-001
+agent: reviewer
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-14T18:53:40+00:00"
+summary: Uniformisation sombre et finitions vérifiées conformes à la décision 12, preuve étendue rejouée verte, reliquat mineur sur la teinte exacte mesurée.
+---
+Date système réelle : 2026-10-14T18:53:40+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (gestionnaire yarn, port 5175)
+Tâche : FEATURE-001
+Version examinée : build.txt de Bamse, statut TERMINÉ, horodatage 2026-10-14T18:52:30+00:00 ; noyau documenté 0.12.3 du 2026-10-14 ; paquet vitrine 0.1.0
+Auteur : Hadji (agent : reviewer, rôle stable)
+Horodatage completed_at : 2026-10-14T18:53:40+00:00
+Résumé (summary) : Uniformisation sombre et finitions vérifiées conformes à la décision 12, preuve étendue rejouée verte, reliquat mineur sur la teinte exacte mesurée.
+Nom du projet : lu dans `.opencode/sayrhazi.yaml` (`project.name` = Sayrhazi-web) ; aucune valeur A_COMPLETER, aucun nom supposé.
+
+Contexte et sources :
+- Mémoire de session : ma review précédente du 2026-10-14T18:39:28+00:00 (VALIDÉ AVEC RÉSERVES, 3 FAIBLE nouveaux) portait sur le build du 2026-10-14T18:37:47+00:00 ; elle est archivée dans `.opencode/history/review-log.md` avant le présent remplacement.
+- Nouveau build lu en intégralité : décision 12 appliquée (sombre uniformisé, carte Versions en sombre, `rel` complété, preuve étendue, hygiène CSS), `yarn lint`, `yarn build` et `yarn test` déclarés verts.
+- Plan relu pour sa décision 12 (uniformisation sur le sombre du hero, carte bleue supprimée, rechargement du dev exigé) ; décisions 1 à 11 conservées.
+- Acquits des autres agents, lus pour leurs verdicts sans refaire leurs vérifications : `security.txt` de Hifadhui du 2026-10-14T18:40:00+00:00 (VALIDÉ AVEC RÉSERVES sur le thème sombre, FAIBLE 01 sur le `rel` d'Accueil) et `qa.txt` de Zawadi du 2026-10-14T18:42:04+00:00 (VALIDÉ AVEC RÉSERVES : thème sombre et héros centrés confirmés au navigateur réel, dev partiellement non rechargé, régression mineure sur un lien). Tous deux antérieurs au présent build et donc non réappliqués à l'uniformisation.
+- `sayrhazi.yaml` et `AGENTS.md` non relus (déjà lus, aucune modification signalée par les horodatages).
+
+Contrôles réalisés (ciblés sur les fichiers modifiés depuis ma review, horodatages du 2026-10-14T18:50 au 18:52) :
+- Recherches ciblées dans `src/` : zéro `bg-ivoire`, `bg-papier`, `sayrhazi/10`, `rel="noreferrer"` sans `noopener` et zéro grille claire (affirmations du build vérifiées, six liens en `noreferrer noopener`).
+- Preuve rejouée : `node scripts/mesure-contrastes.js` exécuté, sortie 7 CONFORME (19,81, 7,31 à 60, 8,44 à 65, 6,44 sur bleu et accents, focus 19,81) et 3 INTERDIT documentés sans usage, algorithme WCAG inchangé et correct.
+- Relecture réelle de `src/index.css` (teinte `--clair` tokénisée, commentaires actualisés, grille claire retirée) et de la carte Dernière version de `Versions.tsx` (carte sombre `bg-encre text-white`, version et badge en `text-chartreuse` sur encre à 6,44).
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité ; aucune QA au navigateur (réservée à Zawadi) ; aucun verdict de sécurité (réservé à Hifadhui).
+
+Points levés depuis ma précédente review :
+- `rel` oublié de l'Accueil : six liens verrouillés, FAIBLE 01 de Hifadhui traité.
+- Preuve incomplète : paliers 60 (7,31) et 65 (8,44) ajoutés comme pires cas employés, tous conformes par preuve rejouée.
+- Hygiène CSS : teinte claire tokénisée en `--clair`, commentaires actualisés, utilitaire inutile retiré.
+
+Problèmes :
+- FAIBLE — Preuve et code sur deux teintes proches : le script mesure le blanc `#ffffff` (19,81) alors que le corps emploie `--clair` (`#f7f7f3`, `index.css`, l.16 et l.26). Preuve : sortie du script contre `index.css`. Impact : écart d'environ un point de ratio, sans aucun risque de seuil, mais la valeur exacte employée n'est pas celle mesurée. Correction recommandée : mesurer `--clair` dans le script ou aligner le corps sur `#ffffff` lors d'une prochaine retouche.
+- FAIBLE (reconducts inchangés) — clés `point.slice(0, 32)` dans `Versions.tsx` ; `execCommand` déprécié ; `quality.design_required` à true contre Ali à false ; `AGENTS.md` §4 à compléter ; `lint` et `test` réduits.
+- Aucun problème CRITIQUE, HAUTE ni MOYENNE dans le code livré.
+
+Recommandations (hors corrections ci-dessus) :
+- Aligner preuve et teinte de corps lors d'une prochaine retouche, sans urgence.
+- Conditionner la mise en ligne aux recontrôles Hifadhui et Zawadi sur ce périmètre uniformisé (tous deux antérieurs), après rechargement du dev par le gestionnaire, comme le build le prévoit.
+
+Limites :
+- Hadji ne modifie, ne crée et ne supprime jamais de code source ; aucune correction appliquée, constats seuls.
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité ; `dist/` admis depuis le build sans contrôle direct du contenu généré.
+- Serveur de développement non rechargé (écart dev contre dist persistant côté processus) ; rendu réel du sombre uniforme, responsive 390 et console réservés à Zawadi, non déduits du seul code.
+- Sécurité admise depuis Hifadhui sur le périmètre précédent, ré-audit requis sur l'uniformisation ; aucun verdict de sécurité rendu, signaux transmis à Hifadhui, autorité en la matière.
+
+Suite :
+- Bamse : finition FAIBLE lors d'une prochaine retouche, sans évolution de périmètre sans confirmation explicite.
+- Hifadhui : audit de l'uniformisation et du `rel` verrouillé si requis par défaut.
+- Zawadi : recontrôle au navigateur réel après rechargement du dev (sombre uniforme, héros centrés, focus, contrastes, mobile 390, console).
+- Fichier vérifié après écriture avant déclaration de fin de review.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.
+
+## Archive du 2026-10-14T18:53:40+00:00 — review du 2026-10-14T18:39:28+00:00 (VALIDÉ AVEC RÉSERVES), remplacée suite au build du 2026-10-14T18:52:30+00:00
+
+task_id: FEATURE-001
+agent: reviewer
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-14T18:39:28+00:00"
+summary: Thème sombre et héros centrés vérifiés conformes aux décisions 10 et 11, seule la preuve de contrastes et un rel oublié appellent des finitions.
+---
+Date système réelle : 2026-10-14T18:39:28+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (gestionnaire yarn, port 5175)
+Tâche : FEATURE-001
+Version examinée : build.txt de Bamse, statut TERMINÉ, horodatage 2026-10-14T18:37:47+00:00 ; noyau documenté 0.12.3 du 2026-10-14 ; paquet vitrine 0.1.0
+Auteur : Hadji (agent : reviewer, rôle stable)
+Horodatage completed_at : 2026-10-14T18:39:28+00:00
+Résumé (summary) : Thème sombre et héros centrés vérifiés conformes aux décisions 10 et 11, seule la preuve de contrastes et un rel oublié appellent des finitions.
+Nom du projet : lu dans `.opencode/sayrhazi.yaml` (`project.name` = Sayrhazi-web) ; aucune valeur A_COMPLETER, aucun nom supposé.
+
+Contexte et sources :
+- Mémoire de session : ma review précédente du 2026-10-14T17:35:11+00:00 (VALIDÉ AVEC RÉSERVES, 1 MOYENNE sur `#249CD8`) portait sur le build du 2026-10-14T17:33:07+00:00 ; elle est archivée dans `.opencode/history/review-log.md` avant le présent remplacement.
+- Nouveau build lu en intégralité : décisions 10 (thème sombre) et 11 (héros centrés) appliquées, bleu `#249CD8` confirmé sans réserve par le plan, contrastes mesurés conformes, `yarn lint`, `yarn build` et `yarn test` déclarés verts.
+- Plan relu pour ses décisions 8 (bleu confirmé sans réserve de coquille), 10 (thème sombre) et 11 (héros centrés) : la réserve MOYENNE de ma précédente review est levée par arbitrage explicite de Lawibrahim.
+- Acquits des autres agents, lus pour leurs verdicts sans refaire leurs vérifications : `security.txt` de Hifadhui du 2026-10-14T17:35:00+00:00 (VALIDÉ AVEC RÉSERVES sur les décisions 8 et 9) et `qa.txt` de Zawadi du 2026-10-14T17:37:11+00:00 (VALIDÉ AVEC RÉSERVES : correctifs 8 et 9 confirmés au navigateur réel, dev non rechargé, relectures Hadji et Hifadhui à rejouer). Tous deux antérieurs au thème sombre et donc non réappliqués à ce périmètre.
+- `sayrhazi.yaml` et `AGENTS.md` non relus (déjà lus, aucune modification signalée par les horodatages).
+
+Contrôles réalisés (ciblés sur les fichiers modifiés depuis ma review, horodatages du 2026-10-14T18:36 au 18:37) :
+- Relecture réelle de `tailwind.config.js` (fonds unifiés en `#090a0b`, bleu confirmé, commentaire décision 10), `src/index.css` (variables alignées, corps sombre, focus double anneau conservé), `src/App.tsx` (racine sombre, logique inchangée) et des héros des trois pages (centrage `text-center`, `mx-auto` et `justify-center` confirmé sur Accueil, Démarrage et Versions, décision 11).
+- Recherches ciblées dans `src/` : zéro `#269CD8`, `#d8ff4f`, `#8d9290`, `text-ivoire`, `text-encre` et `border-encre` (affirmations du build vérifiées, aux exceptions volontaires près : encre sur aplats bleus, bordure du badge, corps blanc cassé) ; `rel="noreferrer noopener"` sur cinq des six liens externes, un oubli relevé ci-dessous.
+- Lecture de `scripts/mesure-contrastes.js` (couples adaptés au sombre, algorithme WCAG inchangé et correct) ; `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité ; aucune QA au navigateur (réservée à Zawadi) ; aucun verdict de sécurité (réservé à Hifadhui).
+
+Points levés depuis ma précédente review :
+- Réserve MOYENNE sur `#249CD8` : levée par la décision 8 qui confirme la valeur sans réserve de coquille sur demande explicite ; le plan tranche, la qualité suit l'arbitrage.
+- Contrastes et hiérarchie : thème sombre unifié, hiérarchie portée par bordures claires et grille pointillée conformément à la décision 10, tous les couples employés annoncés conformes.
+
+Problèmes :
+- FAIBLE — Lien GitHub de l'Accueil oublié dans le durcissement `rel` : le bouton « Voir sur GitHub » (`Accueil.tsx`, l.34) reste en `rel="noreferrer"` seul alors que les cinq autres liens externes sont en `noreferrer noopener`, et que le build annonce les liens complétés. Preuve : recherche ciblée sur `rel="noreferrer` (6 occurrences, 1 sans `noopener`). Impact : hygiène seule, `noreferrer` impliquant déjà `noopener` sur les navigateurs modernes. Correction recommandée : compléter ce sixième lien et corriger la formulation du build (« quatre liens » alors qu'il y en a six).
+- FAIBLE — Preuve de contrastes incomplète : le script affiche `BLANC_70` comme « pire cas autorisé » (9,67) alors que le code emploie `text-white/60` et `text-white/65` (mentions mono, métriques, badge de version). Preuve : `Accueil.tsx`, l.24 et l.56 ; `Demarrage.tsx`, l.9 et l.60 ; `Versions.tsx`, l.11 ; `Entete.tsx`, l.32. Impact : ces paliers restent vraisemblablement conformes (le blanc même atténué sur encre dépasse nettement 4,5:1 par calcul d'ordre de grandeur), mais ils ne sont pas couverts par la preuve. Correction recommandée : ajouter les paliers 0,60 et 0,65 au script ou remonter ces textes à `/70` et `/85`.
+- FAIBLE — Hygiène du CSS : `color: #f7f7f3` en dur dans `body` (`index.css`, l.25, ancien token ivoire recyclé sans variable, au demeurant écrasé par `text-white` racine) et deux commentaires périmés (l.46-47 mentionnant la page d'accueil pour le logotype, l.50 mentionnant les fonds gris). Correction recommandée : tokéniser la teinte claire et actualiser les commentaires.
+- FAIBLE (reconducts inchangés) — clés `point.slice(0, 32)` dans `Versions.tsx` ; `execCommand` déprécié ; `quality.design_required` à true contre Ali à false ; `AGENTS.md` §4 à compléter ; `lint` et `test` réduits.
+- Aucun problème CRITIQUE, HAUTE ni MOYENNE dans le code livré.
+
+Recommandations (hors corrections ci-dessus) :
+- Faire compléter le `rel` oublié, étendre le script aux paliers employés et nettoyer le CSS lors d'une prochaine retouche, sans urgence.
+- Conditionner la mise en ligne aux recontrôles Hifadhui et Zawadi sur ce périmètre sombre (tous deux antérieurs), après rechargement du dev par le gestionnaire, comme le build le prévoit.
+
+Limites :
+- Hadji ne modifie, ne crée et ne supprime jamais de code source ; aucune correction appliquée, constats seuls.
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité ; `dist/` admis depuis le build sans contrôle direct du contenu généré.
+- Serveur de développement non rechargé (écart dev contre dist persistant côté processus) ; rendu réel, héros centrés, responsive 390 et console réservés à Zawadi, non déduits du seul code.
+- Sécurité admise depuis Hifadhui sur le périmètre précédent, ré-audit requis sur le thème sombre ; aucun verdict de sécurité rendu, signaux transmis à Hifadhui, autorité en la matière.
+
+Suite :
+- Bamse : finitions FAIBLE lors d'une prochaine retouche, sans évolution de périmètre sans confirmation explicite.
+- Hifadhui : audit du thème sombre et des héros centrés si requis par défaut.
+- Zawadi : recontrôle au navigateur réel après rechargement du dev (thème sombre, héros centrés, focus, contrastes, mobile 390, console, attributs `rel`).
+- Fichier vérifié après écriture avant déclaration de fin de review.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.
+
+## Archive du 2026-10-14T18:39:28+00:00 — review du 2026-10-14T17:35:11+00:00 (VALIDÉ AVEC RÉSERVES), remplacée suite au build du 2026-10-14T18:37:47+00:00
+
+task_id: FEATURE-001
+agent: reviewer
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-14T17:35:11+00:00"
+summary: Corrections des contrastes et retraits d'images vérifiés conformes, script de preuve rejoué vert, une réserve sur la valeur du bleu.
+---
+Date système réelle : 2026-10-14T17:35:11+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (gestionnaire yarn, port 5175)
+Tâche : FEATURE-001
+Version examinée : build.txt de Bamse, statut TERMINÉ, horodatage 2026-10-14T17:33:07+00:00 ; noyau documenté 0.12.3 du 2026-10-14 ; paquet vitrine 0.1.0
+Auteur : Hadji (agent : reviewer, rôle stable)
+Horodatage completed_at : 2026-10-14T17:35:11+00:00
+Résumé (summary) : Corrections des contrastes et retraits d'images vérifiés conformes, script de preuve rejoué vert, une réserve sur la valeur du bleu.
+Nom du projet : lu dans `.opencode/sayrhazi.yaml` (`project.name` = Sayrhazi-web) ; aucune valeur A_COMPLETER, aucun nom supposé.
+
+Contexte et sources :
+- Mémoire de session : ma review précédente du 2026-10-14T15:52:54+00:00 (VALIDÉ AVEC RÉSERVES, 6 MOYENNE requalifiées) portait sur le build du 2026-10-14T15:51:35+00:00 ; elle est archivée dans `.opencode/history/review-log.md` avant le présent remplacement.
+- Nouveau build lu en intégralité : décisions 8 et 9 du plan appliquées (bleu figé à `#249CD8`, images de pages retirées, contrastes mesurés, `yarn.lock` généré, `rel` complété), `yarn lint`, `yarn build` et `yarn test` déclarés verts.
+- Plan relu pour ses décisions 8 et 9 (plan mis à jour par Lawibrahim le 2026-10-14T15:57:24+00:00) : palette et retraits actés, réserves d'accessibilité maintenues avec mesure exigée, mise en ligne conditionnée à 4,5:1 au moins.
+- Acquits des autres agents, lus pour leurs verdicts sans refaire leurs vérifications : `security.txt` de Hifadhui du 2026-10-14T15:53:00+00:00 (VALIDÉ AVEC RÉSERVES, couverture maintenue sur build sans modification) et `qa.txt` de Zawadi du 2026-10-14T15:53:40+00:00 (CORRECTIONS NÉCESSAIRES au navigateur réel : bleu sur gris à 1,03, blanc sur bleu à 3,07, logotype Versions tronqué, écart dev contre dist, console et parcours conformes).
+- `sayrhazi.yaml` et `AGENTS.md` non relus (déjà lus, aucune modification signalée par les horodatages).
+
+Contrôles réalisés (ciblés sur les fichiers modifiés depuis ma review, horodatages du 2026-10-14T17:30 au 17:32) :
+- Relecture réelle de `tailwind.config.js` (bleu `#249CD8` figé, commentaire décision 8), `src/index.css` (variables alignées, focus double anneau blanc et encre, commentaire de visibilité), `src/components/CarteAgent.tsx` (rôle en encre, pastille seule en couleur, bordures renforcées), `src/components/Entete.tsx` et `src/components/PiedDePage.tsx` (logotypes conservés, liens en soulignement encre avec pastille de survol, `rel="noreferrer noopener"`).
+- Relecture des sections modifiées de `src/pages/Accueil.tsx` (accents passés en encre, microcopies en `text-encre/85`, carte protocole renforcée) et `src/pages/Versions.tsx` (image retirée, textes remontés, cartes renforcées) ; retrait des images de pages confirmé par cantonnement de `BASE_URL` à l'en-tête et au pied de page.
+- Recherches ciblées dans `src/` : zéro `text-sayrhazi`, `hover:text-cobalt`, `decoration-sayrhazi`, `hover:border-sayrhazi` et zéro `text-encre/` sous `/85` (affirmations du build vérifiées) ; seule occurrence restante de `#269CD8` dans la citation historique du CHANGELOG (`versions.ts`), hors tokens et légitime.
+- Preuve rejouée : `node scripts/mesure-contrastes.js` exécuté, sortie 8 CONFORME (encre sur gris 6,27, encre sur bleu 6,44, bleu sur encre 6,44, blanc sur encre 19,81, microcopie 5,28, focus 3,16 et 19,81) et 3 INTERDIT documentés sans usage (bleu sur gris 1,03, blanc sur bleu 3,08, cobalt sur gris 2,06), algorithme de luminance WCAG conforme.
+- Existence contrôlée : `yarn.lock` présent, PNG orphelins supprimés, `public/` réduit aux deux seuls SVG (`logo-sayrhazi.svg` pour l'icône, `sayrhazi-logo.svg` pour la navbar et le footer).
+- Aucun `yarn lint` ni `yarn build` rejoué (verts déclarés, preuve rejouée par le script) ; aucune QA au navigateur (réservée à Zawadi) ; aucun verdict de sécurité (réservé à Hifadhui).
+
+Points levés depuis ma précédente review :
+- Logotype tronqué de Versions : images de pages retirées (décision 9), plus aucun `<img>` de page, défaut supprimé à la source.
+- Contrastes non conformes : textes bleus sur gris supprimés, survols cobalt supprimés, microcopies remontées à 5,28, focus double anneau mesuré à 3,16 et 19,81, tous les couples employés conformes par preuve rejouée.
+- `yarn.lock` manquant : généré par `yarn install`, présent et non vide.
+- `rel` partiel : `noreferrer noopener` sur les quatre liens externes, hygiène FAIBLE 03 de Hifadhui traitée.
+- Dette de nommage et dérive plan et code : tranchées par la décision 8 qui fige valeurs et noms sur arbitrage Lawibrahim, avec traçabilité dans `plan.txt`.
+- Double logotype : un seul logotype conservé (navbar et footer), réserve levée.
+- Mobile 390 : aucun débordement mesuré par Zawadi sur les trois pages, réserve levée sous condition de recontrôle après rechargement du dev.
+
+Problèmes :
+- MOYENNE — Valeur `#249CD8` à confirmer : elle diffère d'un caractère du bleu Sayrhazi `#269CD8` du cahier, des logotypes fournis (`#269cd8`) et de la valeur précédemment déployée ; la décision 8 l'impose avec point d'attention explicite. Preuve : `tailwind.config.js`, l.14-15, et `plan.txt` décision 8. Impact : à l'œil nu l'écart est imperceptible, mais un `#249CD8` non volontaire signalerait une coquille figée dans les tokens et le verrou. Correction recommandée : confirmation explicite du caractère volontaire avant mise en ligne, sinon realignement sur `#269CD8` avec remesure par le script.
+- FAIBLE — Clés de liste fragiles persistantes dans `Versions.tsx` : `key={point.slice(0, 32)}` inchangé (l.34, l.54). Correction recommandée : clé sur l'index ou la chaîne complète lors d'une prochaine retouche.
+- FAIBLE — `document.execCommand("copy")` déprécié dans `CopierCommande.tsx` (l.21), composant non retouché ; laissé à plus tard par le build comme recommandé par Hifadhui.
+- FAIBLE — `quality.design_required` à true contre Ali à false acté, et `AGENTS.md` §4 toujours à compléter ; inchangés depuis le cadrage.
+- FAIBLE — Outillage `lint` et `test` réduit (`tsc --noEmit`, constat journalisé), assumé pour un site statique ; la preuve de contrastes versionnée compense partiellement l'absence de garde automatisée.
+- Aucun problème CRITIQUE ni HAUTE dans le code livré ; convergence avec le build et non-contrediction avec la QA précédente (dont les HAUTE portaient sur l'état antérieur corrigé depuis).
+
+Recommandations (hors corrections ci-dessus) :
+- Confirmer la valeur `#249CD8` avant mise en ligne, puis recontrôles Hifadhui (nouveau périmètre : verrou, retraits d'images, `rel`) et Zawadi (absence d'images de pages, focus visible, contrastes, mobile 390) après rechargement du dev, comme le build le prévoit.
+
+Limites :
+- Hadji ne modifie, ne crée et ne supprime jamais de code source ; aucune correction appliquée, constats seuls.
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité ; `dist/` admis depuis le build (40 modules, deux SVG) sans contrôle direct du contenu généré.
+- Serveur de développement non rechargé (écart dev contre dist persistant côté processus) ; rendu réel, responsive et console réservés à Zawadi, non déduits du seul code.
+- Mesures de contraste admises depuis le script rejoué localement (algorithme vérifié, pas de colorimètre certifié) ; sécurité admise depuis Hifadhui sur le périmètre précédent, ré-audit requis sur le nouveau.
+- Aucun verdict de sécurité rendu ; signaux transmis à Hifadhui, autorité en la matière.
+
+Suite :
+- Lawibrahim ou gestionnaire : confirmer le caractère volontaire de `#249CD8`.
+- Hifadhui : audit du nouveau périmètre si requis par défaut (verrou ajouté, images retirées, `rel` complété).
+- Zawadi : recontrôle au navigateur réel après rechargement du dev (absence d'images de pages, focus visible, contrastes, mobile 390, console).
+- Fichier vérifié après écriture avant déclaration de fin de review.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.
+
+## Archive du 2026-10-14T17:35:11+00:00 — review du 2026-10-14T15:52:54+00:00 (VALIDÉ AVEC RÉSERVES), remplacée suite au build du 2026-10-14T17:33:07+00:00
+
+task_id: FEATURE-001
+agent: reviewer
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-14T15:52:54+00:00"
+summary: État visuel inchangé et vérifié sans régression, réserves maintenues mais requalifiées après QA réelle sans défaut bloquant.
+---
+Date système réelle : 2026-10-14T15:52:54+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (gestionnaire yarn, port 5175)
+Tâche : FEATURE-001
+Version examinée : build.txt de Bamse, statut TERMINÉ, horodatage 2026-10-14T15:51:35+00:00 ; noyau documenté 0.12.3 du 2026-10-14 ; paquet vitrine 0.1.0
+Auteur : Hadji (agent : reviewer, rôle stable)
+Horodatage completed_at : 2026-10-14T15:52:54+00:00
+Résumé (summary) : État visuel inchangé et vérifié sans régression, réserves maintenues mais requalifiées après QA réelle sans défaut bloquant.
+Nom du projet : lu dans `.opencode/sayrhazi.yaml` (`project.name` = Sayrhazi-web) ; aucune valeur A_COMPLETER, aucun nom supposé.
+
+Contexte et sources :
+- Mémoire de session : ma review précédente du 2026-10-14T15:48:37+00:00 (CORRECTIONS NÉCESSAIRES, 1 HAUTE et 5 MOYENNE) portait sur le build du 2026-10-14T15:46:59+00:00 ; elle est archivée dans `.opencode/history/review-log.md` avant le présent remplacement.
+- Nouveau build lu en intégralité : vérification sans modification, état couleurs et logotypes inchangé, `yarn lint`, `yarn build` et `yarn test` déclarés verts, `dist/` regénéré avec les quatre logotypes.
+- Acquits des autres agents, lus pour leurs verdicts sans refaire leurs vérifications : `security.txt` de Hifadhui du 2026-10-14T15:49:00+00:00 (VALIDÉ AVEC RÉSERVES, audit ciblé du build couleurs et logotypes, sans surface d'attaque exploitable) et `qa.txt` de Zawadi du 2026-10-14T15:49:39+00:00 (VALIDÉ AVEC RÉSERVES au navigateur réel, console zéro erreur, images chargées, 3 MOYENNE et 3 FAIBLE, aucune HAUTE).
+- Plan, `sayrhazi.yaml` et `AGENTS.md` non relus (déjà lus, aucune modification signalée par les horodatages).
+
+Contrôles réalisés (ciblés sur ce qui a bougé depuis ma review, horodatages postérieurs au 2026-10-14T15:48:37+00:00) :
+- Relecture intégrale de `src/pages/Accueil.tsx` (seul fichier source horodaté après ma review, 15:49:25) : contenu strictement identique à celui déjà examiné (136 lignes, mêmes classes, mêmes contenus), donc réécriture à l'identique sans changement de fond.
+- Confrontation de mes constats aux faits mesurés par Zawadi : `dist/` fait foi du code (bleu présent), serveur de développement en retard de rechargement (lime affichée, écart dev et dist constaté), mobile 390 sans débordement mesuré sur Démarrage et Versions (scrollWidth 375 pour 390), logotype de Versions tronqué en capture réelle, images toutes chargées avec dimensions naturelles relevées.
+- Aucune relecture des fichiers inchangés depuis ma précédente inspection ; aucun `yarn lint` ni `yarn build` rejoué (verts déclarés, contenu identique) ; aucune QA au navigateur (réservée à Zawadi) ; aucun verdict de sécurité (réservé à Hifadhui, qui a couvert le nouveau périmètre).
+
+Requalification motivée :
+- Ma HAUTE du tour précédent (accents bleus sur fonds gris, calcul relatif proche de 1:1) est requalifiée en MOYENNE : aucun des deux agents au contact du réel (Zawadi avec captures, Hifadhui sans HAUTE) ne relève de défaut bloquant, et mon ratio n'est pas instrumenté au colorimètre. Le risque reste entier sur le code réel (dist bleu confirmé) et la mesure AA 4,5:1 demeure exigée avant mise en ligne, mais la proportionnalité et la convergence inter-agents imposent MOYENNE plutôt que HAUTE.
+- Ma MOYENNE sur le débordement à 390 px est déclassée en FAIBLE : Zawadi mesure désormais aucun débordement sur deux pages, l'en-tête étant commun aux trois ; seule la mesure sur l'Accueil reste à compléter.
+- En conséquence le verdict passe de CORRECTIONS NÉCESSAIRES à VALIDÉ AVEC RÉSERVES, avec mesure des contrastes et cadrage du logotype de Versions comme conditions avant mise en ligne.
+
+Problèmes :
+- MOYENNE — Accents bleus sur fonds gris et focus à mesurer (ex-HAUTE requalifiée, mesure AA exigée) : `text-sayrhazi` sur `bg-ivoire` et `bg-papier` gris (`Accueil.tsx`, l.76 et l.95), soulignements `decoration-sayrhazi` et survols `hover:text-cobalt` sur fond gris du pied de page (`PiedDePage.tsx`, l.25-35), anneau de focus bleu sur fonds gris (`index.css`, l.49-54). Converge avec MOYENNE 03 de Zawadi. Correction recommandée : mesure au contrastemètre avant mise en ligne puis, si confirmée, réserver le bleu aux fonds sombres et passer textes, soulignements et focus sur fonds gris en encre ou bleu assombri au ratio vérifié.
+- MOYENNE — Logotype de la page Versions tronqué, constaté en capture réelle par Zawadi (MOYENNE 02) : `logo-sayrhazi.svg` agrandi et rogné dans le hero, seule la séquence « Sh » visible, fichier pourtant sain (210 px naturels). Preuve : `Versions.tsx`, l.22-26, classe `h-14 w-auto` sans contrainte de largeur ni `object-contain`. Impact : hero de page dégradé, défaut visible par tout visiteur. Correction recommandée : contraindre hauteur, largeur maximale et `object-contain` comme pour les PNG, puis recontrôle capture par Zawadi.
+- MOYENNE — Corps de texte en encre translucide sur gris moyen (reconduite) : `text-encre/55` à `/85` sur fonds gris (`Accueil.tsx`, l.71, l.78 et l.93 ; `Versions.tsx`, l.54, l.58 et l.69). Correction recommandée : opacités remontées ou fond des cartes différencié, à intégrer à la mesure AA globale.
+- MOYENNE — Hiérarchie visuelle perdue, `ivoire` et `papier` au même gris (reconduite, signalée aussi par Bamse et Zawadi). Correction recommandée : différencier les deux tons et renforcer les bordures, validation visuelle par Zawadi.
+- MOYENNE — Dette de nommage trompeuse (reconduite) : classes `chartreuse`, `ivoire` et `papier` aux valeurs contraires, avec simple commentaire (`tailwind.config.js`, l.7-8). Correction recommandée : renommage à arbitrer par Lawibrahim.
+- MOYENNE — Contraste des rôles dans `CarteAgent.tsx` (reconduite) : texte coloré sur fond désormais gris. Converge avec MOYENNE 03 de Zawadi. Correction recommandée : rôle en encre, pastille seule en couleur.
+- FAIBLE — Navigation à 390 px (déclassée, mesure Accueil à compléter) : aucun débordement mesuré par Zawadi sur Démarrage et Versions, lien GitHub masqué en mobile mais accessible par le hero et le pied de page. Surveillance sans blocage.
+- FAIBLE — Écart de traçabilité du build : `Accueil.tsx` horodaté 15:49:25 alors que le build affirme « aucun fichier modifié à ce tour » ; contenu vérifié identique, donc sans effet, mais l'affirmation est inexacte. Correction recommandée : formuler « aucun changement de fond » plutôt que « aucun fichier modifié » quand un fichier est réécrit à l'identique.
+- FAIBLE — Serveur de développement non rechargé (MOYENNE 01 de Zawadi, aspect processus) : tailwind.config.js non repris par le dev, écart dev et dist ; le rechargement appartient au gestionnaire, interdit à la QA. Correction recommandée : recharger puis recontrôler les accents bleus avec mesure des couleurs calculées.
+- FAIBLE (reconducts inchangés) — clés `point.slice(0, 32)` dans `Versions.tsx` ; `execCommand` déprécié ; `rel="noreferrer"` seul ; dérive plan et code sur la palette à consigner par Lawibrahim ; double logotype et `alt` génériques (images vérifiées chargées par Zawadi) ; aucun `yarn.lock` ; `design_required` à true contre Ali à false ; `AGENTS.md` §4 à compléter ; `lint` et `test` réduits.
+- Point levé : nouveaux assets désormais couverts par l'audit ciblé de Hifadhui sur le build recoloré.
+
+Recommandations (hors corrections ci-dessus) :
+- Conditionner la mise en ligne à la mesure AA des couples bleu sur gris et encre translucide sur gris, au cadrage du logotype de Versions et au recontrôle après rechargement du dev, avec nouvelles captures de Zawadi.
+- Faire consigner par Lawibrahim l'arbitrage palette (valeurs, périmètre, demandeur, date) dans `plan.txt`, puis le renommage des tokens si acté.
+
+Limites :
+- Hadji ne modifie, ne crée et ne supprime jamais de code source ; aucune correction appliquée, constats seuls.
+- Ratios de contraste non instrumentés par mes soins ; mesures réelles (couleurs calculées, captures, console, mobile) reprises de Zawadi sans les refaire.
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité ; `dist/` admis depuis les contrôles croisés de Bamse et Zawadi.
+- Aucun verdict de sécurité rendu ; perimeter couvert par Hifadhui sur ce même build, autorité en la matière.
+
+Suite :
+- Bamse : cadrage du logotype de Versions, confirmation des contrastes par mesure, puis finitions MOYENNE et FAIBLE, sans évolution de périmètre sans confirmation explicite.
+- Zawadi : recontrôle après rechargement du dev (accents bleus mesurés), capture de Versions, mesure Accueil à 390 px.
+- Hifadhui : périmètre couvert sur ce build, RAS côté qualité.
+- Fichier vérifié après écriture avant déclaration de fin de review.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.
+
+## Archive du 2026-10-14T15:52:54+00:00 — review du 2026-10-14T15:48:37+00:00 (CORRECTIONS NÉCESSAIRES), remplacée suite au build du 2026-10-14T15:51:35+00:00
+
+task_id: FEATURE-001
+agent: reviewer
+status: CORRECTIONS NÉCESSAIRES
+completed_at: "2026-10-14T15:48:37+00:00"
+summary: Nouvelle palette gris et bleu non déployable en l'état, accents bleus illisibles sur fonds gris et focus invisible.
+---
+Date système réelle : 2026-10-14T15:48:37+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (gestionnaire yarn, port 5175)
+Tâche : FEATURE-001
+Version examinée : build.txt de Bamse, statut TERMINÉ, horodatage 2026-10-14T15:46:59+00:00 ; noyau documenté 0.12.3 du 2026-10-14 ; paquet vitrine 0.1.0
+Auteur : Hadji (agent : reviewer, rôle stable)
+Horodatage completed_at : 2026-10-14T15:48:37+00:00
+Résumé (summary) : Nouvelle palette gris et bleu non déployable en l'état, accents bleus illisibles sur fonds gris et focus invisible.
+Nom du projet : lu dans `.opencode/sayrhazi.yaml` (`project.name` = Sayrhazi-web) ; aucune valeur A_COMPLETER, aucun nom supposé.
+
+Contexte et sources :
+- Mémoire de session : ma review précédente du 2026-10-14T15:31:27+00:00 (VALIDÉ AVEC RÉSERVES, 2 MOYENNE et 6 FAIBLE) portait sur le build du 2026-10-14T15:30:10+00:00 ; elle est archivée dans `.opencode/history/review-log.md` avant le présent remplacement.
+- Nouveau build lu en intégralité : remplacements de couleurs sur demande explicite (fonds ivoire et papier vers gris `#8D9290`, chartreuse vers bleu `#269CD8`), logotypes intégrés, `public/favicon.svg` supprimé, `yarn lint`, `yarn build` et `yarn test` déclarés verts.
+- Acquits des autres agents, lus pour leurs verdicts sans refaire leurs vérifications : `security.txt` de Hifadhui (VALIDÉ AVEC RÉSERVES, 5 FAIBLE, audit sur l'ancien build) et `qa.txt` de Zawadi (VALIDÉ AVEC RÉSERVES, 1 MOYENNE sur la navigation à 390 px, constats sur l'ancien visuel donc caducs sur la nouvelle palette).
+- Plan non relu en intégralité (inchangé depuis ma précédente lecture) ; `sayrhazi.yaml` et `AGENTS.md` non relus (déjà lus, aucune modification signalée par les horodatages).
+
+Contrôles réalisés (ciblés sur les fichiers modifiés depuis ma review, horodatages postérieurs au 2026-10-14T15:31:27+00:00) :
+- Relecture réelle des 8 fichiers touchés : `tailwind.config.js`, `src/index.css`, `index.html`, `src/components/Entete.tsx`, `src/components/PiedDePage.tsx`, `src/pages/Accueil.tsx`, `src/pages/Demarrage.tsx`, `src/pages/Versions.tsx`.
+- Contrôle de `public/` : quatre logotypes présents (`logo-sayrhazi.png`, `logo-sayrhazi.svg`, `sayrhazi-logo.png`, `sayrhazi-logo.svg`), favicon absent, conforme au build.
+- Recherche ciblée dans `src/` sur `#d8ff4f|#f7f7f3|#f0f0ec|favicon\.svg|marque-hexa` : zéro occurrence, affirmation du build vérifiée.
+- Cartographie des couples texte et fond après bascule des tokens : encre pleine sur gris et sur bleu, gris sur encre et bleu sur encre conservés et sains ; en revanche bleu `#269CD8` sur gris `#8D9290` de luminosités proches, ratio mécanique proche de 1:1, à confirmer au colorimètre et par Zawadi au navigateur réel.
+- Logotypes : attributs `alt` présents, `width` et `height` renseignés contre les décalages de mise en page, chemins relatifs via `import.meta.env.BASE_URL` compatibles avec la base `./` pour GitHub Pages.
+- Effort proportionné : aucun `yarn lint` ni `yarn build` rejoué (verts déclarés, contenu statique), aucune QA au navigateur (réservée à Zawadi), aucun verdict de sécurité (réservé à Hifadhui).
+
+Problèmes :
+- HAUTE — Accents bleus illisibles sur fonds gris et indicateur de focus invisible : `text-sayrhazi` (bleu `#269CD8`) affiché sur fonds `bg-ivoire` et `bg-papier` devenus gris `#8D9290` (titres « Un relais précis. » et « laisse une trace. » dans `Accueil.tsx`, l.76 et l.95) ; soulignements `decoration-sayrhazi` et survols `hover:text-cobalt` (`#1e40ff`) sur fond gris du pied de page (`PiedDePage.tsx`, l.25-35) ; anneau de focus `outline: 3px solid var(--sayrhazi)` (désormais bleu) invisible sur ces mêmes fonds gris (`index.css`, l.49-54). Preuve : `tailwind.config.js`, l.9-14, et occurrences relevées par recherche ciblée. Impact : titres de section et liens de pied de page quasi illisibles, navigation au clavier sans repère visible sur les sections claires. Correction recommandée : réserver le bleu aux fonds sombres et utiliser l'encre (ou un bleu marine assombri au ratio vérifié) pour les textes, soulignements et anneaux de focus sur fonds gris.
+- MOYENNE — Corps de texte en encre translucide sur gris moyen : `text-encre/55`, `/60`, `/70`, `/75`, `/80` et `/85` (mentions, descriptions, dates, détails) sur fonds gris, l'encre pleine restant seule à contraste plein. Preuve : `Accueil.tsx`, l.71, l.78 et l.93 ; `Versions.tsx`, l.54, l.58 et l.69. Impact : paragraphes et métadonnées sous le seuil de lisibilité AA probable, à confirmer au colorimètre. Correction recommandée : remonter les opacités (encre à 85 % minimum pour le courant, encre pleine pour les dates et mentions) ou assombrir le fond des cartes.
+- MOYENNE — Hiérarchie visuelle perdue, `ivoire` et `papier` valant le même gris : sections et cartes (dont `CarteAgent`, `Démarrage` et `Versions`) ne se distinguent plus que par des bordures `border-encre/20` elles-mêmes quasi invisibles sur gris ; le build le signale lui-même. Preuve : `tailwind.config.js`, l.9-10, et `index.css`, l.11-12. Impact : page « à plat », structure des contenus peu perceptible. Correction recommandée : différencier les deux tons (cartes plus claires ou plus sombres que les sections) et renforcer les bordures, validation visuelle par Zawadi.
+- MOYENNE — Dette de nommage trompeuse : classes `chartreuse` (bleu), `ivoire` et `papier` (gris) conservées avec simple commentaire. Preuve : `tailwind.config.js`, l.7-8. Impact : risque durable d'erreurs de contraste et de compréhension pour tout contributeur qui lira « chartreuse » en pensant jaune. Correction recommandée : renommage complet (`accent`, `fond`, `surface`) à arbitrer par Lawibrahim, comme le build le suggère.
+- MOYENNE — Contraste des rôles dans `CarteAgent.tsx` aggravé (réserve précédente reconduite) : pastille et texte colorés désormais sur fond gris et non plus ivoire, les teintes claires (vert, orange, sarcelle) y perdent encore en lisibilité. Preuve : `CarteAgent.tsx` inchangé, fond de carte devenu gris via `bg-ivoire`. Correction recommandée : rôle en encre, pastille seule en couleur, comme déjà préconisé.
+- MOYENNE — Réserve QA à 390 px reconduite et potentiellement aggravée : le débordement de navigation constaté par Zawadi (scrollWidth 455 pour 390) n'est pas traité par ce build, et la marque compacte (carré de 32 px) est remplacée par un logotype de 152 px de large dans un en-tête de 64 px (`Entete.tsx`, l.25-31). Impact : risque accru de rognage du dernier lien sur mobile, nouvelle QA à 390 px impérative avant déploiement. Correction recommandée : logotype réduit ou version condensée sous 390 px, puis mesure scrollWidth contre innerWidth par Zawadi.
+- FAIBLE — Clés de liste fragiles persistantes dans `Versions.tsx` : `key={point.slice(0, 32)}` inchangé (l.40, l.60). Correction recommandée : clé sur l'index ou la chaîne complète.
+- FAIBLE — `document.execCommand("copy")` déprécié et temporisateurs non nettoyés dans `CopierCommande.tsx`, composant non retouché. Converge avec FAIBLE 05 de Hifadhui.
+- FAIBLE — `rel="noreferrer"` seul sur tous les liens externes, inchangé y compris sur les nouvelles occurrences. Converge avec FAIBLE 03 de Hifadhui : passer à `rel="noopener noreferrer"`.
+- FAIBLE — Dérive entre plan et code sur la palette : le plan fige fond ivoire et chartreuse (décision 2, Ali à false) tandis que le code affiche gris et bleu sur instruction explicite, sans mise à jour du plan (rôle Lawibrahim, le build l'assume). Impact : traçabilité seule, aucune remise en cause de l'instruction. Correction recommandée : faire consigner l'arbitrage couleur (valeurs, périmètre, demandeur, date) dans `plan.txt` par Lawibrahim.
+- FAIBLE — Cohérence de marque à confirmer : deux logotypes distincts cohabitent (`logo-sayrhazi.*` sur l'accueil, les versions et l'icône contre `sayrhazi-logo.*` sur le démarrage, l'en-tête et le pied de page), textes alternatifs identiques et génériques (« Logotype Sayrhazi » sur quatre images). Correction recommandée : statuer sur un logotype unique ou documenter la dualité, et différencier les `alt` (fonction de chaque image).
+- FAIBLE — Nouveaux assets non couverts par l'audit existant : Hifadhui a audité l'ancien build ; les quatre fichiers `public/` (dont deux SVG) sont fournis par l'utilisateur et servis via `<img>` et `rel="icon"` (donc non exécutés, sans vecteur XSS direct), mais relèvent de son ré-audit ciblé. Transmis à Hifadhui, sans verdict de sécurité de ma part.
+- FAIBLE (reconducts inchangés) — aucun `yarn.lock` versionné ; `quality.design_required` à true contre Ali à false acté ; `AGENTS.md` §4 toujours à compléter ; `lint` et `test` réduits à `tsc --noEmit` et constat journalisé.
+
+Recommandations (hors corrections ci-dessus) :
+- Ne pas déployer `dist/` en l'état sur GitHub Pages tant que la HAUTE n'est pas corrigée ; faire porter la correction par Bamse sur les seuls couples bleu sur gris et l'anneau de focus, puis recontrôle ciblé de Hadji.
+- Confier à Zawadi une QA complète du nouveau visuel (et non un complément) : palette, quatre logotypes, icône d'onglet, responsive 390 avec mesure, console, états « Copié ».
+- Demander à Hifadhui un ré-audit ciblé des seuls nouveaux assets et des liens externes, son verdict précédent portant sur l'ancien build.
+
+Limites :
+- Hadji ne modifie, ne crée et ne supprime jamais de code source ; aucune correction appliquée, constats seuls.
+- Ratios de contraste établis par calcul relatif sur valeurs hexadécimales, non mesurés au colorimètre ; confirmation instrumentée et visuelle réservée à Zawadi.
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité ; `dist/` non contrôlé après rebuild (présence des quatre logotypes et absence de favicon admises depuis le build).
+- Dimensions et poids réels des PNG non contrôlés (hauteurs contraintes en CSS, admis depuis le build) ; rendu réel volontairement non déduit du seul code.
+- Aucun verdict de sécurité rendu ; signaux transmis à Hifadhui, autorité en la matière.
+
+Suite :
+- Bamse : corriger la HAUTE (accents et focus sur fonds gris) puis les 5 MOYENNE, sans évolution de périmètre sans confirmation explicite.
+- Hifadhui : ré-audit ciblé des nouveaux assets `public/`, liens externes et presse-papiers.
+- Zawadi : nouvelle QA navigateur complète du visuel gris et bleu, en priorité 390 px, console et parcours des 3 pages.
+- Fichier vérifié après écriture avant déclaration de fin de review.
+
+Verdict du rôle : CORRECTIONS NÉCESSAIRES.
+
+## Archive du 2026-10-14T15:48:37+00:00 — review du 2026-10-14T15:31:27+00:00 (VALIDÉ AVEC RÉSERVES), remplacée suite au build du 2026-10-14T15:46:59+00:00
+
+task_id: FEATURE-001
+agent: reviewer
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-14T15:31:27+00:00"
+summary: Vitrine 3 pages conforme au plan et au build, sans défaut bloquant, réserves sur contraste, reproductibilité et finitions.
+---
+Date système réelle : 2026-10-14T15:31:27+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (gestionnaire yarn, port 5175)
+Tâche : FEATURE-001
+Version examinée : build.txt de Bamse, statut TERMINÉ, horodatage 2026-10-14T15:30:10+00:00 ; noyau documenté 0.12.3 du 2026-10-14 ; paquet vitrine 0.1.0
+Auteur : Hadji (agent : reviewer, rôle stable)
+Horodatage completed_at : 2026-10-14T15:31:27+00:00
+Résumé (summary) : Vitrine 3 pages conforme au plan et au build, sans défaut bloquant, réserves sur contraste, reproductibilité et finitions.
+Nom du projet : lu dans `.opencode/sayrhazi.yaml` (`project.name` = Sayrhazi-web) ; aucune valeur A_COMPLETER, aucun nom supposé.
+
+Contexte et sources :
+- Configuration lue dans `.opencode/sayrhazi.yaml` (seule source de vérité pour nom, type, stack et commandes).
+- Plan lu dans `.opencode/resume/plan.txt` (FEATURE-001, À IMPLÉMENTER, 7 décisions validées).
+- Build lu en intégralité dans `.opencode/resume/build.txt` (FEATURE-001, TERMINÉ).
+- Aucun ancien `review.txt` à archiver : `.opencode/resume/` ne contenait que `plan.txt` et `build.txt` ; `.opencode/history/` ne contient que `workflow-log.md`. Premier rapport de review, sans archivage préalable.
+- Mémoire de session : aucun rapport Hadji précédent ; acquits des autres agents : build de Bamse (yarn install, lint, build et test déclarés verts, dist produit).
+
+Contrôles réalisés :
+- Lecture réelle des 13 fichiers `src/` : `App.tsx`, `main.tsx`, `index.css`, `data/site.ts`, `data/versions.ts`, `components/Entete.tsx`, `components/PiedDePage.tsx`, `components/CarteAgent.tsx`, `components/CopierCommande.tsx`, `pages/Accueil.tsx`, `pages/Demarrage.tsx`, `pages/Versions.tsx`.
+- Lecture des configurations : `package.json`, `index.html`, `vite.config.ts`, `tailwind.config.js`, `.gitignore`.
+- Existence contrôlée : `dist/index.html`, `dist/assets/`, `dist/favicon.svg` et `public/favicon.svg` présents ; `frontend/` absent, conforme à l'option A du plan.
+- Recherche ciblée dans `src/` sur `A_COMPLETER|TODO|FIXME|secret|token|mot de passe` : 5 occurrences toutes descriptives et légitimes (diagnostic `tunda`, fiche Hifadhui, commentaires de portage du thème), aucun reliquat de gabarit ni secret.
+- Cohérence plan contre build contre code : 3 pages + pied de page, routage par hash sans dépendance routeur, base relative `./`, port 5175, versions figées au build sans appel réseau au runtime, français partout, landmarks et lien d'évitement.
+- Effort proportionné à un contenu statique : contrôles ciblés sur les fichiers livrés, sans rejouer `yarn lint`, `yarn build` ni scans larges, sans QA au navigateur (réservée à Zawadi) et sans verdict de sécurité (réservé à Hifadhui).
+
+Problèmes :
+- MOYENNE — Contraste insuffisant du rôle coloré dans `CarteAgent.tsx` (l.20) : le rôle est affiché avec `style={{ color: agent.couleur }}` sur fond ivoire. Les teintes vert `#22C55E`, orange `#F59E0B` et sarcelle `#14B8A6` n'atteignent vraisemblablement pas le ratio AA 4,5:1 en petit mono majuscule. Preuve : `src/components/CarteAgent.tsx`, l.20-22, couleurs issues de `src/data/site.ts`. Impact : lisibilité réduite et non-conformité d'accessibilité sur une information de rôle. Correction recommandée : conserver la pastille colorée comme seul marqueur de couleur et afficher le rôle en encre ou en encre à 75 %, ou foncer les trois teintes pour le texte.
+- MOYENNE — Reproductibilité sans `yarn.lock` : `yarn install` déclaré vert mais aucun verrou généré dans cet environnement, constat repris du build. Preuve : racine sans `yarn.lock`, versions seulement épinglées dans `package.json`. Impact : dérive possible des résolutions transitives entre postes et en CI. Correction recommandée : générer puis versionner `yarn.lock` (ou documenter son absence volontaire dans les règles locales).
+- FAIBLE — Clés de liste fragiles dans `Versions.tsx` : `key={point.slice(0, 32)}` pour les puces de la dernière version et des précédentes. Preuve : `src/pages/Versions.tsx`, l.33 et l.53. Impact : collision et réconciliation React incorrecte si deux puces partagent le même préfixe de 32 caractères. Correction recommandée : clé sur l'index ou sur la chaîne complète (`key={point}` complétée par l'index en cas de doublon).
+- FAIBLE — Recours à `document.execCommand("copy")` déprécié et temporisateurs non nettoyés dans `CopierCommande.tsx` (l.21, l.23). Preuve : `src/components/CopierCommande.tsx`, l.11-26. Impact : dette d'API et micro-fuite de temporisateur si le composant est démonté sous 2 secondes. Correction recommandée : conserver le repli mais documenter sa dépréciation, mémoriser l'identifiant du temporisateur et l'annuler dans un `useEffect` de nettoyage.
+- FAIBLE — Liens externes en `target="_blank"` avec `rel="noreferrer"` seul (`Entete.tsx`, `Accueil.tsx`, `Demarrage.tsx`, `PiedDePage.tsx`). Preuve : `rel="noreferrer"` sans `noopener` explicite. Impact : risque apparent faible, à transmettre à Hifadhui qui reste l'autorité sur la sécurité. Correction recommandée : `rel="noopener noreferrer"` sur les liens GitHub et npm.
+- FAIBLE — Incohérence de configuration sur le design : `quality.design_required` vaut true dans `sayrhazi.yaml` alors que le plan acte Ali à false sur confirmation explicite et que le build a porté directement les tokens. Preuve : `.opencode/sayrhazi.yaml`, l.44, contre `plan.txt` décision 2 et `build.txt`. Impact : ambiguïté pour les vagues suivantes. Correction recommandée : aligner `design_required` sur l'arbitrage ou consigner l'exception dans les règles locales.
+- FAIBLE — `AGENTS.md` §4 Règles locales toujours à compléter, inchangé depuis le plan. Impact : conventions spécifiques (verrou, lint réduit à `tsc --noEmit`, test sous forme de constat) non consignées. Correction recommandée : renseigner le §4 (stack figée, base relative, hash sans routeur, Google Fonts avec repli, `dist/` ignoré).
+- FAIBLE — Outillage qualité minimal assumé : `lint` réduit à `tsc --noEmit`, `test` réduit à un constat journalisé, sans ESLint ni tests automatisés. Preuve : `package.json`, l.7-13. Impact : aucune garde contre les régressions visuelles ou de contenu ; proportionné à un site statique mais à assumer explicitement. Correction recommandée : documenter ce choix dans le §4 et confier la non-régression visuelle à la QA navigateur de Zawadi.
+
+Recommandations (hors corrections ci-dessus) :
+- Vérifier au navigateur réel les points réservés à Zawadi : console zéro erreur, mobile 390 sans défilement horizontal, focus visible sur chaque page, états « Copié » des quatre boutons de copie.
+- Faire auditer par Hifadhui les seuls points de surface (liens externes, presse-papiers, Google Fonts, absence de formulaire et de secret) avant mise en ligne.
+- Initialiser le dépôt git ou documenter pourquoi `dist/` est ignoré sans dépôt versionné, la commande `git status` retournant « not a git repository » au moment de la review.
+
+Limites :
+- Hadji ne modifie, ne crée et ne supprime jamais de code source ; aucune correction appliquée, constats seuls.
+- `yarn lint`, `yarn build` et `yarn dev` non rejoués par proportionnalité (contenu statique neuf, verts déclarés et `dist/` constaté présent) ; reproductibilité exacte non revalidée sans `yarn.lock`.
+- Rendu réel, responsive 390 et console non vérifiés sans navigateur ; déductions depuis le seul code volontairement limitées.
+- Exhaustivité du gel documentaire (CHANGELOG et docs du noyau à la 0.12.3) admise depuis le build, sans relecture intégrale du dépôt noyau par frugalité.
+- Aucun verdict de sécurité rendu ; les signaux apparents sont transmis à Hifadhui, autorité en la matière.
+
+Suite :
+- Hifadhui : audit requis par défaut (`security_audit_required_by_default`), surface réduite mais liens externes et presse-papiers à viser.
+- Zawadi : QA au navigateur réel sur `http://localhost:5175` ou `dist/`, y compris responsive 390, console et parcours des 3 pages.
+- Bamse : traitement des deux réserves MOYENNE puis des finitions FAIBLE, sans évolution de périmètre sans confirmation explicite.
+- Fichier vérifié après écriture avant déclaration de fin de review.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.

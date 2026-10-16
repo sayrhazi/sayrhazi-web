@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Portage des tokens du thème sayrhazi-them en React + Tailwind.
+   Les affirmations périmées du thème v0.5.0 ne sont pas reprises :
+   seuls les tokens visuels sont portés. */
+
+:root {
+  --encre: #090a0b;
+  --ivoire: #090a0b;
+  --papier: #090a0b;
+  --cobalt: #1e40ff;
+  --sayrhazi: #249cd8;
+  --chartreuse: #249cd8;
+  --clair: #f7f7f3;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--papier);
+  color: var(--clair);
+  font-family: "DM Sans", "Helvetica Neue", Arial, sans-serif;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--chartreuse);
+  color: var(--encre);
+}
+
+/* Grille pointillée discrète sur fonds sombres, signature du thème. */
+
+.grille-pointee-sombre {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Logotype officiel fourni dans public/, utilisé dans l'en-tête,
+   le pied de page et comme icône du site. */
+
+/* Anneau de focus double : liseré clair et halo sombre, visible
+   sur fonds sombres (contraste ≥ 3:1). */
+.lien-souligne:focus-visible,
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid #ffffff;
+  box-shadow: 0 0 0 6px var(--encre);
+  outline-offset: 2px;
+}
+
+.eviter-defilement-horizontal {
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
+/* Animation dropdown mobile navbar */
+@keyframes dropdown-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-dropdown {
+  animation: dropdown-in 200ms ease-out forwards;
+}

@@ -1,0 +1,61 @@
+name: Déployer sur GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    # Rebuild quotidien : suit les releases du noyau via le sync-noyau.
+    - cron: "0 4 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+
+      - name: Activer Corepack (yarn)
+        run: corepack enable
+
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Installer les dépendances
+        run: yarn install --frozen-lockfile
+
+      - name: Construire (sync-noyau + build)
+        # Réseau disponible en CI : le prebuild synchronise la latest du noyau.
+        # GITHUB_ACTIONS=true → base Pages /sayrhazi-web/.
+        run: yarn build
+
+      - name: Vérifier le fallback SPA
+        run: test -f dist/404.html && test -f dist/index.html
+
+      - name: Téléverser l'artefact Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Déployer vers GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

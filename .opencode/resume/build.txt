@@ -1,0 +1,66 @@
+task_id: FEATURE-003
+agent: builder
+status: TERMINÉ
+completed_at: "2026-10-16T12:05:15+00:00"
+summary: Sync-noyau au build avec repli commité, entrée 0.13.1 condensée fidèle, essais local repli et réseau verts.
+---
+Date système réelle : 2026-10-16T12:05:15+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-003
+Auteur : Bamse (agent : builder, rôle stable)
+Horodatage completed_at : 2026-10-16T12:05:15+00:00
+Résumé (summary) : Sync-noyau au build avec repli commité, entrée 0.13.1 condensée fidèle, essais local repli et réseau verts.
+
+Contexte et sources :
+- Plan relu : FEATURE-003 de Lawibrahim du 2026-10-16T11:25:02+00:00, décisions 1 à 7 à implémenter, FEATURE-001 bouclée et FEATURE-002 livrée.
+- Noyau relu : `package.json` 0.13.1, tête `CHANGELOG.md` 0.13.1 à 4 points (binaire sayrhazi-tui, profil tui, dashboard deux blocs, --once) ; Releases GitHub inexistantes admises depuis le plan, latest via `main`.
+- Mémoire : `build.txt` TERMINÉ FEATURE-002 du 2026-10-16T00:33:29+00:00 relu puis archivé dans `.opencode/history/build-log.md` avant remplacement.
+
+Fichiers créés :
+- `scripts/sync-noyau.cjs` (extension `.cjs` car paquet en `type: module`) : lecture réseau au build uniquement (`raw.githubusercontent.com`, timeout 15 s, parsing texte seul, aucune exécution), `SAYRHAZI_CORE_DIR` pour checkout local, union avec points committés préservés et entrées absentes condensées en ordre décroissant, repli commité avec avertissement et sortie 0 en cas d'échec.
+
+Fichiers modifiés :
+- `package.json` : script `prebuild` (`node scripts/sync-noyau.cjs`) avant `tsc --noEmit && vite build`.
+- `src/data/site.ts` : `VERSION_NOYAU` à `0.13.1`, `DATE_NOYAU` à `2026-10-16`, commentaire d'en-tête aligné.
+- `src/data/versions.ts` : nouvelle entrée `0.13.1` en tête avec 4 points fidèles (binaire, profil, deux blocs, --once) ; 9 anciennes entrées du journal complétées par le sync (0.2.3, 0.1.8 à 0.1.1), ordre décroissant vérifié, 0.13.1 en tête intacte.
+
+Fichiers non modifiés : `src/App.tsx`, pages, composants, `index.html`, `public/` (deux SVG), `scripts/mesure-contrastes.js`, `yarn.lock`.
+
+Vérifications :
+- Essai checkout local (`SAYRHAZI_CORE_DIR` vers le noyau) : latest 0.13.1 parsée, 9 entrées ajoutées puis second passage idempotent (« déjà à jour »).
+- Essai repli (chemin inexistant) : avertissement, fichiers inchangés, sortie 0.
+- Essai réseau (`raw.githubusercontent.com`) : latest `main` 0.13.1 tirée et parsée, déjà à jour — preuve en ligne du mécanisme.
+- `yarn lint` vert (`tsc --noEmit`) : 48 modules, aucune erreur.
+- `yarn build` vert (`prebuild` sync réseau « déjà à jour » puis `tsc` + `vite build`, 48 modules, `dist/` avec `index.html`, `404.html`, assets, deux SVG).
+- `yarn test` vert et `node scripts/mesure-contrastes.js` vert (couples inchangés).
+- Correctifs du script constatés en essai : format d'entrée invalide et ordre d'insertion réparés avant livraison, fichier de diagnostic retiré.
+- Structure décision 4 inchangée : racine, aucun dossier `frontend/`.
+
+Décisions :
+- Sync incrémental plutôt que régénération totale : points committés (condensés relus) préservés à l'identique, seules les versions absentes sont ajoutées — périmètre minimal, diff lisible.
+- `prebuild` yarn (déclenché par `yarn build` uniquement) : `lint` et `test` sans réseau, `dev` non concerné.
+- Condensation déterministe (markdown allégé, première phrase, 240 signes) : rejouable à l'identique, garde anti-perte si le committé est illisible.
+- Zéro dépendance ajoutée (fetch natif Node 18), zéro secret, zéro exécution de contenu distant.
+
+Problèmes :
+- FAIBLE : `quality.design_required` vaut true dans `sayrhazi.yaml` alors que le plan arbitre Ali à false ; plan suivi.
+- FAIBLE : `AGENTS.md` §4 Règles locales toujours à compléter, inchangé.
+- FAIBLE reconduits : clés de liste fragiles et `execCommand` déprécié, reportés comme recommandé.
+- FAIBLE : plan nomme `scripts/sync-noyau.js`, fichier réel en `.cjs` (paquet `type: module`) — à consigner par Lawibrahim.
+- Aucun problème CRITIQUE, HAUTE ni MOYENNE dans le code livré.
+
+Limites :
+- Serveur de développement non rechargé ni redémarré par règle ; `dist/` fait foi du code livré et le rechargement appartient au gestionnaire avant le recontrôle de Zawadi.
+- Preuve en ligne réelle (workflow GitHub Actions) réservée à la création du dépôt web, encore inexistant.
+- Rendu réel de l'entrée 0.13.1, responsive et console réservés à Zawadi, non déduits du seul code.
+
+Suite :
+- Rechargement `yarn dev` par le gestionnaire.
+- Hadji : review (exactitude 0.13.1, robustesse parsing et repli).
+- Hifadhui : audit (URL figée, timeout, pas d'exec, pas de secret).
+- Zawadi : QA (Versions 0.13.1 en tête, non-régression, console, responsive).
+- Archivage FEATURE-003 dans `.opencode/features/FEATURE-003.md` à la clôture confirmée.
+
+Verdict du rôle : TERMINÉ.
