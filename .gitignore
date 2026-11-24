@@ -1,5 +1,24 @@
+# Build
 dist/
 node_modules/
+
+# Sayrhazi local state
 .opencode/state/
+.opencode/backup/
+.opencode/__pycache__/
+.opencode/static/
+.opencode/agent_sync.py
+.opencode/node_modules/
+.opencode/package-lock.json
+.opencode/package.json
+.opencode/bun.lock
+
+# Playwright MCP
 .playwright-mcp/
+
+# Temp / generated files
+migrate_sayrhazi.py
+SAYRHAZI-README.md
 *.bak
+*.pyc
+.env*

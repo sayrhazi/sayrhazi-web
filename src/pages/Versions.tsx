@@ -37,6 +37,22 @@ export default function Versions() {
                 </li>
               ))}
             </ul>
+            {derniere.liens && derniere.liens.length > 0 && (
+              <ul className="mt-3 space-y-1 text-sm leading-relaxed">
+                {derniere.liens.map((lien) => (
+                  <li key={lien.href}>
+                    <a
+                      href={lien.href}
+                      target="_blank"
+                      rel="noreferrer noopener"
+                      className="text-chartreuse hover:underline"
+                    >
+                      {lien.nom}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </article>
 
           <h2 className="mt-12 text-3xl font-bold">Versions précédentes</h2>
@@ -57,12 +73,103 @@ export default function Versions() {
                     </li>
                   ))}
                 </ul>
+                {entree.liens && entree.liens.length > 0 && (
+                  <ul className="mt-3 space-y-1 text-sm leading-relaxed">
+                    {entree.liens.map((lien) => (
+                      <li key={lien.href}>
+                        <a
+                          href={lien.href}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="text-chartreuse hover:underline"
+                        >
+                          {lien.nom}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </li>
             ))}
           </ol>
           <p className="mt-8 font-mono text-xs text-white/85">
             Source : CHANGELOG.md du noyau, version {VERSION_NOYAU}. Le site vitrine ne réinterprète aucune note.
           </p>
+        </div>
+      </section>
+
+      <section className="border-t border-white/15 bg-encre pt-12" aria-labelledby="titre-doc-noyau">
+        <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
+          <h2 id="titre-doc-noyau" className="text-3xl font-bold mb-6">Documentation du noyau Sayrhazi</h2>
+          <p className="mb-4 text-sm text-white/85">
+            Consultez la documentation complète du noyau dans le dépôt{" "}
+            <a
+              href="https://github.com/sayrhazi/sayrhazi/tree/main/docs"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-chartreuse hover:underline"
+            >
+              sayrhazi/sayrhazi/docs
+            </a>
+            :
+          </p>
+          <ul className="space-y-2 text-sm text-white/85 max-w-xl">
+            <li>
+              <a
+                href="https://github.com/sayrhazi/sayrhazi/blob/main/docs/agents.md"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-chartreuse hover:underline"
+              >
+                Agents et rôles
+              </a>{" "}
+              — les six rôles, leurs couleurs et l'ordre courant.
+            </li>
+            <li>
+              <a
+                href="https://github.com/sayrhazi/sayrhazi/blob/main/docs/architecture.md"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-chartreuse hover:underline"
+              >
+                Architecture
+              </a>{" "}
+              — rôle du système, deux niveaux, arborescence.
+            </li>
+            <li>
+              <a
+                href="https://github.com/sayrhazi/sayrhazi/blob/main/docs/automation.md"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-chartreuse hover:underline"
+              >
+                Automatisation
+              </a>{" "}
+              — transitions, watcher, dashboard, reprise, scopes.
+            </li>
+            <li>
+              <a
+                href="https://github.com/sayrhazi/sayrhazi/blob/main/docs/installation.md"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-chartreuse hover:underline"
+              >
+                Installation
+              </a>{" "}
+              — commandes sayrhazi, sayrhazi-tui, Linux, mise à jour.
+            </li>
+            <li>
+              <a
+                href="https://github.com/sayrhazi/sayrhazi/blob/main/docs/reports.md"
+                target="_blank"
+                rel="noreferrer noopener"
+                className="text-chartreuse hover:underline"
+              >
+                Rapports
+              </a>{" "}
+              — contrats, statuts, scopes, validation avant transition.
+            </li>
+          </ul>
         </div>
       </section>
     </>

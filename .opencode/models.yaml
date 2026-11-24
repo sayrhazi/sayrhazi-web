@@ -1,54 +1,156 @@
 # Registre des fenêtres de contexte (lecture seule, observé par le dashboard).
 #
-# Ceci est un relevé ponctuel, PAS un catalogue officiel. Les modèles listés
-# étaient accessibles via OpenCode au `verified_at` indiqué ; un fournisseur
-# peut les retirer, les mettre derrière une formule payante ou en changer la
-# fenêtre du jour au lendemain (constaté : des modèles apparaissent et
-# disparaissent d'une semaine à l'autre). Une ligne ici ne dit rien de la
-# disponibilité future d'un modèle, ni de son prix : ne jamais en déduire
-# qu'un modèle est gratuit parce qu'il figure dans ce fichier.
-#
-# Pourquoi ce fichier existe quand même : OpenCode n'enregistre nulle part la
+# Pourquoi ce fichier : OpenCode n'enregistre nulle part la taille de la
 # fenêtre de contexte d'un modèle (ni en base, ni dans sa configuration), mais
-# son panneau Context en a besoin. Sayrhazi reproduit ce calcul ; sans limite
-# connue il n'affiche aucun pourcentage plutôt qu'un chiffre faux — les tokens
-# et le coût restent affichés.
+# son panneau Context en a besoin pour afficher son pourcentage. Sayrhazi
+# reproduit ce calcul : sans limite connue, il n'affiche aucun pourcentage
+# plutôt qu'un chiffre faux — les tokens et le coût restent affichés.
 #
-# Clé = identifiant complet `provider/model` (jamais le seul nom : deux
-# fournisseurs peuvent proposer des variantes homonymes de limites
-# différentes).
+# Clé = identifiant complet `provider/model` (jamais le seul nom du modèle :
+# deux fournisseurs peuvent proposer des variantes homonymes de limites
+# différentes). Commenter/ignorer une clé est sans effet.
 #
-# Entretien :
-#   * nouveau modèle (gratuit ou payant) -> ajouter son ID et son contexte ;
-#   * modèle payant -> l'ID se règle dans le frontmatter de la fiche de
-#     l'agent (`model:` dans `.opencode/agent/*.md`), ce qui permet d'affecter
-#     un modèle différent à chaque agent. Le watcher passe toujours ce modèle
-#     en `--model` : la fiche est la seule source de vérité.
-#   * fenêtre modifiée -> corriger la valeur et `verified_at` ;
-#   * modèle retiré -> la ligne peut rester (inertre) ou être supprimée.
+# Entretien : ajouter une entrée quand un nouveau modèle apparaît. Le
+# `source` et le `verified_at` servent à tracer d'où vient la valeur.
 
 models:
-  opencode/longcat-2.5-preview-free:
-    context_tokens: 1000000
-    source: releve manuel via opencode
-    verified_at: "2026-10-15"
-  opencode/muse-spark-1.3-contributor-free:
+  opencode/tidepool-alpha-free:
     context_tokens: 1048576
-    source: releve manuel via opencode
-    verified_at: "2026-10-15"
-  opencode/nemotron-3-ultra-free:
-    context_tokens: 1000000
-    source: releve manuel via opencode
-    verified_at: "2026-10-15"
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  opencode/hy4-flash-free:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  opencode/iceman-free:
+    context_tokens: 262144
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  opencode/flint-40b-free:
+    context_tokens: 262144
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  opencode/deepseek-v4.1-flash-free:
+    context_tokens: 200000
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
   opencode/nemotron-3.5-super-vl-free:
     context_tokens: 1048576
     source: releve manuel via opencode
     verified_at: "2026-10-15"
-  opencode/space-bunny-free:
+  opencode/beam-free:
     context_tokens: 1048576
-    source: releve manuel via opencode
-    verified_at: "2026-10-15"
-  opencode/step-5-preview-free:
-    context_tokens: 1000000
-    source: releve manuel via opencode
-    verified_at: "2026-10-15"
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  opencode/mimo-v2.6-flash-free:
+    context_tokens: 200000
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  opencode/nemotron-3.5-lightning-free:
+    context_tokens: 262144
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  opencode/big-pickle:
+    context_tokens: 200000
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-4-neon:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-4-hydrogen:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-4-carbon:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-4-argon:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-3.8-flash:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-flash-latest:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-3.5-flash-lite:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-3.6-flash:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-flash-lite-latest:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-3.1-flash-lite-image:
+    context_tokens: 65536
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-3.5-live-translate-preview:
+    context_tokens: 16384
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-3-pro-image:
+    context_tokens: 65536
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-embedding-2:
+    context_tokens: 8192
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/deep-research-max-preview-04-2026:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/deep-research-preview-04-2026:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemma-4-26b-a4b-it:
+    context_tokens: 262144
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemma-4-31b-it:
+    context_tokens: 262144
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-3.1-flash-live-preview:
+    context_tokens: 131072
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/lyria-3-clip-preview:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/lyria-3-pro-preview:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-3.1-pro-preview:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-3.1-pro-preview-customtools:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-pro-latest:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-3-flash-preview:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
+  google/gemini-2.5-flash-lite:
+    context_tokens: 1048576
+    source: relevé automatique par Sayrhazi via OpenCode (/config/providers)
+    verified_at: "2026-11-24"
