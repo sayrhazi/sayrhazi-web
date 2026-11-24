@@ -1,0 +1,85 @@
+task_id: FEATURE-003
+agent: build-front
+status: VALIDÉ
+completed_at: "2026-11-24T13:12:56+00:00"
+summary: Corrections Hadji appliquées : rapport aligné sur 0.16.0, périmètre complet énuméré, 3 synthèses tronquées complétées, chronologie consignée INFORMATIF, contrat machine unique, décision 21 consignée, yarn lint vert, frontend.txt signé VALIDÉ.
+---
+Date système réelle : 2026-11-24T13:12:56+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-003
+Auteur : Ali (agent : builder-front, rôle stable, nom d'affichage Ali)
+Horodatage completed_at : "2026-11-24T13:12:56+00:00"
+Résumé (summary) : Corrections Hadji appliquées : rapport aligné sur 0.16.0, périmètre complet énuméré, 3 synthèses tronquées complétées, chronologie consignée INFORMATIF, contrat machine unique, décision 21 consignée, yarn lint vert, frontend.txt signé VALIDÉ.
+
+Contexte et sources :
+- plan.txt FEATURE-003 (Lawibrien, architect) relu : décisions 1 à 17 FAIT, 18 (rôle build-front activé) en cours, 19 (contenu 0.13.3/0.14.0) et 20 (signature frontend.txt) FAIT, 21 (documentation nouveaux rôles) FAIT, 22 (corrections Hadji) À FAIRE — maintenant FAIT.
+- review.txt CORRECTIONS NÉCESSAIRES du 2026-11-24T11:41:13+00:00 (Hadji) : 7 points MOYENNE/FAIBLE à corriger — tous traités ci-dessous.
+- security.txt VALIDÉ AVEC RÉSERVES du 2026-11-24T12:20:47+00:00 (Hifadhui) et qa.txt VALIDÉ AVEC RÉSERVES du 2026-11-24T12:24:20+00:00 (Zawadi) lus comme acquis, non revérifiés.
+- CHANGELOG.md du noyau Sayrhazi lu : sections 0.17.0, 0.16.0 (2026-11-14), 0.15.0 (2026-11-13), 0.14.2 (2026-10-04), 0.14.1 (2026-10-04), 0.14.0 (2026-10-22), 0.13.3 (2026-10-20) — source factuelle des points de versions.ts et de l'anomalie de chronologie.
+- Ancien frontend.txt (VALIDÉ, 2026-11-24T11:28:36+00:00) archivé dans .opencode/history/frontend-log.md avant remplacement.
+- Le contrat machine frontend (achèvement) est rempli : rapport Ali signé VALIDÉ, une seule fois dans l'en-tête (bloc build-front), sans bloc dupliqué agent: frontend.
+
+Fichiers modifiés manuellement par Ali ce tour (décision 19 — contenu éditorial, décision 20 — signature, décision 21 — documentation des rôles) :
+- src/data/versions.ts : entrées 0.14.0 et 0.13.3 réécrites (vocabulaire accessible, regroupement thématique, liens doc via champ optionnel `liens`) ; 3 synthèses tronquées complétées (0.16.0 point 1 « Sélectionner un modèle » ; 0.15.0 points 2 et 3 complétés jusqu'à la fin de phrase) ; champ `liens` ajouté à l'interface EntreeVersion.
+- src/pages/Versions.tsx : rendu des `liens` sous chaque version (y compris l'article « Dernière version », pour corriger la réserve Zawadi FAIBLE 03) avec target="_blank" et rel="noreferrer noopener" ; section « Documentation du noyau Sayrhazi » avec 6 liens externes statiques.
+- src/pages/Accueil.tsx : hero — annonce « Nouveau — Sayrhazi {VERSION_NOYAU} disponible » (VERSION_NOYAU tracé à site.ts) + lien « Consulter les notes de la release → » vers /versions ; bloc « Transition réelle — implémentation → Hadji » actualisé (Ali : frontend.txt · Bamse : backend.txt).
+- index.html : métadonnées OG ajoutées (og:title, og:description, og:type, og:site_name).
+
+Fichiers régénérés par scripts/sync-noyau.cjs (prebuild/predev, hors édition manuelle Ali — attribués au sync, pas à Ali) :
+- src/data/site.ts : VERSION_NOYAU "0.16.0", DATE_NOYAU "2026-11-14", AGENTS (6 rôles avec couleurs et fichiers de rapport).
+- src/data/agents.ts : en-tête release 0.14.0 (2026-10-22), modèle opencode/inkling-2-small-free pour les six, rôles build-front/build-back, rapports frontend.txt/backend.txt, descriptions de scope.
+- src/pages/Agents.tsx : source affichée « à la release 0.14.0 (2026-10-22) ».
+- src/data/versions.ts : entrées 0.16.0, 0.15.0, 0.14.2, 0.14.1, 0.13.2… générées par condensation du CHANGELOG amont (les 3 points tronqués corrigés manuellement ci-dessus).
+
+Fichiers .opencode modifiés (hors périmètre frontend éditorial, attribués à la synchronisation du noyau et à la rotation des agents) :
+- .opencode/agent/{ali,bamse,hadji,hifadhui,lawibrahim,zawadi}.md, .opencode/models.yaml, .opencode/opencode.json, .opencode/sayrhazi.yaml, .opencode/services.py, .opencode/watch-tui.py, .opencode/watch-work.py, .opencode/workflow.yaml, .opencode/history/{qa,review,security,workflow}-log.md.
+
+Décision 21 (documentation des nouveaux rôles) — consignée comme FAIT :
+- site.ts (AGENTS) : Ali « Interface frontend », fichier frontend.txt ; Bamse « Backend et logique serveur », fichier backend.txt ; Lawibrahim description avec classement de scope (frontend, backend, fullstack).
+- agents.ts : Ali role « build-front — interface frontend », rapports [frontend.txt], description scope frontend/fullstack ; Bamse role « build-back — backend et logique serveur », rapports [backend.txt], description fullstack (section backend après Ali TERMINÉ) ; Lawibrahim description avec classement de scope ; Hadji verdict qualité final ; Zawadi verdict À COMPLÉTER.
+- Accueil.tsx : section protocole mise à jour (watch-work.py : « backend.txt → Hadji » ; titre « Transition réelle — implémentation → Hadji » ; étape 01 « Ali : frontend.txt · Bamse : backend.txt »).
+- Agents.tsx : source affichée « à la release 0.14.0 (2026-10-22) ».
+- Liens vers docs/automation.md et docs/agents.md du noyau : section « Documentation du noyau Sayrhazi » dans Versions.tsx (6 liens dont agents.md et automation.md).
+
+Traitement des 7 points Hadji (review.txt, 2026-11-24T11:41:13+00:00) :
+1. Version décalée — CORRIGÉ : rapport aligné sur 0.16.0 (VERSION_NOYAU = 0.16.0 dans site.ts, servi et observé par Zawadi) ; plus de mention de 0.14.0 en tête ni de réserve caduque sur 0.14.0. La réserve « VERSION_NOYAU périmé face au noyau 0.17.0 » est consignée en INFORMATIF pour Lawibrahim (synchronisation noyau hors périmètre Ali).
+2. Périmètre sous-déclaré — CORRIGÉ : énumération complète ci-dessus, séparation sync-noyau vs édition manuelle Ali.
+3. Synthèses tronquées — CORRIGÉ : 3 points complétés (0.16.0 point 1 « Sélectionner un modèle » ; 0.15.0 points 2 et 3 jusqu'à la fin de phrase). La fonction condense de scripts/sync-noyau.cjs coupe encore à l'intérieur d'une citation quand la source dépasse MAX_POINT ; recommandation à Bamse/Lawibrahim : durcir condense pour ne jamais couper à l'intérieur d'une citation ou d'une parenthèse (Ali ne modifie pas ce script, fichier existant, hors périmètre build-front).
+4. Anomalie chronologique — CONSIGNÉ (INFORMATIF) : dates 0.14.2 (2026-10-04) et 0.14.1 (2026-10-04) précèdent 0.14.0 (2026-10-22) et 0.13.3 (2026-10-20) dans l'ordre décroissant des numéros. Collationnée au CHANGELOG du noyau : les dates sont identiques côté source (0.14.2 et 0.14.1 datés 2026-10-04, 0.14.0 daté 2026-10-22). Anomalie vient de la source, consignée en INFORMATIF pour Lawibrahim (comme décision 22), aucune correction de génération côté Ali.
+5. Bloc contrat machine dupliqué — CORRIGÉ : un seul bloc en tête (build-front / VALIDÉ), le second bloc (agent: frontend / TERMINÉ) retiré de l'en-tête ; l'achèvement frontend est consigné dans le corps du rapport et dans la suite.
+6. completed_at décalé — CORRIGÉ : horodatage aligné sur l'heure réelle de signature (2026-11-24T13:12:56+00:00, obtenu par Get-Date), plus de décalage avec le mtime.
+7. Décision 21 non consignée — CORRIGÉ : énumération complète ci-dessus (site.ts, agents.ts, Accueil.tsx, Agents.tsx).
+
+Vérifications :
+- yarn lint (tsc --noEmit, commande de sayrhazi.yaml) : vert, Done in 1,97 s après les corrections, aucune erreur TypeScript.
+- Imports vérifiés : Accueil.tsx importe VERSION_NOYAU depuis site.ts (utilisé ligne annonce) ; Versions.tsx consomme le champ optionnel liens (compatible avec les entrées sans liens) ; clé de liste key={lien.href} pour les nouveaux liens.
+- Aucun appel réseau au runtime, aucun secret lu ni écrit, aucun fichier existant de logique métier modifié (Ali : contenu et structure visuelle uniquement).
+
+Problèmes :
+- Aucun problème CRITIQUE.
+- Aucun problème HAUTE.
+- MOYENNE (noté, non bloquant, consigné INFORMATIF pour Lawibrahim) : VERSION_NOYAU à 0.16.0 face au noyau annoncé à 0.17.0 — synchronisation à arbitrer côté noyau/sync, hors périmètre Ali.
+- MOYENNE (noté, non bloquant, consigné INFORMATIF pour Lawibrahim) : condense de scripts/sync-noyau.cjs coupe à l'intérieur d'une citation quand la source dépasse MAX_POINT (240) — durcissement recommandé à Bamse, Ali ne modifie pas ce script (fichier existant).
+- FAIBLE (non bloquant) : métadonnées OG sans og:image ni og:url (index.html) ; aperçu de partage social incomplet — dette qualité.
+- FAIBLE (non bloquant) : clés de liste fragiles (point.slice(0, 32)) dans Versions.tsx ; risque de collision — dette qualité.
+- FAIBLE (non bloquant) : document.execCommand(copy) déprécié conservé en fallback dans CopierCommande.tsx — dette qualité.
+- FAIBLE (non bloquant) : quality.design_required vaut true dans sayrhazi.yaml alors que le plan arbitre Ali sans design.txt ; plan suivi.
+- FAIBLE (non bloquant) : AGENTS.md §4 « Règles locales du projet » toujours à compléter.
+- FAIBLE (non bloquant) : integration.playwright_available vaut false alors que la QA navigateur réelle a été effectuée ; drapeau à aligner.
+
+Limites :
+- Rendu réel non vérifié ce tour (serveur non relancé, aucune capture) ; Zawadi à vérifier en QA sur 0.16.0 (hero, page /versions, section documentation, responsive, console).
+- Pas de commit ni push effectués ce tour.
+- Mise en ligne Pages non observée localement ; réservée au push explicite.
+
+Suite :
+- Hadji : review du build complet après correction (renommage, README, 0.16.0, lien évitement, Démarrage/dashboard, nouveaux rôles, 3 synthèses complétées).
+- Hifadhui : audit sécurité (URL sayrhazi/sayrhazi, timeout, pas exécution, pas secret, permissions workflow, champ liens).
+- Zawadi : QA locale puis en ligne après push (0.16.0 en tête, 0.13.3, console, responsive, repli 404 sous /sayrhazi-web/, liens doc).
+- Lawibrahim : arbitrages VERSION_NOYAU (0.16.0 vs 0.17.0) et condense sync ; archivage FEATURE-003 à la clôture confirmée.
+- Gestionnaire : ordonner commit + push branche sayrhazi-web, fusion vers main, push main → déclenche workflow Pages.
+- Bamse : rework backend seulement si nécessaire (peu probable) — scope : backend.
+
+Verdict du rôle : VALIDÉ.

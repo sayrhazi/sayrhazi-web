@@ -3,11 +3,17 @@
   "mcp": {
     "playwright": {
       "type": "local",
-      "command": ["npx", "-y", "@playwright/mcp@latest"],
+      "command": [
+        "npx",
+        "-y",
+        "@playwright/mcp@latest"
+      ],
       "enabled": true
     }
   },
   "permission": {
-    "playwright_*": "deny"
+    "playwright_*": "deny",
+    "external_directory": "ask",
+    "question": "ask"
   }
 }

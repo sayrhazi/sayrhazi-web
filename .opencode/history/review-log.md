@@ -1,3 +1,165 @@
+### Archive 2026-11-24T13:15:12+00:00 (FEATURE-003 review CORRECTIONS NÉCESSAIRES du 2026-11-24T11:41:13+00:00)
+
+task_id: FEATURE-003
+agent: reviewer
+status: CORRECTIONS NÉCESSAIRES
+completed_at: "2026-11-24T11:41:13+00:00"
+summary: Contenu 0.16.0 et liens doc globalement cohérents et lint vert, mais rapport décalé sur la version, périmètre sous-déclaré et synthèses tronquées imposent des corrections avant archivage.
+---
+Date système réelle : 2026-11-24T11:41:13+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-003 (décisions 19, 20 et 21 — contenu éditorial, signature frontend.txt, documentation des rôles)
+Version examinée : frontend.txt TERMINÉ du 2026-11-24T11:28:36+00:00 (Ali, builder-front), code livré non committé dans l'arbre de travail.
+Auteur : Hadji (agent : reviewer, rôle stable, nom d'affichage Hadji)
+Horodatage completed_at : 2026-11-24T11:41:13+00:00
+Résumé (summary) : Contenu 0.16.0 et liens doc globalement cohérents et lint vert, mais rapport décalé sur la version, périmètre sous-déclaré et synthèses tronquées imposent des corrections avant archivage.
+
+Contexte et sources :
+- frontend.txt TERMINÉ du 2026-11-24T11:28:36+00:00 (Ali) lu comme base : décisions 19 (rédaction 0.13.3/0.14.0), 20 (signature) et 21 (documentation nouveaux rôles), 4 fichiers déclarés modifiés, yarn lint vert déclaré, réserve VERSION_NOYAU 0.14.0 périmé.
+- plan.txt relu : décisions 1 à 17 FAIT, 18 (rôle build-front activé) en cours, 19 à 21 à implémenter, 22 INFORMATIF (écarts de contenu côté noyau) ; suite prévue Hadji puis Hifadhui puis Zawadi.
+- Mémoire : review.txt VALIDÉ AVEC RÉSERVES du 2026-10-16T18:30:00+00:00 relu puis archivé dans .opencode/history/review-log.md avant remplacement ; acquis lus sans refaire leurs vérifications : security.txt VALIDÉ AVEC RÉSERVES du 2026-10-22T18:41:22+00:00 et qa.txt VALIDÉ AVEC RÉSERVES du 2026-10-16T18:31:10+00:00, tous deux sur le build antérieur 0.13.2.
+- Configuration : .opencode/sayrhazi.yaml relu, project.name vaut Sayrhazi-web (renseigné, seule source de vérité), agents.reviewer vaut Hadji, workflow.version 0.17.0, quality.design_required true, local_url http://localhost:5175.
+- Règles : AGENTS.md relu (français, typographie, archivage avant remplacement, statuts de rôle, absence de verdict sécurité chez Hadji).
+- Contexte git : branche main, commits 61d149e puis c7e27bc en tête, 25 fichiers suivis modifiés et 12 entrées non suivies, build.txt supprimé (cohérent décision 18), frontend.txt non suivi, aucun commit ce tour.
+- Horodatages système (UTC) : site.ts 11:20:16, versions.ts 11:27:12, Versions.tsx 11:27:32, Accueil.tsx 11:27:50, index.html 11:28:08, frontend.txt 11:30:12 le 2026-11-24 ; le rapport a donc été écrit après les fichiers.
+
+Vérifications réalisées :
+1. Contrat machine frontend.txt : deux blocs en tête — agent build-front status VALIDÉ (lignes 1 à 5) puis agent frontend status TERMINÉ (lignes 6 à 9), même task_id et même completed_at. Nurit à l'automatisation : voir problème MOYENNE dédié.
+2. Lien interne et imports : Accueil.tsx ligne 1 importe VERSION_NOYAU depuis site.ts, lignes 24 à 32 affichent « Nouveau — Sayrhazi {VERSION_NOYAU} disponible » et un <Link to="/versions">; versions.ts ligne 5 ajoute le champ optionnel liens? { nom: string; href: string }[], consommé dans Versions.tsx lignes 60 à 75 avec key={lien.href}, target="_blank" et rel="noreferrer noopener" ; aucune interpolation dans href, aucun javascript:, aucun appel réseau au runtime.
+3. Contenu des versions : versions.ts lignes 13 à 96 contient six entrées récentes — 0.16.0 (2026-11-14, 6 points), 0.15.0 (2026-11-13, 7 points), 0.14.2 (2026-10-04, 5 points), 0.14.1 (2026-10-04, 3 points), 0.14.0 (2026-10-22, 7 points + 2 liens), 0.13.3 (2026-10-20, 4 points + 1 lien) — puis l'historique inchangé jusqu'à 0.1.0. site.ts lignes 9 à 14 porte VERSION_NOYAU 0.16.0 et DATE_NOYAU 2026-11-14 ; Versions.tsx lignes 17 à 20 reprend ces constantes. Cohérence interne du code correcte, contrairement au rapport qui annonce 0.14.0 en tête et une réserve sur 0.14.0 périmé.
+4. Section documentation noyau : Versions.tsx lignes 85 à 158 ajoute une section aria-labelledby="titre-doc-noyau" avec 6 liens externes (docs du dépôt sayrhazi/sayrhazi), tous avec rel="noreferrer noopener", textes descriptifs en français, responsive max-w-xl. Conforme à la décision 19 sur les liens doc et à la décision 21 sur les liens vers automation.md et agents.md.
+5. Décision 21 partiellement livrée mais non déclarée : site.ts lignes 66 à 114 et agents.ts décrivent les rôles build-front/build-back et les rapports frontend.txt/backend.txt ; Accueil.tsx lignes 94 à 118 remplace « build → Hadji » par « implémentation → Hadji » et « 01 · Bamse écrit build.txt » par « 01 · L'implémentation (Ali : frontend.txt · Bamse : backend.txt) » ; Agents.tsx ligne 15 passe la source à 0.14.0. Le rapport n'énumère pas ces fichiers.
+6. Périmètre réel vs déclaré : le rapport liste 4 fichiers modifiés (versions.ts, Versions.tsx, Accueil.tsx, index.html) et classe site.ts et Agents.tsx parmi les fichiers « inchangés ce tour ». Le diff git montre 9 fichiers frontend modifiés (s'ajoutent site.ts, agents.ts, Agents.tsx) et 16 fichiers .opencode modifiés (agent/*.md, workflow.yaml, services.py, watch-*.py, models.yaml, opencode.json, sayrhazi.yaml, journaux), plus 12 entrées non suivies. Écart de traçabilité confirmé.
+7. Non-régression ciblée : index.html lignes 10 à 16 ajoute 4 métadonnées og sans toucher au titre ni au descripteur existants ; aucun import rompu (lint vert) ; clés de liste point.slice(0, 32) conservées (Versions.tsx lignes 34 et 54), execCommand déprécié inchangé dans CopierCommande.tsx (non relu ce tour, admis depuis les acquis).
+8. Contrôles rejoués : yarn lint (tsc --noEmit, commande de sayrhazi.yaml) rejoué vert, Done in 1,86 s, aucune erreur TypeScript ; la durée diffère des 2,97 s annoncés par Ali sans incidence sur le résultat.
+9. Surface de sécurité transmise sans verdict : href tous statiques vers github.com/sayrhazi/sayrhazi et npmjs.com, rel="noreferrer noopener" sur chaque lien externe ajouté, aucune entrée utilisateur, aucun script inline nouveau. Aucun verdict de sécurité rendu ici, autorité Hifadhui.
+
+Problèmes identifiés :
+- Aucun problème CRITIQUE.
+- Aucun problème HAUTE au plan fonctionnel : aucune erreur de compilation, aucun import rompu, aucune régression de navigation détectée.
+- MOYENNE — Rapport décalé sur la version examinée. Preuve : frontend.txt lignes 5 et 18 annoncent « 0.13.3/0.14.0 » et « annonce 0.14.0 dans le hero Accueil », ligne 42 qualifie VERSION_NOYAU de « 0.14.0 dans site.ts » périmé face au noyau 0.17.0 ; or site.ts ligne 13 vaut 0.16.0, versions.ts lignes 13 à 24 a 0.16.0 en tête et Accueil.tsx ligne 25 affiche 0.16.0. Impact : le rapport, source de vérité pour Hifadhui et Zawadi, décrit une release qui n'est pas livrée et une réserve caduque ; la confiance dans la traçabilité s'effondre si l'archivage se fait sur cette base. Correction recommandée : Ali corrige summary, contexte et réserve pour refléter 0.16.0 (et les entrées 0.15.0, 0.14.2, 0.14.1), puis resignе frontend.txt avec un completed_at réel.
+- MOYENNE — Périmètre sous-déclaré. Preuve : rapport lignes 25 à 32 énumère 4 fichiers et classe site.ts et Agents.tsx comme inchangés, mais le diff montre site.ts, agents.ts et Agents.tsx modifiés, ainsi que 16 fichiers .opencode modifiés et 12 entrées non suivies. Impact : revue, audit et QA ne peuvent pas être ciblés correctement ; l'attribution entre synchronisation du noyau (predev/prebuild) et édition manuelle est impossible ; décision 21 non consignée. Correction recommandée : Ali énumère tous les fichiers touchés ce tour, sépare ce qui provient du sync noyau de son édition propre, et consigne la décision 21 traitée.
+- MOYENNE — Synthèses de release tronquées. Preuve : versions.ts ligne 17 se termine par « tooltip au survol dans «… » avec guillemet ouvrant non fermé ; lignes 30 et 31 se terminent par « … » (« flux SSE session.updated/session.deleted… », « ouverture d'une discussion existante… »). Impact : notes publiques inachevées, lisibilité et crédibilité du journal entamées ; régression de la réserve de condensation déjà levée le 2026-10-16. Correction recommandée : ne jamais couper à l'intérieur d'une citation ou d'une énumération ; recondenser ou retoucher ces trois points dans versions.ts et, si la source est le sync, corriger la fonction condense de scripts/sync-noyau.cjs.
+- MOYENNE — Anomalie chronologique dans l'historique des versions. Preuve : versions.ts lignes 39 à 40 (0.14.2, 2026-10-04) et 50 à 51 (0.14.1, 2026-10-04) précèdent ligne 60 (0.14.0, 2026-10-22) et ligne 83 (0.13.3, 2026-10-20) ; l'ordre des numéros est décroissant mais les dates ne le sont pas. Impact : le visiteur lit une 0.14.2 antérieure à la 0.14.0 qu'elle suit, ce qui contredit la mention « le site vitrine ne réinterprète aucune note » (Versions.tsx ligne 80). Correction recommandée : Lawibrahim confronte les dates au CHANGELOG du noyau ; si l'anomalie vient de la source, la consigner en INFORMATIF comme la décision 22 ; sinon corriger la génération.
+- MOYENNE — Double bloc contrat machine dans frontend.txt. Preuve : lignes 1 à 5 (agent build-front, status VALIDÉ) et lignes 6 à 9 (agent frontend, status TERMINÉ) pour le même task_id et le même horodatage. Impact : l'automatisation qui lit le contrat en tête peut retenir VALIDÉ (verdict normalement réservé à Hadji) au lieu de TERMINÉ (achèvement attendu du build-front) ; risque de transition ou d'archivage prématuré. Correction recommandée : un seul bloc contrat machine en tête, avec l'agent et le statut attendus par le workflow en vigueur, puis déplacer l'autre mention dans le corps du rapport.
+- FAIBLE reconduit — Clés de liste fragiles : Versions.tsx lignes 34 et 54, key={point.slice(0, 32)}, risque de collision si deux points partagent le même préfixe. Correction recommandée : clé composite avec index ou identifiant stable.
+- FAIBLE reconduit — document.execCommand(copy) déprécié conservé en fallback dans CopierCommande.tsx, non retouché ce tour. Correction recommandée : ne conserver que navigator.clipboard avec message accessible.
+- FAIBLE reconduit — quality.design_required vaut true dans sayrhazi.yaml ligne 45 alors que le plan arbitre Ali sans design.txt ; plan suivi. Correction recommandée : aligner la configuration ou le plan.
+- FAIBLE reconduit — AGENTS.md §4 « Règles locales du projet » toujours à compléter, inchangé. Correction recommandée : compléter la section.
+- FAIBLE — Métadonnées OG sans og:image ni og:url (index.html lignes 10 à 16) ; aperçu de partage social incomplet. Correction recommandée : ajouter ces balises avec une image publique du dépôt si le partage est un objectif.
+- FAIBLE — Écart entre completed_at déclaré 11:28:36 et mtime frontend.txt 11:30:12. Correction recommandée : aligner l'horodatage du contrat sur l'heure réelle de signature.
+- Aucun autre problème CRITIQUE, HAUTE ni MOYENNE dans le code livré.
+
+Recommandations :
+1. Ali corrige frontend.txt (version 0.16.0, périmètre complet, décision 21, bloc contrat machine unique, completed_at réel) avant tout archivage FEATURE-003.
+2. Ali ou Bamse corrige les trois synthèses tronquées de versions.ts et durcit la condensation de scripts/sync-noyau.cjs pour ne plus couper à l'intérieur d'une citation.
+3. Lawibrahim arbitre l'anomalie de dates 0.14.1/0.14.2 contre le CHANGELOG du noyau et le statut machine attendu du builder-front (PROPOSÉ/VALIDÉ selon la décision 20 contre TERMINÉ dans le bloc frontend).
+4. Transmettre à Hifadhui : href statiques et rel noreferrer noopener vérifiés, aucune entrée utilisateur, mais 16 fichiers .opencode modifiés (workflow.yaml, opencode.json, models.yaml, services.py, watch-*.py, agent/*.md) à auditer ; autorité sécurité, aucun verdict rendu ici.
+5. Zawadi : QA réelle sur 0.16.0 après rechargement du serveur — hero, page /versions (0.16.0 en tête, 0.13.3/0.14.0 avec liens, section documentation), responsive 390 et 1280, console ; ses acquis d'octobre portent sur 0.13.2.
+6. Traiter en dette les FAIBLE reconduits : clés de liste, execCommand, og:image, quality.design_required et AGENTS.md §4.
+
+Limites :
+- CHANGELOG.md du noyau absent du dépôt local (recherche **/CHANGELOG.md sans résultat) : l'exactitude des points 0.16.0, 0.15.0, 0.14.2 et 0.14.1 et des dates n'a pas pu être collationnée à la source ; fidélité admise depuis le rapport pour 0.14.0 et 0.13.3 seulement.
+- yarn build, yarn test et mesure des contrastes non rejoués sur ce tour, admis verts depuis le rapport par proportionnalité éditoriale ; seul yarn lint a été rejoué, avec lecture intégrale des 4 fichiers déclarés et ciblée des 5 autres.
+- Les 16 fichiers .opencode modifiés et 12 entrées non suivies n'ont pas été relus intégralement (hors périmètre frontend éditorial) ; ils sont signalés au problème « périmètre sous-déclaré » et transmis à Hifadhui.
+- Serveur de développement non rechargé ni redémarré par règle ; dist/ non reconstruit ce tour.
+- Rendu réel du hero 0.16.0, des liens doc, de la section documentation, du responsive et de la console réservé à Zawadi, non déduit du seul code.
+- Aucun verdict de sécurité rendu ; surface décrite transmise à Hifadhui, autorité en la matière.
+
+Suite :
+- Ali : corrections MOYENNE puis nouveau frontend.txt signé ; aucun commit ni push sans demande explicite.
+- Hadji : review à rouvrir sur la version corrigée avant archivage.
+- Hifadhui : audit de la surface 0.16.0 après correction du rapport.
+- Zawadi : QA réelle 0.16.0 après rechargement du serveur.
+- Lawibrahim : arbitrages dates noyau et contrat machine ; archivage FEATURE-003 à la clôture confirmée.
+
+Verdict du rôle : CORRECTIONS NÉCESSAIRES.
+
+---
+
+### Archive 2026-11-24T11:41:13+00:00 (FEATURE-003 review VALIDÉ AVEC RÉSERVES du 2026-10-16T18:30:00+00:00)
+
+task_id: FEATURE-003
+agent: reviewer
+status: VALIDÉ AVEC RÉSERVES
+completed_at: "2026-10-16T18:30:00+00:00"
+summary: Renommage Navbar et Footer vérifié, README réécrit conforme, 0.13.2 justifiée sans doublon, réserves Démarrage et évitement maintenues.
+---
+Date système réelle : 2026-10-16T18:30:00+00:00
+Projet : Sayrhazi-web — Le site vitrine du système agentic Sayrhazi
+Type : website
+Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
+Tâche : FEATURE-003 (renommage Navbar et Footer, README, 0.13.2 complète)
+Version examinée : build.txt TERMINÉ du 2026-10-16T18:26:09+00:00 (Bamse)
+Auteur : Hadji (agent : reviewer, rôle stable)
+Horodatage completed_at : 2026-10-16T18:30:00+00:00
+Résumé (summary) : Renommage Navbar et Footer vérifié, README réécrit conforme, 0.13.2 justifiée sans doublon, réserves Démarrage et évitement maintenues.
+
+Contexte et sources :
+- build.txt TERMINÉ du 2026-10-16T18:26:09+00:00 (Bamse) lu comme base : décisions 14 (renommage + retrait du lien d'évitement), 15 (README UTF-8) et 16 (0.13.2 complète) à implémenter, yarn lint build test déclarés verts.
+- plan.txt relu : FEATURE-003 de Lawibrahim du 2026-10-16T18:15:17+00:00, décisions 14, 15 et 16, dérive installation.md (+32 lignes) et tunda vérifiant le dashboard signalées, page Démarrage à recontrôler.
+- Mémoire : review.txt VALIDÉ AVEC RÉSERVES du 2026-10-16T17:53:33+00:00 relu puis archivé dans .opencode/history/review-log.md avant remplacement ; acquis lus sans refaire leurs vérifications : security.txt et qa.txt précédents portant sur le build antérieur.
+- Configuration : .opencode/sayrhazi.yaml lu, project.name vaut Sayrhazi-web (renseigné, seule source de vérité), agents.reviewer vaut Hadji.
+- Fichiers relus : src/App.tsx (57 lignes), src/components/Navbar.tsx (140 lignes), src/components/Footer.tsx (34 lignes), src/data/versions.ts (281 lignes, tête et entrées 0.13.2 et 0.13.1), src/data/site.ts (115 lignes), README.md (38 lignes), scripts/sync-noyau.cjs (293 lignes), src/pages/Demarrage.tsx (104 lignes, recontrôle demandé par le plan).
+- Fichiers admis depuis le build sans relecture intégrale par frugalité : autres pages, autres composants, index.html, public/ (deux SVG), scripts/mesure-contrastes.js, yarn.lock, workflow Pages.
+- Contexte git : branche main, commit 61d149e en tête, arbre avec modifications non committées laissées en place (commit et push non ordonnés, décision du build respectée) ; renommages avec suivi (RM dans le diff : PiedDePage.tsx vers Footer.tsx, Entete.tsx vers Navbar.tsx).
+
+Vérifications réalisées :
+1. Renommage Navbar et Footer (décision 14) : src/App.tsx relu — imports Navbar et Footer et usages <Navbar /> et <Footer /> à jour ; fonctions exportées Navbar et Footer relues ; recherches ciblées dans src/ — zéro Entete, zéro PiedDePage, zéro Aller au contenu ; diff avec suivi git constaté (RM) ; autres noms français conservés (CopierCommande, CarteAgent) ; périmètre à 3 fichiers confirmé.
+2. Retrait du lien d'évitement : absence confirmée dans Navbar.tsx ; main#contenu avec tabIndex -1, scroll-mt-20 et focus au changement de route conservés dans App.tsx (lignes 31 et 50) ; régression clavier actée au plan sur demande explicite, signalée en réserve sans exiger sa réintroduction contre l'ordre utilisateur.
+3. README (décision 15) : 38 lignes relues — présentation, stack (React 18, TypeScript, Vite 5, Tailwind 3, yarn, Node 18), commandes (install, dev sur localhost:5175 avec predev, sync, build avec prebuild, lint, test), sync-noyau (source main de sayrhazi/sayrhazi, repli commité, timeout 15 s), déploiement Pages (sayrhazi.github.io/sayrhazi-web, workflow, 404.html), liens org sayrhazi (noyau, npm, site), licence tous droits réservés, en français ; lecture outillée réussie (preuve de sortie d'UTF-16) ; zéro Lawi-Salim dans src/ et dans README (occurrences restantes limitées au cahier et à l'historique, conservés comme références historiques selon la décision 8).
+4. Entrée 0.13.2 et non-duplication (décision 16 contre décision 5) : versions.ts relu — entrée 0.13.2 en tête avec date 2026-10-16 et 9 points, entrée 0.13.1 conservée à 4 points, ordre décroissant préservé ; les 4 points réclamés par la décision 16 (binaire sayrhazi-tui, profil tui, dashboard en deux blocs, --once sans balisage) sont déjà, à l'identique, les 4 points de la 0.13.1 ; les ajouter en 0.13.2 aurait falsifié le journal ; le refus de duplication du build est donc correct sur le fond, mais crée une divergence plan contre build qui relève d'un arbitrage Lawibrahim, non d'une correction aveugle par Bamse.
+5. Levée du FAIBLE en-tête : commentaire versions.ts lignes 7 à 9 désormais à la release 0.13.2 du 2026-10-16, site.ts lignes 9 à 14 à 0.13.2 du 2026-10-16 ; la réserve du rapport précédent est levée.
+6. Script sync-noyau.cjs : en-tête relue (mise à jour de versions.ts et site.ts, union, repli) ; remplacement de l'en-tête à la release vérifié (lignes 248 à 268, log en-tête aligné) ; condensation signalée en log vérifiée (formaterPoints lignes 173 à 183, longueurs avant et après) ; garde versions.ts illisible conservée (lignes 221 à 225) ; RAW_BASE en sayrhazi/sayrhazi inchangé ; aucune exécution de contenu distant.
+7. Hygiène et non-régressions ciblées : rel noreferrer noopener explicite conservé (Navbar ligne 127, Footer ligne 25) ; basename et cheminSansBase inchangés ; clés de liste fragiles et execCommand déprécié toujours présents mais inchangés (dette reconduite, voir FAIBLE).
+8. Contrôles rejoués : yarn lint (tsc --noEmit) rejoué vert (5,96 s) ; yarn build, yarn test et mesure des contrastes admis verts depuis le build par proportionnalité (pages et couples inchangés, aucun test touché), dist/ faisant foi du code livré.
+
+Problèmes identifiés :
+- Aucun problème CRITIQUE.
+- Aucun problème HAUTE.
+- MOYENNE reconduite — Vérification attendue de la page Démarrage sans le contrôle dashboard. Preuve : src/pages/Demarrage.tsx lignes 53 à 58 (liste : structure, six agents, zéro A_COMPLETER, schéma, contrat, version) et src/data/site.ts lignes 39 à 44 contre plan 2026-10-16T18:15:17 (tunda vérifie désormais le dashboard) et entrée 0.13.2 (tunda sayrhazi vérifie enfin le dashboard). Impact : documentation en retard d'une release, l'utilisateur découvre un contrôle supplémentaire non annoncé ; aucun effet fonctionnel ni blocage d'installation. Correction recommandée : ajouter la mention du contrôle dashboard dans la Vérification attendue, à traiter par Bamse au prochain tour Démarrage, sans bloquer la mise en ligne.
+- MOYENNE (réserve actée, non bloquante) — Lien d'évitement Aller au contenu supprimé sur demande explicite. Preuve : zéro occurrence dans src/ contre plan décision 14 (suppression demandée) et réserve d'accessibilité actée. Impact : régression d'accessibilité clavier assumée, contraire au cahier §6 (navigation clavier) ; le focus programmatique sur main#contenu demeure, mais l'accès rapide au contenu au clavier est perdu. Correction recommandée : ne pas réintroduire contre l'ordre utilisateur ; Hadji et Zawadi la signalent, Lawibrahim arbitre si l'exigence cahier doit prévaloir.
+- MOYENNE (arbitrage, non bloquante) — Divergence décision 16 contre non-duplication du build. Preuve : plan décision 16 (ajouter les 4 points en 0.13.2) contre build (constat 9 points exacts, ajout refuser pour ne pas falsifier) et versions.ts relu (0.13.2 à 9 points, 0.13.1 aux 4 points réclamés). Impact : build et plan ne peuvent être validés ensemble sans arbitrage ; corriger dans un sens ou dans l'autre sans arbitrage falsifierait soit le journal soit la consigne. Correction recommandée : Lawibrahim arbitre (soit 0.13.2 confirmée à 9 points et décision 16 révisée, soit source noyau à réexaminer si le CHANGELOG distant compte réellement 13 bullets).
+- FAIBLE reconduit — quality.design_required vaut true dans sayrhazi.yaml alors que le plan arbitre Ali à false ; plan suivi. Correction recommandée : aligner sayrhazi.yaml ou le plan.
+- FAIBLE reconduit — AGENTS.md §4 Règles locales toujours à compléter, inchangé. Correction recommandée : compléter §4 (stack, conventions Tailwind, seuils accessibilité, commandes).
+- FAIBLE reconduit — Plan nomme scripts/sync-noyau.js, fichier réel en .cjs — à consigner par Lawibrahim.
+- FAIBLE reconduit — Regex blocsCommits rigide (forme multiligne exacte, lignes 155 à 165). Impact : reformatage rendant le committé illisible, sync en repli avec avertissement. Correction recommandée : regex tolérante ou test garde-fou.
+- FAIBLE reconduit — Version du paquet lue mais non confrontée au journal (versionPaquet seulement journalisée, ligne 209). Correction recommandée : avertir en cas de divergence.
+- FAIBLE reconduit — Clés de liste fragiles dans Versions.tsx (point.slice(0, 32)). Correction recommandée : clé composite avec index ou identifiant stable, en dette dédiée.
+- FAIBLE reconduit — document.execCommand(copy) déprécié conservé en fallback dans CopierCommande.tsx. Correction recommandée : ne conserver que navigator.clipboard avec message accessible à la prochaine retouche.
+- Aucun autre problème CRITIQUE, HAUTE ni MOYENNE dans le code livré.
+
+Recommandations :
+1. Traiter la MOYENNE Démarrage au prochain tour (mention dashboard dans la Vérification attendue) puis recontrôle ciblé contre la nouvelle installation.md.
+2. Faire arbitrer par Lawibrahim la divergence 0.13.2 (9 points sans doublon contre décision 16) avant toute retouche du journal ; ne pas dupliquer sans consigne.
+3. Conserver le retrait du lien d'évitement tant que l'ordre explicite vaut, avec réserve visible pour Zawadi et suivi cahier §6.
+4. Transmettre à Hifadhui pour audit : renommage pur, README statique, sync avec en-tête et logs ; autorité sécurité pour le verdict, aucun verdict de sécurité rendu ici.
+5. QA Zawadi locale puis en ligne après push : renommage visible, entrée 0.13.2 en tête, absence du lien d'évitement au clavier, console, responsive.
+6. Aligner sayrhazi.yaml quality.design_required sur la décision du plan et compléter AGENTS.md §4 ; consigner l'extension .cjs ; assouplir la regex et avertir en cas de divergence paquet contre journal (FAIBLE).
+7. Traiter clés de liste et execCommand en dette dédiée (FAIBLE).
+
+Limites :
+- yarn build, yarn test et mesure des contrastes non rejoués sur ce tour, admis verts depuis le build ; seul yarn lint a été rejoué, avec lecture intégrale du script.
+- Essais réseau, second passage idempotent et repli admis depuis le build, non rejoués ; exactitude des 9 points 0.13.2 contre le CHANGELOG du noyau admise depuis le collationnement du build, dépôt noyau hors périmètre.
+- Encodage README déduit de la lecture outillée réussie et du diff (binaire vers 2008 octets), sans contrôle d'octets dédié sur ce tour.
+- Serveur de développement non rechargé ni redémarré par règle ; dist/ fait foi du code livré.
+- Mise en ligne Pages effective après le workflow du dépôt distant, non observée localement ; arbre laissé non committé ni poussé sur décision du build.
+- Rendu réel du renommage, du README, responsive et console réservés à Zawadi, non déduits du seul code.
+- Aucun verdict de sécurité rendu ; surface décrite transmise à Hifadhui, autorité en la matière.
+
+Suite :
+- Hadji : review close (VALIDÉ AVEC RÉSERVES) — en-tête versions.ts levée, réserves Démarrage, évitement et arbitrage 0.13.2 ouvertes.
+- Bamse : mention dashboard en page Démarrage au prochain tour ; aucune duplication 0.13.2 sans arbitrage Lawibrahim ; ni commit ni push sans demande explicite.
+- Hifadhui : audit du présent build (renommage, README, sync avec en-tête).
+- Zawadi : QA locale puis en ligne (renommage, 0.13.2 en tête, clavier sans évitement, console, responsive).
+- Archivage FEATURE-003 dans .opencode/features/FEATURE-003.md à la clôture confirmée.
+
+Verdict du rôle : VALIDÉ AVEC RÉSERVES.
+
+---
+
 ### Archive 2026-10-16T12:08:25+00:00 (FEATURE-001 review VALIDÉ du 2026-10-16T00:25:18+00:00)
 
 task_id: FEATURE-001
@@ -590,75 +752,75 @@ Verdict du rÃ´le : VALIDÃ‰ AVEC RÃ‰SERVES.
 ### Archive 2026-10-16T18:30:00+00:00 (FEATURE-003 review VALIDE AVEC RESERVES du 2026-10-16T17:53:33+00:00)
 task_id: FEATURE-003
 agent: reviewer
-status: VALID� AVEC R�SERVES
+status: VALID� AVEC R�SERVES
 completed_at: "2026-10-16T17:53:33+00:00"
-summary: Sync predev, hero empil� et titres sans basename v�rifi�s, 0.13.2 en t�te, r�serve sur la page D�marrage face au contr�le dashboard.
+summary: Sync predev, hero empil� et titres sans basename v�rifi�s, 0.13.2 en t�te, r�serve sur la page D�marrage face au contr�le dashboard.
 ---
-Date syst�me r�elle : 2026-10-16T17:53:33+00:00
-Projet : Sayrhazi-web � Le site vitrine du syst�me agentic Sayrhazi
+Date syst�me r�elle : 2026-10-16T17:53:33+00:00
+Projet : Sayrhazi-web � Le site vitrine du syst�me agentic Sayrhazi
 Type : website
 Stack : TypeScript / React, Vite.js, Tailwind (React Router v6, yarn, http://localhost:5175)
-T�che : FEATURE-003 (sync dev avec predev, hero empil� mobile, 0.13.2, TITRES sans basename)
-Version examin�e : build.txt TERMIN� du 2026-10-16T17:50:04+00:00 (Bamse)
-Auteur : Hadji (agent : reviewer, r�le stable)
+T�che : FEATURE-003 (sync dev avec predev, hero empil� mobile, 0.13.2, TITRES sans basename)
+Version examin�e : build.txt TERMIN� du 2026-10-16T17:50:04+00:00 (Bamse)
+Auteur : Hadji (agent : reviewer, r�le stable)
 Horodatage completed_at : 2026-10-16T17:53:33+00:00
-R�sum� (summary) : Sync predev, hero empil� et titres sans basename v�rifi�s, 0.13.2 en t�te, r�serve sur la page D�marrage face au contr�le dashboard.
+R�sum� (summary) : Sync predev, hero empil� et titres sans basename v�rifi�s, 0.13.2 en t�te, r�serve sur la page D�marrage face au contr�le dashboard.
 
 Contexte et sources :
-- build.txt TERMIN� du 2026-10-16T17:50:04+00:00 (Bamse) lu comme base : d�cisions 12 (sync et predev), 13 (hero empil� mobile), 0.13.2 tir�e du distant pouss�, cheminSansBase pour TITRES, .bak retir� du suivi, yarn lint build test d�clar�s verts.
-- plan.txt relu : FEATURE-003 de Lawibrahim du 2026-10-16T16:32:29+00:00, d�cisions 12 et 13 � impl�menter, d�rive installation.md (+32 lignes) et tunda v�rifiant le dashboard signal�es, page D�marrage � recontr�ler.
-- M�moire : review.txt VALID� AVEC R�SERVES du 2026-10-16T15:42:38+00:00 relu puis archiv� dans .opencode/history/review-log.md avant remplacement ; acquis lus sans refaire leurs v�rifications : security.txt VALID� AVEC R�SERVES du 2026-10-16T15:42:03+00:00, qa.txt VALID� AVEC R�SERVES du 2026-10-16T15:44:02+00:00, portant sur le build pr�c�dent.
-- Configuration : .opencode/sayrhazi.yaml lu, project.name vaut Sayrhazi-web (renseign�, seule source de v�rit�), agents.reviewer vaut Hadji.
-- Fichiers relus : src/App.tsx (57 lignes), src/pages/Accueil.tsx (conteneur hero lignes 24 � 32), package.json (scripts lignes 7 � 17), .gitignore (5 lignes), src/data/site.ts (VERSION_NOYAU, DATE_NOYAU), t�te src/data/versions.ts (lignes 1 � 70), src/components/CopierCommande.tsx (53 lignes), src/pages/Demarrage.tsx (104 lignes, recontr�le demand� par le plan).
-- Fichiers admis depuis le build sans relecture int�grale par frugalit� : autres pages, autres composants, index.html, public/ (deux SVG), scripts/, yarn.lock, workflow Pages.
-- Contexte git : branche main, commit 61d149e en t�te, arbre avec modifications non committ�es laiss�es en place (commit et push non ordonn�s, d�cision du build respect�e).
+- build.txt TERMIN� du 2026-10-16T17:50:04+00:00 (Bamse) lu comme base : d�cisions 12 (sync et predev), 13 (hero empil� mobile), 0.13.2 tir�e du distant pouss�, cheminSansBase pour TITRES, .bak retir� du suivi, yarn lint build test d�clar�s verts.
+- plan.txt relu : FEATURE-003 de Lawibrahim du 2026-10-16T16:32:29+00:00, d�cisions 12 et 13 � impl�menter, d�rive installation.md (+32 lignes) et tunda v�rifiant le dashboard signal�es, page D�marrage � recontr�ler.
+- M�moire : review.txt VALID� AVEC R�SERVES du 2026-10-16T15:42:38+00:00 relu puis archiv� dans .opencode/history/review-log.md avant remplacement ; acquis lus sans refaire leurs v�rifications : security.txt VALID� AVEC R�SERVES du 2026-10-16T15:42:03+00:00, qa.txt VALID� AVEC R�SERVES du 2026-10-16T15:44:02+00:00, portant sur le build pr�c�dent.
+- Configuration : .opencode/sayrhazi.yaml lu, project.name vaut Sayrhazi-web (renseign�, seule source de v�rit�), agents.reviewer vaut Hadji.
+- Fichiers relus : src/App.tsx (57 lignes), src/pages/Accueil.tsx (conteneur hero lignes 24 � 32), package.json (scripts lignes 7 � 17), .gitignore (5 lignes), src/data/site.ts (VERSION_NOYAU, DATE_NOYAU), t�te src/data/versions.ts (lignes 1 � 70), src/components/CopierCommande.tsx (53 lignes), src/pages/Demarrage.tsx (104 lignes, recontr�le demand� par le plan).
+- Fichiers admis depuis le build sans relecture int�grale par frugalit� : autres pages, autres composants, index.html, public/ (deux SVG), scripts/, yarn.lock, workflow Pages.
+- Contexte git : branche main, commit 61d149e en t�te, arbre avec modifications non committ�es laiss�es en place (commit et push non ordonn�s, d�cision du build respect�e).
 
-V�rifications r�alis�es :
-1. Sync dev avec predev (d�cision 12) : package.json relu � scripts sync et predev vers node scripts/sync-noyau.cjs ajout�s, prebuild inchang� ; node --check de scripts/sync-noyau.cjs rejou� sans erreur ; repli commit� admis depuis le build (avertissement, fichiers inchang�s, sortie 0) ; lint et test restent sans r�seau, conforme au plan.
-2. Lev�e de la MOYENNE TITRES sous basename : cheminSansBase relu (App.tsx lignes 17 � 24) � base d�duite de import.meta.env.BASE_URL sans slash final, pr�fixe retir�, racine normalis�e vers /, dev local � / inchang� ; usage unique ligne 30 avec repli sur TITRES[/] ; basename ligne 47 inchang� et synchronis� avec la base ; logique sans injection (comparaison seule, jamais en href ni en HTML). La r�serve du rapport pr�c�dent est lev�e.
-3. Hero empil� mobile (d�cision 13) : conteneur Accueil.tsx ligne 24 en flex max-w-xl flex-col items-stretch gap-2 sm:flex-row � 2 lignes pleine largeur sur mobile, c�te � c�te sur bureau ; CopierCommande en w-full d�j�, lien D�marrer en w-full puis sm:w-auto sm:shrink-0 ; ordre du DOM et ordre de tabulation inchang�s, gap-2 et items-stretch conformes � la maquette du plan ; d�bordement 390 corrig� en lecture, rendu r�el r�serv� � Zawadi.
-4. Entr�e 0.13.2 et alignement site.ts : diff relu � entr�e 0.13.2 ajout�e en t�te de VERSIONS avec date 2026-10-16 et 9 points, 0.13.1 conserv�e � 4 points, ordre d�croissant pr�serv� ; VERSION_NOYAU � 0.13.2 avec DATE_NOYAU et commentaire align�s dans site.ts ; second passage idempotent et condensation admis depuis le build ; exactitude des 9 points contre le CHANGELOG distant admise, non collationn�e � la source sur ce tour.
-5. Lev�e du FAIBLE .bak : .gitignore relu avec *.bak ajout� ; git ls-files sans aucun .bak, suppression .opencode/history/review-log.md.bak constat�e dans l arbre ; bruit versionn� r�sorb�. La r�serve est lev�e.
-6. Hygi�ne et non-r�gressions cibl�es : z�ro Lawi-Salim dans src/, z�ro rel noreferrer sans noopener, basename et cheminSansBase en place ; cl�s de liste fragiles et execCommand d�pr�ci� toujours pr�sents mais inchang�s (dette reconduite, voir FAIBLE).
-7. Contr�les rejou�s : yarn lint (tsc --noEmit) rejou� vert (3,10 s) ; yarn build, yarn test et mesure des contrastes admis verts depuis le build par proportionnalit� (couples inchang�s, aucun test touch�), dist/ faisant foi du code livr�.
+V�rifications r�alis�es :
+1. Sync dev avec predev (d�cision 12) : package.json relu � scripts sync et predev vers node scripts/sync-noyau.cjs ajout�s, prebuild inchang� ; node --check de scripts/sync-noyau.cjs rejou� sans erreur ; repli commit� admis depuis le build (avertissement, fichiers inchang�s, sortie 0) ; lint et test restent sans r�seau, conforme au plan.
+2. Lev�e de la MOYENNE TITRES sous basename : cheminSansBase relu (App.tsx lignes 17 � 24) � base d�duite de import.meta.env.BASE_URL sans slash final, pr�fixe retir�, racine normalis�e vers /, dev local � / inchang� ; usage unique ligne 30 avec repli sur TITRES[/] ; basename ligne 47 inchang� et synchronis� avec la base ; logique sans injection (comparaison seule, jamais en href ni en HTML). La r�serve du rapport pr�c�dent est lev�e.
+3. Hero empil� mobile (d�cision 13) : conteneur Accueil.tsx ligne 24 en flex max-w-xl flex-col items-stretch gap-2 sm:flex-row � 2 lignes pleine largeur sur mobile, c�te � c�te sur bureau ; CopierCommande en w-full d�j�, lien D�marrer en w-full puis sm:w-auto sm:shrink-0 ; ordre du DOM et ordre de tabulation inchang�s, gap-2 et items-stretch conformes � la maquette du plan ; d�bordement 390 corrig� en lecture, rendu r�el r�serv� � Zawadi.
+4. Entr�e 0.13.2 et alignement site.ts : diff relu � entr�e 0.13.2 ajout�e en t�te de VERSIONS avec date 2026-10-16 et 9 points, 0.13.1 conserv�e � 4 points, ordre d�croissant pr�serv� ; VERSION_NOYAU � 0.13.2 avec DATE_NOYAU et commentaire align�s dans site.ts ; second passage idempotent et condensation admis depuis le build ; exactitude des 9 points contre le CHANGELOG distant admise, non collationn�e � la source sur ce tour.
+5. Lev�e du FAIBLE .bak : .gitignore relu avec *.bak ajout� ; git ls-files sans aucun .bak, suppression .opencode/history/review-log.md.bak constat�e dans l arbre ; bruit versionn� r�sorb�. La r�serve est lev�e.
+6. Hygi�ne et non-r�gressions cibl�es : z�ro Lawi-Salim dans src/, z�ro rel noreferrer sans noopener, basename et cheminSansBase en place ; cl�s de liste fragiles et execCommand d�pr�ci� toujours pr�sents mais inchang�s (dette reconduite, voir FAIBLE).
+7. Contr�les rejou�s : yarn lint (tsc --noEmit) rejou� vert (3,10 s) ; yarn build, yarn test et mesure des contrastes admis verts depuis le build par proportionnalit� (couples inchang�s, aucun test touch�), dist/ faisant foi du code livr�.
 
-Probl�mes identifi�s :
-- Aucun probl�me CRITIQUE.
-- Aucun probl�me HAUTE.
-- MOYENNE � V�rification attendue de la page D�marrage sans le contr�le dashboard. Preuve : src/pages/Demarrage.tsx lignes 53 � 58 (liste : structure, six agents, z�ro A_COMPLETER, sch�ma, contrat, version) contre plan 2026-10-16T16:32:29 (tunda v�rifie d�sormais le dashboard) et entr�e 0.13.2 (tunda sayrhazi v�rifie enfin le dashboard, qu il ignorait compl�tement). Impact : documentation en retard d une release, l utilisateur d�couvre un contr�le suppl�mentaire non annonc� ; aucun effet fonctionnel ni blocage d installation. Correction recommand�e : ajouter la mention du contr�le dashboard dans la V�rification attendue, � traiter par Bamse au prochain tour D�marrage, sans bloquer la mise en ligne.
-- FAIBLE nouveau � En-t�te de src/data/versions.ts rest� � la release pr�c�dente. Preuve : lignes 7 � 8 (Liste fig�e � la release 0.13.1) alors que VERSIONS porte 0.13.2 en t�te et que site.ts est d�j� � 0.13.2. Impact : commentaire trompeur, aucun effet fonctionnel. Correction recommand�e : aligner l en-t�te sur 0.13.2 � la prochaine retouche du fichier g�n�r�.
-- FAIBLE reconduit � quality.design_required vaut true dans sayrhazi.yaml alors que le plan arbitre Ali � false ; plan suivi. Correction recommand�e : aligner sayrhazi.yaml ou le plan.
-- FAIBLE reconduit � AGENTS.md �4 R�gles locales toujours � compl�ter, inchang�. Correction recommand�e : compl�ter �4 (stack, conventions Tailwind, seuils accessibilit�, commandes).
-- FAIBLE reconduit � Plan nomme scripts/sync-noyau.js, fichier r�el en .cjs � � consigner par Lawibrahim.
-- FAIBLE reconduit � Regex blocsCommits rigide (forme multiligne exacte). Impact : reformatage rendant le committ� illisible, sync en repli silencieux. Correction recommand�e : regex tol�rante ou test garde-fou.
-- FAIBLE reconduit � Version du paquet lue mais non confront�e au journal (versionPaquet seulement journalis�e). Correction recommand�e : avertir en cas de divergence.
-- FAIBLE reconduit � Cl�s de liste fragiles dans Versions.tsx (point.slice(0, 32), lignes 34 et 54). Correction recommand�e : cl� composite avec index ou identifiant stable, en dette d�di�e.
-- FAIBLE reconduit � document.execCommand(copy) d�pr�ci� conserv� en fallback dans CopierCommande.tsx (ligne 21). Correction recommand�e : ne conserver que navigator.clipboard avec message accessible � la prochaine retouche.
-- Aucun autre probl�me CRITIQUE, HAUTE ni MOYENNE dans le code livr�.
+Probl�mes identifi�s :
+- Aucun probl�me CRITIQUE.
+- Aucun probl�me HAUTE.
+- MOYENNE � V�rification attendue de la page D�marrage sans le contr�le dashboard. Preuve : src/pages/Demarrage.tsx lignes 53 � 58 (liste : structure, six agents, z�ro A_COMPLETER, sch�ma, contrat, version) contre plan 2026-10-16T16:32:29 (tunda v�rifie d�sormais le dashboard) et entr�e 0.13.2 (tunda sayrhazi v�rifie enfin le dashboard, qu il ignorait compl�tement). Impact : documentation en retard d une release, l utilisateur d�couvre un contr�le suppl�mentaire non annonc� ; aucun effet fonctionnel ni blocage d installation. Correction recommand�e : ajouter la mention du contr�le dashboard dans la V�rification attendue, � traiter par Bamse au prochain tour D�marrage, sans bloquer la mise en ligne.
+- FAIBLE nouveau � En-t�te de src/data/versions.ts rest� � la release pr�c�dente. Preuve : lignes 7 � 8 (Liste fig�e � la release 0.13.1) alors que VERSIONS porte 0.13.2 en t�te et que site.ts est d�j� � 0.13.2. Impact : commentaire trompeur, aucun effet fonctionnel. Correction recommand�e : aligner l en-t�te sur 0.13.2 � la prochaine retouche du fichier g�n�r�.
+- FAIBLE reconduit � quality.design_required vaut true dans sayrhazi.yaml alors que le plan arbitre Ali � false ; plan suivi. Correction recommand�e : aligner sayrhazi.yaml ou le plan.
+- FAIBLE reconduit � AGENTS.md �4 R�gles locales toujours � compl�ter, inchang�. Correction recommand�e : compl�ter �4 (stack, conventions Tailwind, seuils accessibilit�, commandes).
+- FAIBLE reconduit � Plan nomme scripts/sync-noyau.js, fichier r�el en .cjs � � consigner par Lawibrahim.
+- FAIBLE reconduit � Regex blocsCommits rigide (forme multiligne exacte). Impact : reformatage rendant le committ� illisible, sync en repli silencieux. Correction recommand�e : regex tol�rante ou test garde-fou.
+- FAIBLE reconduit � Version du paquet lue mais non confront�e au journal (versionPaquet seulement journalis�e). Correction recommand�e : avertir en cas de divergence.
+- FAIBLE reconduit � Cl�s de liste fragiles dans Versions.tsx (point.slice(0, 32), lignes 34 et 54). Correction recommand�e : cl� composite avec index ou identifiant stable, en dette d�di�e.
+- FAIBLE reconduit � document.execCommand(copy) d�pr�ci� conserv� en fallback dans CopierCommande.tsx (ligne 21). Correction recommand�e : ne conserver que navigator.clipboard avec message accessible � la prochaine retouche.
+- Aucun autre probl�me CRITIQUE, HAUTE ni MOYENNE dans le code livr�.
 
 Recommandations :
-1. Traiter la MOYENNE D�marrage au prochain tour (mention dashboard dans la V�rification attendue) puis recontr�le cibl� contre la nouvelle installation.md.
-2. Aligner l en-t�te versions.ts sur 0.13.2 (FAIBLE).
-3. Transmettre � Hifadhui pour audit : sync en predev, hero purement visuel, TITRES normalis� sans basename, .bak hors suivi ; autorit� s�curit� pour le verdict, aucun verdict de s�curit� rendu ici.
-4. QA Zawadi locale puis en ligne apr�s push : hero empil� � 390, entr�e 0.13.2 en t�te, titres par page sous /sayrhazi-web/, console, responsive.
-5. Aligner sayrhazi.yaml quality.design_required sur la d�cision du plan et compl�ter AGENTS.md �4 ; consigner l extension .cjs ; assouplir la regex et avertir en cas de divergence paquet contre journal (FAIBLE).
-6. Traiter cl�s de liste et execCommand en dette d�di�e (FAIBLE).
+1. Traiter la MOYENNE D�marrage au prochain tour (mention dashboard dans la V�rification attendue) puis recontr�le cibl� contre la nouvelle installation.md.
+2. Aligner l en-t�te versions.ts sur 0.13.2 (FAIBLE).
+3. Transmettre � Hifadhui pour audit : sync en predev, hero purement visuel, TITRES normalis� sans basename, .bak hors suivi ; autorit� s�curit� pour le verdict, aucun verdict de s�curit� rendu ici.
+4. QA Zawadi locale puis en ligne apr�s push : hero empil� � 390, entr�e 0.13.2 en t�te, titres par page sous /sayrhazi-web/, console, responsive.
+5. Aligner sayrhazi.yaml quality.design_required sur la d�cision du plan et compl�ter AGENTS.md �4 ; consigner l extension .cjs ; assouplir la regex et avertir en cas de divergence paquet contre journal (FAIBLE).
+6. Traiter cl�s de liste et execCommand en dette d�di�e (FAIBLE).
 
 Limites :
-- yarn build, yarn test et mesure des contrastes non rejou�s sur ce tour, admis verts depuis le build ; seul yarn lint a �t� rejou�, avec node --check du script.
-- Essais r�seau, second passage idempotent, repli et base Pages admis depuis le build, non rejou�s.
-- Exactitude des 9 points 0.13.2 contre le CHANGELOG du noyau admise depuis le build ; d�p�t noyau hors p�rim�tre, non collationn� � la source.
-- Serveur de d�veloppement non recharg� ni red�marr� par r�gle ; dist/ fait foi du code livr�.
-- Mise en ligne Pages effective apr�s le workflow du d�p�t distant, non observ�e localement ; arbre laiss� non committ� ni pouss� sur d�cision du build.
-- Rendu r�el du hero empil�, de l entr�e 0.13.2, responsive et console r�serv�s � Zawadi, non d�duits du seul code.
-- Aucun verdict de s�curit� rendu ; surface d�crite transmise � Hifadhui, autorit� en la mati�re.
+- yarn build, yarn test et mesure des contrastes non rejou�s sur ce tour, admis verts depuis le build ; seul yarn lint a �t� rejou�, avec node --check du script.
+- Essais r�seau, second passage idempotent, repli et base Pages admis depuis le build, non rejou�s.
+- Exactitude des 9 points 0.13.2 contre le CHANGELOG du noyau admise depuis le build ; d�p�t noyau hors p�rim�tre, non collationn� � la source.
+- Serveur de d�veloppement non recharg� ni red�marr� par r�gle ; dist/ fait foi du code livr�.
+- Mise en ligne Pages effective apr�s le workflow du d�p�t distant, non observ�e localement ; arbre laiss� non committ� ni pouss� sur d�cision du build.
+- Rendu r�el du hero empil�, de l entr�e 0.13.2, responsive et console r�serv�s � Zawadi, non d�duits du seul code.
+- Aucun verdict de s�curit� rendu ; surface d�crite transmise � Hifadhui, autorit� en la mati�re.
 
 Suite :
-- Hadji : review close (VALID� AVEC R�SERVES) � r�serves titre et .bak lev�es, r�serve D�marrage contre dashboard ouverte.
-- Bamse : mention dashboard en page D�marrage et alignement de l en-t�te versions.ts au prochain tour ; ni commit ni push sans demande explicite.
-- Hifadhui : audit du pr�sent build (sync dev, hero, TITRES, .bak hors suivi).
-- Zawadi : QA locale puis en ligne (hero empil�, 0.13.2 en t�te, titres, console, responsive).
-- Archivage FEATURE-003 dans .opencode/features/FEATURE-003.md � la cl�ture confirm�e.
+- Hadji : review close (VALID� AVEC R�SERVES) � r�serves titre et .bak lev�es, r�serve D�marrage contre dashboard ouverte.
+- Bamse : mention dashboard en page D�marrage et alignement de l en-t�te versions.ts au prochain tour ; ni commit ni push sans demande explicite.
+- Hifadhui : audit du pr�sent build (sync dev, hero, TITRES, .bak hors suivi).
+- Zawadi : QA locale puis en ligne (hero empil�, 0.13.2 en t�te, titres, console, responsive).
+- Archivage FEATURE-003 dans .opencode/features/FEATURE-003.md � la cl�ture confirm�e.
 
-Verdict du r�le : VALID� AVEC R�SERVES.
+Verdict du r�le : VALID� AVEC R�SERVES.
 ---

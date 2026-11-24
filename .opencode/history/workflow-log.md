@@ -312,3 +312,42 @@
 - [2026-10-16 18:30:51] security terminée pour FEATURE-003
 - [2026-10-16 18:32:00] visual_qa terminée pour FEATURE-003
 - [2026-10-16 18:32:00] convergence (3/3) : review OK, security OK, visual_qa OK
+- [2026-10-22 18:31:16] vague : review, security, visual_qa (FEATURE-003)
+- [2026-10-22 18:31:16] review déclenchée pour FEATURE-003
+- [2026-10-22 18:31:16] visual_qa déclenchée pour FEATURE-003
+- [2026-10-22 18:31:16] security déclenchée pour FEATURE-003
+- [2026-10-22 18:31:16] backend.txt TERMINÉ (FEATURE-003) -> appel de hadji [nemotron-3.5-super-vl] (modèle opencode/nemotron-3.5-super-vl-free) [session Sayrhazi FEATURE-003 hadji 20261022-183116-007d]
+- [2026-10-22 18:31:16] backend.txt TERMINÉ (FEATURE-003) -> appel de zawadi [nemotron-3.5-super-vl] (modèle opencode/nemotron-3.5-super-vl-free) [session Sayrhazi FEATURE-003 zawadi 20261022-183116-007e]
+- [2026-10-22 18:31:16] backend.txt TERMINÉ (FEATURE-003) -> appel de hifadhui [nemotron-3.5-super-vl] (modèle opencode/nemotron-3.5-super-vl-free) [session Sayrhazi FEATURE-003 hifadhui 20261022-183116-007f]
+- [2026-10-22 18:31:29] visual_qa échouée pour FEATURE-003
+- [2026-10-22 18:40:13] vague : review, security, visual_qa (FEATURE-003)
+- [2026-10-22 18:40:13] review déclenchée pour FEATURE-003
+- [2026-10-22 18:40:13] security déclenchée pour FEATURE-003
+- [2026-10-22 18:40:13] visual_qa déclenchée pour FEATURE-003
+- [2026-10-22 18:40:13] backend.txt TERMINÉ (FEATURE-003) -> appel de hadji [nemotron-3.5-super-vl] (modèle opencode/nemotron-3.5-super-vl-free) [session Sayrhazi FEATURE-003 hadji 20261022-184013-007a]
+- [2026-10-22 18:40:13] backend.txt TERMINÉ (FEATURE-003) -> appel de hifadhui [nemotron-3.5-super-vl] (modèle opencode/nemotron-3.5-super-vl-free) [session Sayrhazi FEATURE-003 hifadhui 20261022-184013-0079]
+- [2026-10-22 18:40:13] backend.txt TERMINÉ (FEATURE-003) -> appel de zawadi [nemotron-3.5-super-vl] (modèle opencode/nemotron-3.5-super-vl-free) [session Sayrhazi FEATURE-003 zawadi 20261022-184013-0078]
+- [2026-10-22 18:45:49] security échouée pour FEATURE-003
+- [2026-10-22 18:51:02] interruption détectée (--continue) : reviewer, qa en cours sur FEATURE-003, purge
+- [2026-10-22 18:51:02] diagnostic --continue effectué.
+- [2026-10-22 18:51:08] vague : review, visual_qa (FEATURE-003)
+- [2026-10-22 18:51:08] review déclenchée pour FEATURE-003
+- [2026-10-22 18:51:08] visual_qa déclenchée pour FEATURE-003
+- [2026-10-22 18:51:08] backend.txt TERMINÉ (FEATURE-003) -> appel de hadji [nemotron-3.5-super-vl] (modèle opencode/nemotron-3.5-super-vl-free) [session Sayrhazi FEATURE-003 hadji 20261022-185108-0033]
+- [2026-10-22 18:51:08] backend.txt TERMINÉ (FEATURE-003) -> appel de zawadi [nemotron-3.5-super-vl] (modèle opencode/nemotron-3.5-super-vl-free) [session Sayrhazi FEATURE-003 zawadi 20261022-185108-0030]
+- [2026-10-22 19:09:36] qa.txt produit malgré le timeout pour FEATURE-003.
+- [2026-10-22 19:09:36] review.txt produit malgré le timeout pour FEATURE-003.
+- [2026-10-22 19:09:36] visual_qa terminée pour FEATURE-003
+- [2026-10-22 19:09:36] review terminée pour FEATURE-003
+- [2026-11-24 11:42:49] vague : rework (FEATURE-003)
+- [2026-11-24 11:42:49] rework déclenchée pour FEATURE-003
+- [2026-11-24 11:42:49] review.txt CORRECTIONS NÉCESSAIRES (FEATURE-003) -> appel de bamse [big-pickle] (modèle opencode/big-pickle) [session Sayrhazi FEATURE-003 bamse 20261124-114249-007e]
+- [2026-11-24 11:45:30] rework terminée pour FEATURE-003
+- [2026-11-24 12:06:03] vague : rework (FEATURE-003)
+- [2026-11-24 12:06:03] rework déclenchée pour FEATURE-003
+- [2026-11-24 12:06:03] review.txt CORRECTIONS NÉCESSAIRES (FEATURE-003) -> appel de bamse [big-pickle] (modèle opencode/big-pickle) [session Sayrhazi FEATURE-003 bamse 20261124-120603-00f8]
+- [2026-11-24 12:07:51] rework terminée pour FEATURE-003
+- [2026-11-24 14:48:15] vague : security (FEATURE-003)
+- [2026-11-24 14:48:15] security déclenchée pour FEATURE-003
+- [2026-11-24 14:48:15] frontend.txt VALIDÉ (FEATURE-003) -> appel de hifadhui [beam] (modèle opencode/beam-free) [session Sayrhazi FEATURE-003 hifadhui 20261124-144815-0012]
+- [2026-11-24 14:54:46] security terminée pour FEATURE-003

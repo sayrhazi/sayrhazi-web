@@ -2,13 +2,98 @@ export interface EntreeVersion {
   version: string;
   date: string;
   points: string[];
+  liens?: { nom: string; href: string }[];
 }
 
-/* Liste figée au build depuis CHANGELOG.md du noyau à la release 0.13.2 (2026-10-16).
+/* Liste figée au build depuis CHANGELOG.md du noyau à la release 0.16.0 (2026-11-14).
    Synchronisée par scripts/sync-noyau.cjs (prebuild) ou figée manuellement.
    Aucun appel réseau au runtime : ces données sont statiques. */
 
 export const VERSIONS: EntreeVersion[] = [
+  {
+    version: "0.16.0",
+    date: "2026-11-14",
+    points: [
+      "Sayrhazi GUI : mentions @fichier.ext[#1-20] dans le composer (autocomplétion confinée au répertoire racine, coloration --accent), bouton + pour joindre des fichiers/répertoires comme parts file OpenCode, tooltip au survol dans « Sélectionner un modèle » (Entrées / Raisonnement).",
+      "Sayrhazi GUI : bandeau d'erreur upstream (retry ambre avec countdown, erreur définitive rouge avec modal (i)), compaction silencieuse (badge « Compacting… »), questions/permissions de l'agent (bandeau multi-onglets + modal).",
+      "Dashboard chat : bouton d'envoi à état explicite (■ en attente / ↑ au repos), interruption via POST /api/chat/session/:id/abort, foot « Interrompu » à l'arrêt.",
+      "Dashboard chat : revert natif d'OpenCode (bouton ↩, modal Sayrhazi, bandeau « N message(s) reverted » au-dessus du composer, liste des fichiers avec +/-).",
+      "Sayrhazi update : permission.question: \"ask\" et permission.external_directory: \"ask\" ajoutés dans .opencode/opencode.json (avec backup).",
+      "Tests : tests/chat_frontend_sim.js et tests/test_core.py étendus (mentions, erreurs upstream, compaction, relais SSE).",
+    ],
+  },
+  {
+    version: "0.15.0",
+    date: "2026-11-13",
+    points: [
+      "Serveur unifié sayrhazi-serveur.py (dashboard + watcher en un processus) et nouvelle sous-commande sayrhazi server.",
+      "Dashboard chat refondu : création et suppression de discussions via l'API native OpenCode (sessionID réel, renommage automatique du titre par l'agent natif title), menu contextuel de suppression, flux SSE session.updated/session.deleted synchronisé avec la barre latérale, streaming token par token, indicateur « L'agent est en cours… », bouton d'envoi à état explicite (■ en attente, ↑ au repos), tableau Markdown avec bordures, bouton copy sur la bulle utilisateur, plus de discussions dupliquées dans la sidebar.",
+      "Dashboard chat : durée des réponses = durée du tour (comme la TUI), pieds de message posés sur le message le plus récent du tour, streaming fluide en direct, rechargement global supprimé en fin de tour, ouverture d'une discussion existante en bas de page.",
+      "Suppression de l'ancien dashboard terminal (watch-tui.py) et du dashboard web autonome (watch-web.py).",
+      "Nouveau module interne sayrhazi-modules.py.",
+      "Installation / mise à jour : engine/installer.py et engine/updater.py copient désormais sayrhazi-modules.py + serveur + statiques.",
+      "Documentation : docs/chat-streaming.md ajouté.",
+    ],
+  },
+  {
+    version: "0.14.2",
+    date: "2026-10-04",
+    points: [
+      "Dashboard web watch-web.py amélioré : interface HTML autonome avec sidebar, tableau de bord et rapports d'agents détaillés.",
+      "Ajout de --port, --interval, --root et --once au pilote watch-web.py pour exécution autonome ou intégrée.",
+      "Nouveau fichier statique static/app.js : affichage dynamique des agents, rapport détaillé par agent et journal du dernier jour travaillé.",
+      "Ajout de static/index.html et static/style.css pour l'interface web autonome.",
+      "sayrhazi update copie désormais watch-web.py et le dossier static/ dans les projets existants.",
+    ],
+  },
+  {
+    version: "0.14.1",
+    date: "2026-10-04",
+    points: [
+      "Nouvel adaptateur watch-web.py : dashboard web sur http://localhost:8000 (python .opencode/watch-web.py).",
+      "Lecture des rapports .opencode/resume/, état .opencode/state/workflow-state.yaml, journal .opencode/history/workflow-log.md et métriques d'appel chez OpenCode.",
+      "Rafraîchissement automatique toutes les 2 secondes.",
+    ],
+  },
+  {
+    version: "0.14.0",
+    date: "2026-10-22",
+    points: [
+      "Flux de tâche : déclarer le périmètre d'une étape dans plan.txt (frontend, backend ou fullstack) ; le scope pilote les contrôles requis.",
+      "Rapports signés : Ali écrit frontend.txt et Bamse écrit backend.txt pour les scopes simples.",
+      "Flux fullstack : la section frontend d'Ali dans fullstack.txt doit être terminée avant que Bamse n'écrive la sienne (verrou actif, non destructif).",
+      "Migration des rôles : designer devient build-front (Ali) et builder devient build-back (Bamse) ; les anciens rapports restent lus (rétrocompatibilité).",
+      "Archivage : Lawibrien archives plan.txt de façon idempotente, une entrée par task_id, après validation de tous les contrôles requis et verdict Hadji OK.",
+      "Verrou moteur : Bamse est bloqué tant que la section frontend de fullstack.txt n'est pas terminée ; rework ciblé si fichiers modifiés.",
+      "Tests : TestScope, TestFullstack, TestFullstackWatcher, TestArchive, TestRework, TestFullstackFlow ont été ajoutés.",
+    ],
+    liens: [
+      {
+        nom: "Automatisation — flux, verrou et archivage",
+        href: "https://github.com/sayrhazi/sayrhazi/blob/main/docs/automation.md",
+      },
+      {
+        nom: "Rapports — statuts et validation",
+        href: "https://github.com/sayrhazi/sayrhazi/blob/main/docs/reports.md",
+      },
+    ],
+  },
+  {
+    version: "0.13.3",
+    date: "2026-10-20",
+    points: [
+      "Modèle par agent mis à jour : le modèle personnalisé d'un agent n'est plus écrasé à l'update, et il est aussi propagé dans ~/.opencode/agent (là où OpenCode le lit au lancement).",
+      "CLI : le postinstall du paquet indique comment exécuter les commandes indépendantes du profil, sans sourçage manuel.",
+      "Fiches agents : le modèle par défaut par fiche est remplacé par longcat-2.5-preview-free, avec un commentaire pointant vers .opencode/models.yaml.",
+      "Windows : le script de profil PowerShell ne fournit plus la fonction sayrhazi (npm suffit ; plus de CallDepthOverflow sur sayrhazi --version).",
+    ],
+    liens: [
+      {
+        nom: "Installation — CLI et mise à jour",
+        href: "https://github.com/sayrhazi/sayrhazi/blob/main/docs/installation.md",
+      },
+    ],
+  },
   {
     version: "0.13.2",
     date: "2026-10-16",

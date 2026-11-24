@@ -3,8 +3,8 @@
 # Les étapes désignent des rôles stables, jamais des noms d'affichage.
 # `auto: true` = transition prise en charge par le watcher ; `auto: false` =
 # orchestration humaine. Automatiques : review, security et visual_qa (si
-# requis dans sayrhazi.yaml), rework (retour vers builder sur CORRECTIONS),
-# rework_qa (retour vers builder sur qa.txt À COMPLÉTER).
+# requis dans sayrhazi.yaml), rework (retour vers build-back sur CORRECTIONS),
+# rework_qa (retour vers build-back sur qa.txt À COMPLÉTER).
 # Vérifié par `tunda sayrhazi` (présence + validité, jamais bloquant).
 workflow:
   mode: supervised
@@ -12,25 +12,24 @@ workflow:
   max_parallel_agents: 3
 
 stages:
-  - id: implementation
-    agent: builder
-    trigger:
-      report: plan.txt
-      status: VALIDÉ
-    auto: false
+  # - id: buildback
+  #   agent: build-back
+  #   trigger:
+  #     report: plan.txt
+  #     status: VALIDÉ
+  #   auto: false
 
-  - id: design
-    agent: designer
-    condition: design_required
+  - id: buildfront
+    agent: build-front
     trigger:
       report: plan.txt
       status: VALIDÉ
-    auto: false
+    auto: true
 
   - id: review
     agent: reviewer
     trigger:
-      report: build.txt
+      report: backend.txt
       status: TERMINÉ
     auto: true
 
@@ -38,7 +37,7 @@ stages:
     agent: security
     condition: security_required
     trigger:
-      report: build.txt
+      report: backend.txt
       status: TERMINÉ
     auto: true
 
@@ -46,19 +45,19 @@ stages:
     agent: qa
     condition: visual_qa_required
     trigger:
-      report: build.txt
+      report: backend.txt
       status: TERMINÉ
     auto: true
 
   - id: rework
-    agent: builder
+    agent: build-back
     trigger:
       report: review.txt
       status: CORRECTIONS NÉCESSAIRES
     auto: true
 
   - id: rework_qa
-    agent: builder
+    agent: build-back
     trigger:
       report: qa.txt
       status: À COMPLÉTER

@@ -6,12 +6,12 @@ export interface Agent {
   fichier: string;
 }
 
-/* Contenu gelé sur le noyau à la release en cours (0.13.2 du 2026-10-16).
+/* Contenu gelé sur le noyau à la release en cours (0.16.0 du 2026-11-14).
    Sources : README.md, docs/installation.md, docs/agents.md, package.json (sayrhazi).
    Aucune affirmation du thème v0.5.0 n'est reprise. */
 
-export const VERSION_NOYAU = "0.13.2";
-export const DATE_NOYAU = "2026-10-16";
+export const VERSION_NOYAU = "0.16.0";
+export const DATE_NOYAU = "2026-11-14";
 
 export const PRESENTATION =
   "Sayrhazi est un workflow multi-agents portable pour structurer le développement logiciel, orchestré via OpenCode. Chaque agent a un rôle précis et cloisonné.";
@@ -68,25 +68,25 @@ export const AGENTS: Agent[] = [
     nom: "Lawibrahim",
     role: "Réflexion et architecture",
     description:
-      "Discute le besoin, explore les options et consigne la décision validée dans plan.txt. Ne code pas et ne review jamais.",
+      "Discute le besoin, explore les options et consigne la décision validée dans plan.txt. Classe le scope (frontend, backend, fullstack). Ne code pas et ne review jamais.",
     couleur: "#8B5CF6",
     fichier: "plan.txt",
   },
   {
     nom: "Ali",
-    role: "Design UI/UX",
+    role: "Interface frontend",
     description:
-      "Maquettes, écrans, composants, responsive et thèmes dans design.txt. Crée la structure visuelle neuve, sans toucher à l'existant ni à la logique.",
+      "Maquettes, écrans, composants, responsive et thèmes depuis plan.txt. Écrit frontend.txt (scope frontend) ou sa section de fullstack.txt (scope fullstack, avant Bamse). Crée la structure visuelle neuve, sans toucher à l'existant ni à la logique.",
     couleur: "#3B82F6",
-    fichier: "design.txt",
+    fichier: "frontend.txt",
   },
   {
     nom: "Bamse",
-    role: "Implémentation",
+    role: "Backend et logique serveur",
     description:
-      "Implémente depuis plan.txt et design.txt, vérifie puis écrit build.txt. Seul à modifier le code existant et la logique.",
+      "Implémente depuis plan.txt et design.txt, vérifie puis écrit backend.txt (scope backend) ou la section backend de fullstack.txt, après Ali. Seul à modifier le code existant et la logique.",
     couleur: "#22C55E",
-    fichier: "build.txt",
+    fichier: "backend.txt",
   },
   {
     nom: "Hadji",

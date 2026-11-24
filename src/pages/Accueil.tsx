@@ -1,4 +1,4 @@
-import { AGENTS, COMMANDES, PRESENTATION } from "../data/site";
+import { AGENTS, COMMANDES, PRESENTATION, VERSION_NOYAU } from "../data/site";
 import { Link } from "react-router-dom";
 import CarteAgent from "../components/CarteAgent";
 import CopierCommande from "../components/CopierCommande";
@@ -21,6 +21,15 @@ export default function Accueil() {
           <p className="mt-4 font-mono text-xs uppercase tracking-widest text-white/60">
             Un rôle. Un rapport. Une transition vérifiable.
           </p>
+          <p className="mt-5 font-mono text-xs uppercase tracking-widest text-chartreuse">
+            Nouveau — Sayrhazi {VERSION_NOYAU} disponible
+          </p>
+          <Link
+            to="/versions"
+            className="mt-2 inline-block text-sm text-chartreuse hover:underline"
+          >
+            Consulter les notes de la release →
+          </Link>
           <div className="mx-auto mt-6 flex max-w-xl flex-col items-stretch gap-2 sm:flex-row">
             <CopierCommande commande={COMMANDES[0].commande} etiquette="Commande d'installation à copier" />
             <Link
@@ -86,7 +95,7 @@ export default function Accueil() {
 ├── agent/          6 rôles installés
 ├── sayrhazi.yaml   source de vérité
 ├── workflow.yaml   parcours déclaratif
-├── watch-work.py   build → Hadji
+├── watch-work.py   backend.txt → Hadji
 ├── resume/         état courant
 ├── history/        archives
 └── features/       travail terminé`}
@@ -95,11 +104,11 @@ export default function Accueil() {
             </div>
             <div className="rounded-xl border border-white/30 bg-encre p-6">
               <p className="font-mono text-[11px] uppercase tracking-widest text-white/85">
-                Transition réelle — build → Hadji
+                Transition réelle — implémentation → Hadji
               </p>
               <ol className="mt-4 space-y-3 text-sm">
                 <li className="rounded-lg border border-white/15 p-3">
-                  <strong>01 · Bamse</strong> écrit <code>build.txt</code> avec le statut <code>TERMINÉ</code>.
+                  <strong>01 · L'implémentation</strong> (Ali : <code>frontend.txt</code> · Bamse : <code>backend.txt</code>) écrit son rapport avec le statut <code>TERMINÉ</code>.
                 </li>
                 <li className="rounded-lg border border-chartreuse bg-encre p-3">
                   <strong>02 · Moteur</strong> vérifie le contrat : <code>task_id</code> et statut autorisé.

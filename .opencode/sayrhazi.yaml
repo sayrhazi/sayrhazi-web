@@ -2,7 +2,7 @@
 # Ce fichier décrit le projet courant ; il ne lance aucun service.
 workflow:
   name: Sayrhazi # Ne pas modifier
-  version: "0.13.2" # Ne pas modifier
+  version: "0.17.0" # Ne pas modifier
 
 project:
   name: Sayrhazi-web # Renseigner le nom du projet
@@ -14,7 +14,8 @@ agents:
   # Les fichiers agent/*.md et les roles restent stables : seul le nom presente change.
   architect: Lawibrahim
   designer: Ali
-  builder: Bamse
+  builder-front: Ali
+  builder-back: Bamse
   reviewer: Hadji
   security: Hifadhui
   qa: Zawadi
@@ -45,12 +46,10 @@ quality:
   required_checks: []
 
 session:
-  # Une seule session OpenCode par tâche, réutilisée à chaque appel.
-  # Bascule vers une session neuve quand l'usage atteint max_usage
-  # (0.95 = 95 %, marge pour écrire le rapport final).
-  max_usage: 0.95
-  # Fenêtre de contexte (tokens) si le modèle est inconnu.
-  default_limit: 1048576
+  # Politique de rotation des sessions OpenCode (watcher). OpenCode est l'unique
+  # autorité sur les métriques du contexte (tokens, fenêtre, compaction) ;
+  # Sayrhazi ne consomme que ces données et applique son propre seuil.
+  max_usage: 85 # pourcentage d'usage au-delà duquel une nouvelle session est ouverte
 
 integration:
   docker_required: false

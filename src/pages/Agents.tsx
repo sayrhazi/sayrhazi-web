@@ -12,7 +12,7 @@ export default function Agents() {
             <SectionAgent key={agent.nom} agent={agent} index={index} />
           ))}
           <p className="font-mono text-xs text-white/60">
-            Source : docs/agents.md et core/agents/ du noyau à la release 0.13.0. Données figées au build.
+            Source : docs/agents.md et core/agents/ du noyau à la release 0.14.0 (2026-10-22). Données figées au build.
           </p>
         </div>
       </div>
